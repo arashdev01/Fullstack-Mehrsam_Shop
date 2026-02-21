@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'IRANSans';
+  src: url('./fonts/vazir/vazir/woff2') format('woff2'); 
+}
+
+body {
+  font-family: 'Tahoma', 'Segoe UI', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+}
+
+.navbar-brand {
+  letter-spacing: -1px;
+}
+/* فایل index.css یا App.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  /* یک رنگ پس‌زمینه کلی تیره برای کل سایت */
+  background-color: #5697f8f0; 
+  /* اگر بخواهید رنگ روشن باشد: background-color: #f8f9fa; */
+  font-family: vazir, sans-serif; /* فونت پیش‌فرض کل سایت */
+  font-size: 16px;
+}

@@ -1,0 +1,391 @@
+/* ─── جلوگیری از اسکرول افقی ─── */
+html,
+body {
+  overflow-x: hidden !important;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── کل فوتر ─── */
+.custom-footer {
+  width: 100%;
+  overflow: hidden !important;
+  position: relative;
+  background-image: url("/images/green-hoodie.png");
+  background-size: cover;
+  background-position: left;
+  background-attachment: fixed;
+  padding-top: 0.5rem !important;
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+}
+
+.custom-footer *,
+.custom-footer *::before,
+.custom-footer *::after {
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+}
+
+/* ─── لایه تیره روی بک‌گراند ─── */
+.custom-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(1, 14, 50, 0.712) 0%, rgb(0, 8, 25) 100%);
+  z-index: 1;
+  border-top: none !important;
+}
+
+/* ─── container ─── */
+.custom-footer .container {
+  position: relative;
+  z-index: 2;
+  padding-left: 15px;
+  padding-right: 15px;
+  max-width: 100% !important;
+  width: 100%;
+}
+
+/* ─── row ─── */
+.custom-footer .row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100%;
+}
+
+/* ─── ستون‌ها ─── */
+.custom-footer [class*="col-"] {
+  padding-left: 10px;
+  padding-right: 10px;
+  max-width: 100%;
+  overflow: hidden;
+  color: #e0e0e0;
+}
+
+/* ─── عنوان‌های فوتر ─── */
+.custom-footer .title {
+  color: #ffffff !important;
+  font-weight: bold;
+  font-size: 20px !important;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #fcb941;
+  padding-bottom: 6px;
+  display: inline-block;
+}
+
+/* ─── لیست لینک‌ها ─── */
+.custom-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.custom-footer ul li {
+  margin-bottom: 8px;
+}
+
+.custom-footer ul li a {
+  color: #ffffff !important;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.2s;
+}
+
+.custom-footer ul li a:hover {
+  color: #fcb941 !important;
+}
+
+/* ─── متن‌های ساده ─── */
+.custom-footer small,
+.custom-footer h6,
+.custom-footer span {
+  color: #f7f6fb !important;
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+
+/* ─── تصاویر (عمومی) ─── */
+.custom-footer img {
+  max-width: 100% !important;
+  height: auto !important;
+  display: inline-block;
+}
+
+/* ─── بخش کپی‌رایت ─── */
+#copyright {
+  width: 100%;
+  overflow: hidden;
+  background: #010925fa;
+  color: #aaaaaa;
+}
+
+#copyright .container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#copyright span {
+  color: #355fea !important;
+  font-size: 12px;
+}
+
+/* ─── شبکه‌های اجتماعی ─── */
+#social-links span {
+  color: #f9f9f9 !important;
+  margin-left: 8px;
+  font-size: 13px;
+}
+
+#social-links a img {
+  width: 28px !important;
+  height: 28px !important;
+  object-fit: contain;
+  margin: 0 .5px;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+#social-links a img:hover {
+  opacity: 1;
+}
+
+/* ======================================================= */
+/* تنظیمات نمادها (ای‌نماد و نشان ملی) - مشترک پایه */
+/* ======================================================= */
+.trust-icons-row {
+  display: flex !important;
+  flex-direction: row !important;
+  /* اجبار به کنار هم بودن */
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* ======================================================= */
+/* مخصوص کامپیوتر (Desktop) */
+/* ======================================================= */
+@media (min-width: 992px) {
+  .custom-footer {
+    padding-top: 5% !important;
+    padding-bottom: 20px !important;
+  }
+
+  .custom-footer .row {
+    align-items: center;
+  }
+
+  /* اندازه نمادها در کامپیوتر */
+  .trust-icons-row {
+    gap: 15px !important;
+    margin-top: -30px;
+  }
+
+  .img-enamad {
+    width: 65px !important;
+    height: auto !important;
+  }
+
+  .img-neshan {
+    width: 120px !important;
+    height: auto !important;
+  }
+}
+
+/* ======================================================= */
+/* مخصوص موبایل (Mobile) */
+/* ======================================================= */
+
+@media (max-width: 991px) {
+  .custom-footer .container {
+    padding-left: 6px;
+    padding-right: 0px;
+  }
+
+ @media (max-width: 991px) {
+  /* هُل دادن کل متن به پایین بدون تکان خوردن لوگو */
+  .contact-info-mobile {
+    padding-top: 8px !important; /* این عدد را زیاد کنی، متن از لوگو دورتر می‌شود */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  /* باز کردن فاصله بین خطوط برای جوین شدن عدد ۲۴ */
+  .contact-info-mobile span {
+    display: block !important;
+    line-height: 2.2 !important; /* فاصله بین خط‌ها را بیشتر کردیم */
+    text-align: center !important;
+    font-size: 13px !important;
+    margin: 0 auto !important;
+    width: 140px !important; /* اجبار به شکستن خط برای عدد ۲۴ */
+  }
+
+  .contact-info-mobile h6 {
+    margin-top: 5px !important; /* فاصله شماره تلفن از متن بالایی */
+  }
+
+
+    /* تنظیم متن اول (کپی رایت) */
+    #copyright span {
+      display: block !important;
+      font-size: 14px !important;
+      margin-bottom: 10px !important;
+      /* ایجاد فاصله از متن بالایی */
+    }
+
+    /* تنظیم متن دوم (طراح) با فاصله بیشتر */
+    #copyright span:last-child {
+      display: block !important;
+      margin-top: 2px !important;
+      /* این عدد فاصله را بیشتر می‌کند */
+      font-size: 11px !important;
+    }
+  }
+
+  .contact-info-mobile {
+    margin-top: -20px !important;
+    position: relative;
+    z-index: 5;
+  }
+
+  .custom-footer .row.py-3.mx-0 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* جابجایی ستون‌ها */
+  .custom-footer .col-12.col-lg-6:first-child {
+    order: 1;
+  }
+
+  .custom-footer .col-12.col-lg-6:last-child {
+    order: 2;
+    margin-top: -10px;
+  }
+
+  /* چیدمان داخل ستون دوم */
+  .custom-footer .col-12.col-lg-6:last-child .row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* شماره تلفن */
+  .custom-footer .col-12.col-lg-6:last-child .col-12.col-md-6.text-center.p-2 {
+    order: 1;
+    margin-bottom: 2px;
+  }
+
+  /* ردیف نمادها در موبایل */
+  .custom-footer .col-12.col-lg-6:last-child .col-12.col-md-6.pt-2.pt-md-3 {
+    order: 2;
+    margin-top: -9px !important;
+  }
+
+  /* اندازه نمادها در موبایل (خیلی کوچک و کنار هم) */
+  .trust-icons-row {
+    padding-right: 28px !important;
+    justify-content: center !important;
+    gap: 29px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.35);
+    padding-top: 10px;
+    margin-top: 5px;
+    flex-direction: row !important;
+    /* این خط نمیذاره تو موبایل عمودی بشن */
+  }
+
+  .img-enamad {
+    width: 55px !important;
+    /* سایز جمع و جور برای موبایل */
+    height: auto !important;
+  }
+
+  .img-neshan {
+    width: 105px !important;
+    /* سایز جمع و جور برای موبایل */
+    height: auto !important;
+  }
+
+  .custom-footer .col-12.col-lg-6:last-child hr {
+    display: none;
+  }
+
+  /* تنظیمات لوگو در موبایل */
+  .custom-footer .col-4.d-flex.align-items-center {
+    margin-right: -10px !important;
+    margin-top: 0 !important;
+    position: relative;
+    z-index: 2;
+    top: -25px;
+    margin-bottom: 10px !important;
+  }
+
+  .custom-footer .col-4.d-flex.align-items-center img {
+    max-width: 160px !important;
+    max-height: 160px !important;
+    margin-right: -10px !important;
+    padding-right: 5px !important;
+    box-shadow: 0 4px 8px rgba(79, 79, 79, 0.018) !important;
+    border-radius: 4px;
+  }
+
+  .custom-footer .col-4.d-flex.align-items-center::before {
+    content: '';
+    position: absolute;
+    right: 0px;
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, #47454222, transparent);
+    pointer-events: none;
+  }
+
+  #social-links {
+    display: flex !important;
+    flex-direction: row !important; /* اجبار به قرارگیری در یک خط */
+    align-items: center !important; /* تراز شدن عمودی */
+    justify-content: center !important; /* وسط‌چین شدن در کل صفحه */
+    gap: 4px !important; /* فاصله بین متن و اولین آیکون */
+    margin-bottom: 10px !important; /* فاصله از متن کپی‌رایت پایین */
+    align-items: center !important;
+  }
+
+  #social-links span {
+    display: inline-block !important; /* اجازه جابجایی تکی به متن می‌دهد */
+    transform: translateY(6px) !important;
+    line-height: 1 !important;
+    margin-left: 0 !important; /* حذف فاصله قدیمی */
+    white-space: nowrap !important; /* جلوگیری از شکستن خط متن */
+  }
+}
+
+  .custom-footer .title {
+    font-size: 14px !important;
+    margin-bottom: 2px;
+  }
+
+  .custom-footer ul li a {
+    font-size: 12px !important;
+    margin-bottom: 0px;
+    padding: 2px;
+  }
+
+  @media (max-width: 991px) {
+  /* باریک کردن نوار خبرنامه در موبایل */
+  .newsletter {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+  
+  /* کوچک کردن متن‌ها برای باریک شدن نوار */
+  .newsletter h6 {
+    font-size: 13px !important;
+    margin-bottom: 2px !important;
+  }
+  
+  .newsletter p {
+    font-size: 10px !important;
+    margin-bottom: 10px !important;
+  }
+}
