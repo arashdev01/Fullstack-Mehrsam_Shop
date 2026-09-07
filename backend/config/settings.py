@@ -13,9 +13,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-($$z5d+!^ed%zv^aful2e4o5%81d9z3fu%@j81_y4x(giojr+!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mehrsamjeans.ir']
 
 
 # Application definition
@@ -123,8 +123,9 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
-
-JAZZMIN_SETTINGS = {
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / "staticfiles"
+JAZMIN_SETTINGS = {
     "site_title": "مدیریت فروشگاه مهرسام",
     "site_header": "مهرسام",
     "welcome_sign": "به پنل مدیریت خوش آمدید",
