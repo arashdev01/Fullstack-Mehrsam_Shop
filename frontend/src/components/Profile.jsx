@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_URL from '../api';
 
 // ─── ساید بار مشترک ───────────────────────────────────────
 function ProfileSidebar({ active }) {
@@ -144,7 +145,7 @@ export function Orders() {
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
-    axios.get('http://127.0.0.1:8000/api/orders/', {
+    axios.get(`${API_URL}/api/orders/`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => { setOrders(res.data); setLoading(false); })

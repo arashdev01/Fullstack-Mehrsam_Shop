@@ -1,75 +1,84 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-// کامپوننت‌های ثابت (همیشه نمایش داده می‌شن)
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Slider from './components/Slider'
+// کامپوننت‌های ثابت
+import Header from './components/Header';
+import Footer from './components/Footer';
+import BackToTop from './components/BackToTop';
 
-// صفحات مختلف
+// صفحه اصلی
+import Slider from './components/Slider';
+import Hero from './components/Hero';
+import FeaturedProducts from './components/FeaturedProducts';
+import OnSaleTimer from './components/OnSaleTimer';
+import Benefits from './components/Benefits';
+import BestSellers from './components/BestSellers';
+import OfferBanners from './components/OfferBanners';
+import VendorCarousel from './components/VendorCarousel';
+import LatestPosts from './components/LatestPosts';
+import Newsletter from './components/Newsletter';
+import PopupDiscount from './components/PopupDiscount';
+
+// صفحات فروشگاه
 import ShopPage from './pages/ShopPage';
-import Hero from './components/Hero'
-import ProductList from './components/ProductList'
-import ProductDetail from './components/ProductDetail'
-import Cart from './components/Cart'
-import Checkout from './components/Checkout'
-import Register from './components/Register'
-import FeaturedProducts from './components/FeaturedProducts'
-import OfferBanners from './components/OfferBanners'
-import VendorCarousel from './components/VendorCarousel'
-import Login from './components/Login'
-import { PersonalInfo, Orders, Favorites, Addresses } from './components/Profile'
-import BackToTop from './components/BackToTop'
-import Contact from './components/Contact'
-import About from './components/About'
-import FAQ from './components/FAQ'
-import Blog from './components/Blog'
-import BlogPost from './components/BlogPost'
-import ResetPassword from './components/ResetPassword'
-import NotFound from './components/NotFound'
-import Compare from './components/Compare'
-import SupportTicket from './components/SupportTicket';
-import ThankYou from './components/ThankYou'
-import Newsletter from './components/Newsletter'
-import PopupDiscount from './components/PopupDiscount'
-import LatestPosts from './components/LatestPosts'
-import Benefits from './components/Benefits'
-import OnSaleTimer from './components/OnSaleTimer'
-import BestSellers from './components/BestSellers'
+import ProductList from './components/ProductList';
+import ProductDetail from './components/ProductDetail';
+import Cart from './components/Cart';
+import Checkout from './components/Checkout';
 
+// حساب کاربری
+import Register from './components/Register';
+import Login from './components/Login';
+import { PersonalInfo, Orders, Favorites, Addresses } from './components/Profile';
+
+// صفحات عمومی
+import Contact from './components/Contact';
+import About from './components/About';
+import FAQ from './components/FAQ';
+import Blog from './components/Blog';
+import BlogPost from './components/BlogPost';
+import ResetPassword from './components/ResetPassword';
+import Compare from './components/Compare';
+import SupportTicket from './components/SupportTicket';
+import ThankYou from './components/ThankYou';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
     <div className="app-wrapper">
 
-      {/* هدر - همیشه بالای صفحه */}
+      {/* هدر - همیشه نمایش داده می‌شود */}
       <Header />
 
-      {/* اسلایدر - فقط در صفحه اصلی نشان داده می‌شه */}
+      {/* مسیرهای برنامه */}
       <Routes>
-        <Route path="/" element={<Slider />} />
-      </Routes>
 
-      {/* محتوای اصلی - بسته به آدرس عوض می‌شه */}
-      <Routes>
         {/* صفحه اصلی */}
-        <Route path="/" element={
-          <>
-            <Hero />
-            
-            <FeaturedProducts />
-            <OnSaleTimer />
-            <Benefits />
-            <BestSellers /> 
-            <OfferBanners /> 
-            <VendorCarousel />
-          
-            <LatestPosts />
-            <Newsletter />
-            <PopupDiscount />
-          </>
-        } />
+        <Route
+          path="/"
+          element={
+            <>
+              <Slider />
+              <Hero />
+              <FeaturedProducts />
+              <OnSaleTimer />
+              <Benefits />
+              <BestSellers />
+              <OfferBanners />
+              <VendorCarousel />
+              <LatestPosts />
+              <Newsletter />
+              <PopupDiscount />
+            </>
+          }
+        />
+
+        {/* صفحه فروشگاه قدیمی */}
         <Route path="/shop" element={<ShopPage />} />
+
+        {/* لیست تمام محصولات */}
+        <Route path="/products" element={<ProductList />} />
+
         {/* محصولات یک دسته‌بندی خاص */}
         <Route path="/category/:categoryId" element={<ProductList />} />
 
@@ -81,34 +90,53 @@ function App() {
 
         {/* پرداخت */}
         <Route path="/checkout" element={<Checkout />} />
+
+        {/* پشتیبانی */}
         <Route path="/support" element={<SupportTicket />} />
+
+        {/* نتیجه پرداخت */}
         <Route path="/thankyou" element={<ThankYou />} />
+
         {/* ثبت‌نام */}
         <Route path="/register" element={<Register />} />
 
-          {/* ورود */}
+        {/* ورود */}
         <Route path="/login" element={<Login />} />
+
+        {/* پروفایل */}
         <Route path="/profile" element={<PersonalInfo />} />
         <Route path="/profile/orders" element={<Orders />} />
         <Route path="/profile/favorites" element={<Favorites />} />
         <Route path="/profile/addresses" element={<Addresses />} />
-      
+
+        {/* صفحات عمومی */}
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/faq" element={<FAQ />} />
+
+        {/* وبلاگ */}
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogPost />} />
+
+        {/* بازیابی رمز عبور */}
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="*" element={<NotFound />} />
+
+        {/* مقایسه محصولات */}
         <Route path="/compare" element={<Compare />} />
 
+        {/* مسیر نامعتبر */}
+        <Route path="*" element={<NotFound />} />
+
       </Routes>
-      
-      {/* فوتر - همیشه پایین صفحه */}
+
+      {/* فوتر - همیشه نمایش داده می‌شود */}
       <Footer />
+
+      {/* دکمه بازگشت به بالا */}
       <BackToTop />
+
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

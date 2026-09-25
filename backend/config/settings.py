@@ -15,7 +15,7 @@ SECRET_KEY = 'f1o*2b6)ytqc*d0n15g8q$cffd_5a757s@583d9nb%6-62n1!+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['mehrsamjeans.ir']
+ALLOWED_HOSTS = ['mehrsamjeans.ir', '127.0.0.1', 'localhost']
 
 
 # Application definition

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import API_URL from '../api';
 
 export default function Register() {
   const [username, setUsername] = useState('');
@@ -7,7 +8,7 @@ export default function Register() {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    axios.post('http://127.0.0.1:8000/api/register/', { username, password })
+    axios.post(`${API_URL}/api/register/`, { username, password })
       .then(() => alert("ثبت‌نام موفق! حالا می‌توانید وارد شوید."))
       .catch(() => alert("خطا در ثبت‌نام"));
   };

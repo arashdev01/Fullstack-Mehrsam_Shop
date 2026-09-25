@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import API_URL from '../api';
 
 export default function Login() {
     const [username, setUsername] = useState('');
@@ -14,7 +15,7 @@ export default function Login() {
         setLoading(true);
         setError('');
 
-        axios.post('http://127.0.0.1:8000/api/token/', { username, password })
+        axios.post(`${API_URL}/api/token/`, { username, password })
             .then(res => {
                 // ذخیره توکن در مرورگر
                 localStorage.setItem('access_token', res.data.access);

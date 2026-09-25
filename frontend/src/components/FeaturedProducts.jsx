@@ -1,34 +1,35 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import API_URL from '../api';
 
 export default function FeaturedProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // اگر جنگو فیلد featured داشت از این استفاده کن
-    // اگه نه، اولین 4 محصول رو نشون میده
-    axios.get('http://127.0.0.1:8000/api/products/?featured=true')
-      .then(res => {
-        const data = Array.isArray(res.data) ? res.data : res.data.results || [];
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/api/products/`);
+        const data = Array.isArray(response.data)
+          ? response.data
+          : response.data.results || [];
+
         setProducts(data.slice(0, 4));
+      } catch (error) {
+        console.error('خطا در دریافت محصولات ویژه:', error);
+        setProducts([]);
+      } finally {
         setLoading(false);
-      })
-      .catch(() => {
-        axios.get('http://127.0.0.1:8000/api/products/')
-          .then(res => {
-            const data = Array.isArray(res.data) ? res.data : res.data.results || [];
-            setProducts(data.slice(0, 4));
-            setLoading(false);
-          });
-      });
+      }
+    };
+
+    fetchProducts();
   }, []);
 
-  const formatPrice = (price) => new Intl.NumberFormat('fa-IR').format(price);
+  const formatPrice = price => new Intl.NumberFormat('fa-IR').format(price);
 
-  
-  if (products.length === 0) return null;
+  if (loading || products.length === 0) return null;
 
   return (
     <section className="container mt-5">
@@ -42,10 +43,13 @@ export default function FeaturedProducts() {
                 alt={product.name}
                 className="card-img-top"
                 style={{ height: '220px', objectFit: 'cover' }}
-                    onError={e => e.target.src='/images/no-image.svg'}              />
+                onError={e => e.target.src = '/images/no-image.svg'}
+              />
               <div className="card-body text-end">
                 <h6 className="fw-bold text-truncate">{product.name}</h6>
-                <p className="text-primary fw-bold mb-2">{formatPrice(product.price)} تومان</p>
+                <p className="text-primary fw-bold mb-2">
+                  {formatPrice(product.price)} تومان
+                </p>
                 {product.stock > 0 ? (
                   <span className="badge bg-success-subtle text-success rounded-pill mb-2">موجود</span>
                 ) : (

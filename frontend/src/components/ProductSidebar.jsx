@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import API_URL from '../api';
 
 export default function ProductSidebar({ onFilterChange }) {
   const [categories, setCategories] = useState([]);
@@ -11,8 +12,8 @@ export default function ProductSidebar({ onFilterChange }) {
   const [latestProducts, setLatestProducts] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/categories/').then(res => setCategories(res.data)).catch(() => {});
-    axios.get('http://127.0.0.1:8000/api/products/').then(res => {
+    axios.get(`${API_URL}/api/categories/`).then(res => setCategories(res.data)).catch(() => {});
+    axios.get(`${API_URL}/api/products/`).then(res => {
       const data = res.data.results || res.data;
       setLatestProducts(data.slice(0, 3));
     }).catch(() => {});
@@ -39,8 +40,7 @@ export default function ProductSidebar({ onFilterChange }) {
   const NO_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Crect width='60' height='60' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='55%25' font-size='10' text-anchor='middle' fill='%23aaa'%3Eبدون%20تصویر%3C/text%3E%3C/svg%3E";
 
   return (
-    <div className="col-12 col-lg-3 px-3 px-lg-0" style={{ overflow: 'hidden' }}>
-
+    <div className="w-100">
       {/* گروه‌های محصولات */}
       <div className="accordion filters-container">
         <div className="accordion-item">
@@ -170,7 +170,6 @@ export default function ProductSidebar({ onFilterChange }) {
           </div>
         </div>
       )}
-
     </div>
   );
 }

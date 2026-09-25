@@ -42,3 +42,4 @@ dist-ssr
 
 # Django collected static files
 backend/staticfiles/
+backend/media/
