@@ -1,8 +1,10 @@
 import './Footer.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import useSiteSettings from '../useSiteSettings';
 
 const Footer = () => {
+  const config = useSiteSettings();
   return (
     <>
       <section className="custom-footer" id="footer" style={{ borderTop: 'none' }}>
@@ -35,14 +37,14 @@ const Footer = () => {
                 {/* لوگو + اطلاعات تماس (فقط در موبایل زیر لوگو میاید) */}
                 <div className="col-4 d-flex flex-column align-items-center justify-content-center">
                   <img
-                    src="/images/logo.png"
-                    alt="پوشاک مهرسام"
+                    src={config.logo}
+                    alt={config.siteName}
                     className="footer-logo-img"
                   />
                   {/* این بخش فقط در موبایل زیر لوگو نمایش داده می‌شود */}
                   <div className="contact-info-mobile d-lg-none text-center mt-2">
                     <small>۷ روز هفته، ۲۴ ساعت شبانه روز</small>
-                    <h6>09351234567</h6>
+                    <h6>{config.phone}</h6>
                   </div>
                 </div>
               </div>
@@ -55,7 +57,7 @@ const Footer = () => {
                 {/* شماره تماس قدیمی در دسکتاپ (در موبایل مخفی شده چون بالا نمایش دادیم) */}
                 <div className="col-12 col-md-6 text-center p-2 d-none d-lg-block">
                   <small style={{ display: 'block', marginBottom: '6px' }}>۷ روز هفته،  ۲۴  ساعت شبانه روز</small>
-                  <h6 className="m-1" style={{ fontSize: '16px', fontWeight: 'bold' }}>09351234567</h6>
+                  <h6 className="m-1" style={{ fontSize: '16px', fontWeight: 'bold' }}>{config.phone}</h6>
                 </div>
 
                 {/* نمادها */}
