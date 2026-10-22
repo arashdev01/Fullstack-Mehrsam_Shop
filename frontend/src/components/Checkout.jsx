@@ -44,7 +44,6 @@ export default function Checkout() {
     }
     setLoading(true);
     setError('');
-
     try {
       const orderData = {
         phone: address.phone,
@@ -71,7 +70,8 @@ export default function Checkout() {
         }),
       };
 
-      const response = await axios.post(API_URL + '/api/orders/', orderData);
+      const accessToken = localStorage.getItem('access_token');
+      const response = await axios.post(API_URL + '/api/orders/', orderData, accessToken ? { headers: { Authorization: 'Bearer ' + accessToken } } : {});
 
       const orderId = response.data.order_id || '';
       const paymentResponse = await axios.post(API_URL + '/api/payment/request/', { order_id: orderId, order_token: response.data.order_token }).catch(() => null);
