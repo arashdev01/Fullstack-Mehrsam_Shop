@@ -1,80 +1,80 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import API_URL from '../api';
 
-const posts = [
-  { id: 1, title: 'بررسی آیفون 12 پرو مکس اپل', date: '30 خرداد 1400', img: '/images/blog/post100.jpg', excerpt: 'آیفون ۱۲ پرو مکس با ابعاد غول‌پیکر، دوربین توانمندتر و باتری حجمیش، تمام‌عیارترین پرچم‌دار کنونی اپل به‌حساب می‌آید.' },
-  { id: 2, title: 'سامسونگ گلکسی S21 اولترا 5G', date: '30 خرداد 1400', img: '/images/blog/post101.jpg', excerpt: 'سامسونگ برای گوشی پرچم‌دارش، یعنی گلکسی S21 اولترا 5G، علاوه‌بر رنگ‌های قبلی، رنگ جدید سرمه‌ای را معرفی کرد.' },
-  { id: 3, title: 'دریافت گواهی بلوتوث گلکسی A03s سامسونگ', date: '30 خرداد 1400', img: '/images/blog/post102.jpg', excerpt: 'ماه گذشته، برای اولین‌بار اطلاعاتی از گلکسی A03s فاش شد و اکنون با دریافت گواهی بلوتوث، به زمان رونمایی این گوشی نزدیک شده‌ایم.' },
-];
+const articleImage = image => !image ? '/images/products/green-hoodie.png' : /^https?:\/\//i.test(image) ? image : API_URL + (image.startsWith('/') ? image : '/' + image);
+const articleDate = value => value ? new Date(value).toLocaleDateString('fa-IR') : '';
+
+const postStyles = [
+  '.post-image { height: 160px; background-size: contain; background-position: center; background-repeat: no-repeat; background-color: #fff; border-radius: 14px 14px 0 0; }',
+  '.post-card { height: 100%; overflow: hidden; border: 1px solid #e8deed; border-radius: 16px; background: #fff; box-shadow: 0 5px 20px rgba(52,44,61,.05); }',
+  '.post-title { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; min-height: 44px; margin: 6px 0; color: #342c3d; font-size: 14px; font-weight: 700; line-height: 1.7; }',
+  '.post-excerpt { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; color: #716a78; font-size: 12px; line-height: 1.8; }',
+  '.post-details { padding: 12px 14px; }',
+  '.post-date { color: #8b8392; font-size: 11px; }',
+  '@media (max-width: 575px) { .post-image { height: 132px; } .post-details { padding: 9px; } .post-title { font-size: 12px; min-height: 40px; } }'
+].join('\n');
 
 export default function LatestPosts() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    axios.get(API_URL + '/api/blogs/')
+      .then(response => {
+        const data = response.data.results || response.data;
+        const entries = Array.isArray(data) ? data : [];
+        if (active) setPosts(entries.slice(0, 3).map(post => ({
+          ...post,
+          img: articleImage(post.image),
+          date: articleDate(post.created_at),
+          excerpt: post.excerpt || post.content || ''
+        })));
+      })
+      .catch(() => { if (active) setPosts([]); })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, []);
+
+  if (!loading && posts.length === 0) return null;
+
   return (
     <>
-      <style>{`
-  .encode43bdsf23da .post-image {
-    height: 160px;        
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px 10px 0 0;
-  }
+      <style>{postStyles}</style>
+      <section id="blog" className="pt-3 pt-md-4" dir="rtl">
 
-  .encode43bdsf23da .post-title {
-    font-size: 14px;      /* کوچکتر */
-    margin: 6px 0;
-  }
+        <div className="container">
+          <div className="d-flex align-items-end justify-content-between gap-2 mb-3">
+            <h5 className="section-title mb-0">تازه‌های دنیای استایل</h5>
+            <Link to="/blog" className="small fw-bold text-decoration-none">همه مقالات ←</Link>
+          </div>
 
-  .encode43bdsf23da .encode43bbfb {
-    font-size: 12px;      /* متن کوچکتر */
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* فقط 2 خط نشون بده */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
+          {loading && <p className="text-center text-muted py-3" role="status">در حال دریافت مقالات...</p>}
 
-  .encode43bdsf23da .details {
-    padding: 10px 14px !important;
-  }
-
-  @media (max-width: 768px) {
-    #blog .encode43bdsf23da .details {
-      padding-top: 10px !important;
-      padding-bottom: 10px !important;
-    }
-  }
-`}</style>
-
-      <section id="blog" className="pt-5">
-        <h5 className="section-title">جدیدترین مقالات آموزشی</h5>
-        <div className="container pt-4">
-          <div className="row row-cols-1 row-cols-md-3">
+          <div className="row row-cols-1 row-cols-md-3 g-3">
             {posts.map(post => (
               <div key={post.id} className="col">
-                <div className="encode43bdsf23da">
-                  <Link to={`/blog/${post.id}`}>
-                    <div className="post-image" style={{ backgroundImage: `url('${post.img}')` }}></div>
+                <article className="post-card">
+                  <Link to={'/blog/' + post.id} aria-label={post.title}>
+                    <div className="post-image" role="img" aria-label={post.title} style={{ backgroundImage: 'url("' + post.img + '")' }} />
                   </Link>
-                  <div className="details py-3 px-4">
-                    <div className="post-date">ارسال شده در {post.date}</div>
-                    <Link to={`/blog/${post.id}`}>
+                  <div className="post-details">
+                    <div className="post-date">ارسال شده در {post.date || 'تازه‌ترین مقاله'}</div>
+                    <Link to={'/blog/' + post.id} className="text-decoration-none">
                       <h6 className="post-title">{post.title}</h6>
                     </Link>
-                    <div className="encode43bbfb">{post.excerpt}</div>
-                    <div className="read-more">
-                      <Link to={`/blog/${post.id}`} className="hvr-icon-back">
-                        بیشتر خوانید <i className="fa fa-arrow-left hvr-icon"></i>
-                      </Link>
-                    </div>
+                    <div className="post-excerpt">{post.excerpt}</div>
                   </div>
-                </div>
+                </article>
               </div>
             ))}
           </div>
-          <div className="text-center mt-1">
-            <Link to="/blog" className="btn btn-outline-primary rounded-pill px-5" style={{position: 'relative', top: '-4px'}}>
-  مشاهده همه مقالات
-</Link>
-          </div>
         </div>
       </section>
+
     </>
   );
+
 }
