@@ -39,11 +39,11 @@ export default function FeaturedProducts() {
           <div key={product.id} className="col-6 col-md-4 col-lg-3">
             <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
               <img
-                src={product.image}
+                src={product.image && product.image.startsWith('http') ? product.image : API_URL + (product.image || '/images/products/green-hoodie.png')}
                 alt={product.name}
                 className="card-img-top"
-                style={{ height: '220px', objectFit: 'cover' }}
-                onError={e => e.target.src = '/images/no-image.svg'}
+                style={{ height: '220px', objectFit: 'contain' }}
+                onError={e => e.target.src = '/images/products/green-hoodie.png'}
               />
               <div className="card-body text-end">
                 <h6 className="fw-bold text-truncate">{product.name}</h6>
