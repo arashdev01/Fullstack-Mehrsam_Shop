@@ -191,7 +191,7 @@ export default function ProductList() {
                       alt={product.name}
                       style={{
                         height: '220px',
-                        objectFit: 'cover',
+                        objectFit: 'contain', background: '#fbf7ef',
                       }}
                     />
 
