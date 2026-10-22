@@ -1,4 +1,4 @@
-
+import API_URL from '../api';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -14,7 +14,7 @@ const deliveryDates = [
 ];
 
 export default function Checkout() {
-  const { cartItems: cart, clearCart } = useCart();
+  const { cartItems: cart } = useCart();
   const navigate = useNavigate();
 
   const [selectedDate, setSelectedDate] = useState('date1');
@@ -77,16 +77,16 @@ export default function Checkout() {
         }),
       };
 
-      const response = await axios.post('/api/orders/', orderData);
+      const response = await axios.post(API_URL + '/api/orders/', orderData);
 
       console.log('Order created:', response.data);
       console.log('Selected delivery date:', selectedDate);
 
-      clearCart();
+      // Keep the persisted cart until a configured payment flow confirms settlement.
 
       const orderId = response.data.order_id || '';
 
-      navigate('/thankyou?status=card&order_id=' + orderId);
+      navigate('/thankyou?status=pending&order_id=' + orderId);
     } catch (err) {
       console.error('Order creation error:', err);
 
