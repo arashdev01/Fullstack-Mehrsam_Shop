@@ -20,7 +20,7 @@ import Newsletter from './components/Newsletter';
 import PopupDiscount from './components/PopupDiscount';
 
 // صفحات فروشگاه
-import ShopPage from './pages/ShopPage';
+// Legacy ShopPage remains in the repository; catalog routes use live API data.
 import ProductList from './components/ProductList';
 import ProductDetail from './components/ProductDetail';
 import Cart from './components/Cart';
@@ -40,7 +40,7 @@ import BlogPost from './components/BlogPost';
 import ResetPassword from './components/ResetPassword';
 import Compare from './components/Compare';
 import SupportTicket from './components/SupportTicket';
-import ThankYou from './components/ThankYou';
+import ThankYou from './components/Thankyou';
 import NotFound from './components/NotFound';
 
 function App() {
@@ -74,7 +74,7 @@ function App() {
         />
 
         {/* صفحه فروشگاه قدیمی */}
-        <Route path="/shop" element={<ShopPage />} />
+        <Route path="/shop" element={<ProductList />} />
 
         {/* لیست تمام محصولات */}
         <Route path="/products" element={<ProductList />} />
