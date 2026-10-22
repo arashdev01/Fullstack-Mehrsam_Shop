@@ -12,9 +12,9 @@ export default function Benefits() {
         .benefits-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 75px;
+          gap: 24px;
           max-width: 950px;
-          margin: 5px;
+          margin: 5px auto;
         }
 
         .benefit-card {
@@ -23,8 +23,8 @@ export default function Benefits() {
           align-items: center;
           justify-content: center;
           gap: 6px;
-          background-color: #0c32cc;
-          border-radius: 15px;
+          background-color: #6b459b;
+          border-radius: 16px;
           padding: 8px 10px;
           transition: transform 0.2s, box-shadow 0.2s;
           cursor: default;
@@ -32,12 +32,12 @@ export default function Benefits() {
 
         .benefit-card:hover {
           transform: translateY(-3px);
-          box-shadow: 0 8px 20px rgba(19, 34, 60, 0.72);
+          box-shadow: 0 8px 20px rgba(107, 69, 155, 0.18);
         }
 
         .benefit-card img {
-          width: 64px;
-          height: 64px;
+          width: 52px;
+          height: 52px;
           object-fit: contain;
         }
 
@@ -51,7 +51,7 @@ export default function Benefits() {
         @media (max-width: 768px) {
           .benefits-grid {
             grid-template-columns: repeat(2, 1fr);
-            gap: 44px; 
+            gap: 12px; 
           }
 
         }
