@@ -1,9 +1,9 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => { try { return JSON.parse(localStorage.getItem('mehrsam-cart') || '[]'); } catch { return []; } });
 
   const addToCart = (product) => {
     setCartItems((prev) => {
@@ -17,15 +17,15 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  // این دو تابع را حتماً چک کن که یادت نرفته باشد:
+  useEffect(() => { try { localStorage.setItem('mehrsam-cart', JSON.stringify(cartItems)); } catch { /* Storage is optional. */ } }, [cartItems]);
   const removeFromCart = (id) => {
-    setCartItems(prev => prev.filter(item => item.id !== id));
+    setCartItems(prev => prev.flatMap(item => item.id !== id ? [item] : item.quantity > 1 ? [{ ...item, quantity: item.quantity - 1 }] : []));
   };
 
   const clearCart = () => setCartItems([]);
 
   return (
-    // دقت کن که همه توابع اینجا نوشته شده باشند:
+    // Cart actions are centralized for consistent quantity and persistence behavior.
     <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
       {children}
     </CartContext.Provider>
