@@ -7,7 +7,7 @@ const Newsletter = () => {
     const [status, setStatus] = useState('');
 
     const handleSubmit = async event => { event.preventDefault(); setStatus('loading');
-        try { await axios.post(\`\${API_URL}/api/newsletter/\`, { email }); setEmail(''); setStatus('success'); }
+        try { await axios.post(API_URL + '/api/newsletter/', { email }); setEmail(''); setStatus('success'); }
         catch { setStatus('error'); }
     };
 
