@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect, useCallback } from 'react';
 
 const CartContext = createContext();
 
@@ -22,7 +22,7 @@ export const CartProvider = ({ children }) => {
     setCartItems(prev => prev.flatMap(item => item.id !== id ? [item] : item.quantity > 1 ? [{ ...item, quantity: item.quantity - 1 }] : []));
   };
 
-  const clearCart = () => setCartItems([]);
+  const clearCart = useCallback(() => setCartItems([]), []);
 
   return (
     // Cart actions are centralized for consistent quantity and persistence behavior.
