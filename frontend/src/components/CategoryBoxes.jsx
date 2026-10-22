@@ -22,8 +22,8 @@ export default function CategoryBoxes() {
           border-radius: 16px;
           padding: 14px 16px;
           text-decoration: none;
-          color: #6b459b;
-          font-size: 15px;
+          color: #342c3d;
+          font-size: 14px;
           font-weight: 600;
           transition: box-shadow 0.2s, transform 0.2s;
           height: 100%;
@@ -31,10 +31,10 @@ export default function CategoryBoxes() {
         #category-boxes .cat-item:hover {
           box-shadow: 0 10px 24px rgba(107,69,155,0.13);
           transform: translateY(-2px);
-          color: #333;
+          color: #6b459b;
         }
         #category-boxes .cat-icon {
-          font-size: 28px;
+          font-size: 24px;
           margin-right: 0;
           margin-left: 10px;
         }
