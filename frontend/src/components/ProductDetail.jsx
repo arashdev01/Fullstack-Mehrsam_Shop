@@ -89,7 +89,7 @@ export default function ProductDetail() {
             className="img-fluid rounded-4 shadow-sm mb-3"
             style={{ width: '100%', height: '450px', objectFit: 'contain', background: '#fbf7ef' }}
             onError={e => {
-              e.currentTarget.src = '/images/user-no-image.jpg';
+              e.currentTarget.src = '/images/products/green-hoodie.png';
             }}
           />
 
@@ -97,7 +97,7 @@ export default function ProductDetail() {
           <div className="d-flex gap-2 overflow-auto">
             {/* عکس اصلی محصول به عنوان اولین مورد گالری */}
             <img
-              src={product.image && product.image.startsWith('http') ? product.image : API_URL + (product.image || '/images/products/green-hoodie.png')}
+              src={product.image ? (product.image.startsWith('http') ? product.image : API_URL + product.image) : '/images/products/green-hoodie.png'}
               alt={product.name}
               className={`rounded-3 border ${
                 mainImage === product.image ? 'border-primary border-2' : ''
@@ -118,7 +118,7 @@ export default function ProductDetail() {
             {product.images && product.images.map(img => (
               <img
                 key={img.id}
-                src={img.image && img.image.startsWith('http') ? img.image : API_URL + (img.image || '/images/products/green-hoodie.png')}
+                src={img.image ? (img.image.startsWith('http') ? img.image : API_URL + img.image) : '/images/products/green-hoodie.png'}
                 alt={product.name}
                 className={`rounded-3 border ${
                   mainImage === img.image ? 'border-primary border-2' : ''
