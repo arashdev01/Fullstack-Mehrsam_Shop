@@ -32,7 +32,7 @@ export default function FeaturedProducts() {
   if (loading || products.length === 0) return null;
 
   return (
-    <section className="container mt-5">
+    <section className="container mt-3 mt-md-4">
       <h4 className="fw-bold text-end mb-4 border-bottom pb-2">محصولات ویژه</h4>
       <div className="row g-3">
         {products.map(product => (
