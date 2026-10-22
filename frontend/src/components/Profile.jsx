@@ -219,7 +219,7 @@ export function Orders() {
                         <div key={i} className="col-6 col-sm-4 col-lg-3 px-1 mb-2">
                           <Link to={`/product/${item.product}`} target="_blank">
                             <div className="border rounded-3 overflow-hidden text-center p-2">
-                              <img src={item.image && item.image.startsWith('http') ? item.image : API_URL + item.image} alt={item.name}
+                              <img src={item.image ? (item.image.startsWith('http') ? item.image : API_URL + item.image) : '/images/products/green-hoodie.png'} alt={item.name}
                                 style={{ width: '100%', height: '80px', objectFit: 'cover' }}
                                 onError={e => e.target.src='/images/products/green-hoodie.png'} />
                               <div className="small fw-bold mt-1 text-truncate">{item.name}</div>
