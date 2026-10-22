@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 export default function HeroSlider() {
   const products = [
-    { id: 1, title: 'دوربین AX6065', price: '۴,۵۰۰,۰۰۰', img: '/images/products/p403.png' },
-    { id: 2, title: 'لنز دیجیتال Z1', price: '۲,۸۰۰,۰۰۰', img: '/images/products/p400.png' },
-    { id: 3, title: 'پک ویژه لنز', price: '۳,۲۰۰,۰۰۰', img: '/images/products/p403.png' },
-    { id: 4, title: 'دوربین حرفه‌ای', price: '۹,۵۰۰,۰۰۰', img: '/images/products/p400.png' },
+    { id: 1, title: 'هودی راحت و روزمره', price: 'پیشنهاد مهرسام', img: '/images/products/green-hoodie.png' },
+    { id: 2, title: 'تی‌شرت مینیمال', price: 'استایل روزانه', img: '/images/products/imgi_20_shirt1.webp' },
+    { id: 3, title: 'کفش برای استایل جین', price: 'انتخاب فصل', img: '/images/products/imgi_17_shoes1.webp' },
+    { id: 4, title: 'کلاه و اکسسوری', price: 'جزئیات استایل', img: '/images/products/imgi_19_cap5.webp' },
   ];
 
   const rootRef = useRef(null);
@@ -58,7 +58,7 @@ export default function HeroSlider() {
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
 
             /* ✅ رنگ + بافت جین */
-            background-color: #112796;
+            background-color: #275778;
             background-image: 
               repeating-linear-gradient(
                 45deg,
@@ -89,7 +89,7 @@ export default function HeroSlider() {
           align-items: left;
           clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
           background-image: 
-            radial-gradient(circle at top right, rgba(13, 26, 164, 0.23) 0%, rgba(141, 141, 14, 0.26) 60%),
+            radial-gradient(circle at top right, rgba(107, 69, 155, 0.18) 0%, rgba(242, 183, 159, 0.18) 60%),
             url('/images/slider/jeans-shop.webp');
           background-size: cover;
           background-position: center;
@@ -115,12 +115,12 @@ export default function HeroSlider() {
         }
 
         .premium-card {
-          background: rgba(149, 104, 104, 0.07); backdrop-filter: blur(10px);
-          border: 1px solid rgba(164, 63, 63, 0.28); border-radius: 25px;
+          background: rgba(107, 69, 155, 0.07); backdrop-filter: blur(10px);
+          border: 1px solid rgba(107, 69, 155, 0.20); border-radius: 25px;
           padding: 15px; min-width: 180px; text-align: center; text-decoration: none;
         }
 
-        .card-media { background: rgba(9, 52, 97, 0.04); border-radius: 20px; height: 120px; display: flex; align-items: center; justify-content: center; }
+        .card-media { background: rgba(107, 69, 155, 0.04); border-radius: 20px; height: 120px; display: flex; align-items: center; justify-content: center; }
         .card-media img { width: 70%; }
 
         @media (max-width: 1000px) {
@@ -148,7 +148,7 @@ export default function HeroSlider() {
           <div className="slider-container">
             <div className="slider-track">
               {[...products, ...products].map((p, index) => (
-                <Link key={index} to={`/product/${p.id}`} className="premium-card">
+                <Link key={index} to="/products" className="premium-card">
                   <div className="card-media">
                     <img src={p.img} alt={p.title} />
                   </div>
