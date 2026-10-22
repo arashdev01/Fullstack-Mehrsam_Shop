@@ -26,7 +26,7 @@ export default function ProductList() {
     const search = queryParams.get('search');
     const params = {};
 
-    if (categoryId) params.category = categoryId;
+    if (categoryId) params['category__slug'] = categoryId;
     if (search) params.search = search;
 
     axios.get(url, { params })
@@ -179,13 +179,13 @@ export default function ProductList() {
               filteredProducts.map(product => (
                 <div
                   key={product.id}
-                  className="col-12 col-sm-6 col-md-4 mb-4 text-end"
+                  className="col-6 col-sm-6 col-md-4 mb-3 text-end"
                 >
                   <div className="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
                     <img
-                      src={product.image || '/images/no-image.png'}
+                      src={product.image ? (product.image.startsWith('http') ? product.image : `${API_URL}${product.image}`) : '/images/products/green-hoodie.png'}
                       onError={e => {
-                        e.currentTarget.src = '/images/no-image.png';
+                        e.currentTarget.src = '/images/products/green-hoodie.png';
                       }}
                       className="card-img-top"
                       alt={product.name}
