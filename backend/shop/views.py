@@ -1,5 +1,5 @@
-# ─── shop/views.py — نسخه نهایی و تمیز ───────────────────
-
+import os
+from decimal import Decimal
 import requests
 from rest_framework import viewsets, filters, status
 from rest_framework.decorators import api_view
@@ -8,93 +8,65 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.shortcuts import redirect
-from django.http import JsonResponse
-
+import secrets
 from .models import Product, Category, Order, Comment, Blog, ContactMessage
 from .serializers import (
     ProductSerializer, CategorySerializer, CommentSerializer,
     BlogSerializer, ContactMessageSerializer
 )
-
-# ─────────────────────────────────────────────────────────
-# ۱. محصولات و دسته‌بندی
-# ─────────────────────────────────────────────────────────
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    filterset_fields = ['category', 'stock']
+    filterset_fields = ['category', 'category__slug', 'stock']
     search_fields = ['name', 'description']
-
+    http_method_names = ['get', 'head', 'options']
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-
-# ─────────────────────────────────────────────────────────
-# ۲. نظرات
-# ─────────────────────────────────────────────────────────
+    http_method_names = ['get', 'head', 'options']
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-
-# ─────────────────────────────────────────────────────────
-# ۳. بلاگ
-# ─────────────────────────────────────────────────────────
+    http_method_names = ['get', 'post', 'head', 'options']
 class BlogViewSet(viewsets.ModelViewSet):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
-
-# ─────────────────────────────────────────────────────────
-# ۴. تماس با ما
-# ─────────────────────────────────────────────────────────
+    http_method_names = ['get', 'head', 'options']
 class ContactMessageViewSet(viewsets.ModelViewSet):
     queryset = ContactMessage.objects.all()
     serializer_class = ContactMessageSerializer
-
-# ─────────────────────────────────────────────────────────
-# ۵. پیامک (کاوه‌نگار)
-# ─────────────────────────────────────────────────────────
-KAVENEGAR_API_KEY = '676A586A6A456A4C4F4333355876434A6C622F2B4263636D55422B7739552B697A7276616D4A71582B64303D'
-SENDER_NUMBER = '2000660110'
-
+    http_method_names = ['post', 'head', 'options']
+KAVENEGAR_API_KEY = os.getenv('KAVENEGAR_API_KEY', '')
+SENDER_NUMBER = os.getenv('KAVENEGAR_SENDER_NUMBER', '2000660110')
 def send_sms(receptor, message):
     url = f'https://api.kavenegar.com/v1/{KAVENEGAR_API_KEY}/sms/send.json'
     try:
+        if not KAVENEGAR_API_KEY:
+            return None
         response = requests.post(url, data={
             'receptor': receptor,
             'sender': SENDER_NUMBER,
             'message': message,
-        })
+        }, timeout=10)
+        response.raise_for_status()
         return response.json()
     except Exception as e:
         print(f'خطا در ارسال پیامک: {e}')
         return None
-
-# ─────────────────────────────────────────────────────────
-# ۶. ثبت‌نام با پیامک
-# ─────────────────────────────────────────────────────────
 @api_view(['POST'])
 def register_user(request):
     username = request.data.get('username', '').strip()
     password = request.data.get('password', '').strip()
     phone    = request.data.get('phone', '').strip()
-
     if not username or not password:
         return Response({'error': 'نام کاربری و رمز عبور الزامی است'}, status=400)
-
     if User.objects.filter(username=username).exists():
         return Response({'error': 'این نام کاربری قبلاً ثبت شده است'}, status=400)
-
     User.objects.create_user(username=username, password=password)
-
     if phone:
-        send_sms(phone, f'سلام {username} عزیز!\nثبت‌نام شما در روبیک مارکت با موفقیت انجام شد. خوش آمدید!')
-
+        send_sms(phone, f'سلام {username} عزیز!\nثبت‌نام شما در مهرسام جینز با موفقیت انجام شد. خوش آمدید!')
     return Response({'message': 'ثبت‌نام موفق!'}, status=201)
-
-# ─────────────────────────────────────────────────────────
-# ۷. ورود
-# ─────────────────────────────────────────────────────────
 @api_view(['POST'])
 def login_user(request):
     user = authenticate(
@@ -104,72 +76,100 @@ def login_user(request):
     if user:
         return Response({'message': 'ورود موفق', 'username': user.username, 'user_id': user.id})
     return Response({'error': 'نام کاربری یا رمز عبور اشتباه است'}, status=401)
-
-# ─────────────────────────────────────────────────────────
-# ۸. سفارش
-# ─────────────────────────────────────────────────────────
+# Order creation and gateway callbacks
 @api_view(['POST'])
 def create_order(request):
     data = request.data
-    order = Order.objects.create(
-        phone=data['phone'],
-        address=data['address'],
-        total_price=data['total_price'],
-        items=data['items']
-    )
-    send_sms(data['phone'], f'سفارش #{order.id} با موفقیت ثبت شد. روبیک مارکت')
-    return Response({'message': 'موفق', 'order_id': order.id})
-
-# ─────────────────────────────────────────────────────────
-# ۹. درگاه پرداخت زرین‌پال
-# ─────────────────────────────────────────────────────────
-ZARINPAL_MERCHANT = 'YOUR-MERCHANT-ID'  # ← بعداً از پنل زرین‌پال جایگزین کن
-ZARINPAL_REQUEST  = 'https://api.zarinpal.com/pg/v4/payment/request.json'
-ZARINPAL_VERIFY   = 'https://api.zarinpal.com/pg/v4/payment/verify.json'
+    phone = str(data.get('phone', '')).strip()
+    address = str(data.get('address', '')).strip()
+    submitted_items = data.get('items')
+    if not phone or len(phone) > 15 or not address:
+        return Response({'error': 'شماره تلفن و نشانی معتبر الزامی است.'}, status=status.HTTP_400_BAD_REQUEST)
+    if not isinstance(submitted_items, list) or not submitted_items:
+        return Response({'error': 'سبد خرید خالی یا نامعتبر است.'}, status=status.HTTP_400_BAD_REQUEST)
+    quantities = {}
+    for item in submitted_items:
+        try:
+            product_id = int(item.get('product', item.get('id')))
+            quantity = int(item.get('quantity', 0))
+        except (AttributeError, TypeError, ValueError):
+            return Response({'error': 'اطلاعات یکی از محصولات نامعتبر است.'}, status=status.HTTP_400_BAD_REQUEST)
+        if product_id < 1 or quantity < 1:
+            return Response({'error': 'شناسه و تعداد محصول باید معتبر باشند.'}, status=status.HTTP_400_BAD_REQUEST)
+        quantities[product_id] = quantities.get(product_id, 0) + quantity
+    products = Product.objects.in_bulk(quantities)
+    if len(products) != len(quantities):
+        return Response({'error': 'یکی از محصولات دیگر در دسترس نیست.'}, status=status.HTTP_400_BAD_REQUEST)
+    normalized_items = []
+    total_price = Decimal('0')
+    for product_id, quantity in quantities.items():
+        product = products[product_id]
+        if quantity > product.stock:
+            return Response({'error': 'تعداد درخواستی از موجودی محصول بیشتر است.'}, status=status.HTTP_400_BAD_REQUEST)
+        normalized_items.append({'product': product.id, 'name': product.name, 'quantity': quantity, 'price': str(product.price), 'image': product.image.url if product.image else ''})
+        total_price += product.price * quantity
+    order_token = secrets.token_urlsafe(32)
+    order = Order.objects.create(phone=phone, address=address, total_price=total_price, items={'products': normalized_items, 'payment': {'authority': '', 'ref_id': '', 'order_token': order_token}})
+    send_sms(phone, 'سفارش شماره {} در مهرسام جینز ثبت شد و در انتظار پرداخت است.'.format(order.id))
+    return Response({'message': 'سفارش ثبت شد.', 'order_id': order.id, 'order_token': order_token, 'total_price': str(total_price), 'status': order.status}, status=status.HTTP_201_CREATED)
+ZARINPAL_MERCHANT = os.getenv('ZARINPAL_MERCHANT_ID', '')
+ZARINPAL_REQUEST = 'https://api.zarinpal.com/pg/v4/payment/request.json'
+ZARINPAL_VERIFY = 'https://api.zarinpal.com/pg/v4/payment/verify.json'
 ZARINPAL_STARTPAY = 'https://www.zarinpal.com/pg/StartPay/{}'
-CALLBACK_URL      = 'http://127.0.0.1:8000/api/payment/verify/'
-
+FRONTEND_URL = os.getenv('FRONTEND_URL', 'https://mehrsamjeans.ir').rstrip('/')
+CALLBACK_URL = os.getenv('PAYMENT_CALLBACK_URL', 'https://mehrsamjeans.ir/api/payment/verify/')
 @api_view(['POST'])
 def payment_request(request):
-    order_id    = request.data.get('order_id')
-    total_price = request.data.get('total_price')
-
-    response = requests.post(ZARINPAL_REQUEST, json={
-        'merchant_id':  ZARINPAL_MERCHANT,
-        'amount':       int(total_price) * 10,
-        'description':  f'پرداخت سفارش #{order_id}',
-        'callback_url': CALLBACK_URL,
-    })
-    result = response.json()
-
-    if result['data']['code'] == 100:
-        authority = result['data']['authority']
-        Order.objects.filter(id=order_id).update(authority=authority)
-        return JsonResponse({'pay_url': ZARINPAL_STARTPAY.format(authority)})
-    return JsonResponse({'error': 'خطا در اتصال به درگاه'}, status=400)
-
+    if not ZARINPAL_MERCHANT:
+        return Response({'error': 'درگاه پرداخت پیکربندی نشده است.'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+    try:
+        order_id = int(request.data.get('order_id'))
+    except (TypeError, ValueError):
+        return Response({'error': 'شماره سفارش نامعتبر است.'}, status=status.HTTP_400_BAD_REQUEST)
+    order = Order.objects.filter(id=order_id, status='pending').first()
+    if not order or not isinstance(order.items, dict):
+        return Response({'error': 'سفارش در انتظار پرداخت پیدا نشد.'}, status=status.HTTP_404_NOT_FOUND)
+    payment = order.items.get('payment') or {}
+    supplied_token = str(request.data.get('order_token', ''))
+    if not payment.get('order_token') or not secrets.compare_digest(str(payment['order_token']), supplied_token):
+        return Response({'error': 'مجوز پرداخت این سفارش معتبر نیست.'}, status=status.HTTP_403_FORBIDDEN)
+    try:
+        response = requests.post(ZARINPAL_REQUEST, json={'merchant_id': ZARINPAL_MERCHANT, 'amount': int(order.total_price) * 10, 'description': 'پرداخت سفارش شماره {}'.format(order.id), 'callback_url': CALLBACK_URL}, timeout=12)
+        response.raise_for_status()
+        result = response.json()
+    except (requests.RequestException, ValueError):
+        return Response({'error': 'ارتباط با درگاه پرداخت برقرار نشد.'}, status=status.HTTP_502_BAD_GATEWAY)
+    result_data = result.get('data') or {}
+    authority = result_data.get('authority')
+    if result_data.get('code') != 100 or not authority:
+        return Response({'error': 'درگاه پرداخت درخواست را نپذیرفت.'}, status=status.HTTP_502_BAD_GATEWAY)
+    order.items['payment']['authority'] = authority
+    order.save(update_fields=['items'])
+    return Response({'pay_url': ZARINPAL_STARTPAY.format(authority)})
 def payment_verify(request):
-    authority = request.GET.get('Authority')
-    status    = request.GET.get('Status')
-
-    if status != 'OK':
-        return redirect('http://localhost:5173/thankyou?status=failed')
-
-    order = Order.objects.filter(authority=authority).first()
-    if not order:
-        return redirect('http://localhost:5173/thankyou?status=failed')
-
-    response = requests.post(ZARINPAL_VERIFY, json={
-        'merchant_id': ZARINPAL_MERCHANT,
-        'amount':      int(order.total_price) * 10,
-        'authority':   authority,
-    })
-    result = response.json()
-
-    if result['data']['code'] in [100, 101]:
-        ref_id = result['data']['ref_id']
-        order.status = 'paid'
-        order.ref_id = str(ref_id)
-        order.save()
-        return redirect(f'http://localhost:5173/thankyou?status=success&ref_id={ref_id}')
-    return redirect('http://localhost:5173/thankyou?status=failed')
+    authority = request.GET.get('Authority', '')
+    gateway_status = request.GET.get('Status', '')
+    failed_url = FRONTEND_URL + '/thankyou?status=failed'
+    if gateway_status != 'OK' or not authority:
+        return redirect(failed_url)
+    order = Order.objects.filter(items__payment__authority=authority).first()
+    if not order or not isinstance(order.items, dict):
+        return redirect(failed_url)
+    payment = order.items.get('payment') or {}
+    if order.status == 'paid' and payment.get('ref_id'):
+        return redirect(FRONTEND_URL + '/thankyou?status=success&ref_id=' + str(payment['ref_id']) + '&order_id=' + str(order.id))
+    try:
+        response = requests.post(ZARINPAL_VERIFY, json={'merchant_id': ZARINPAL_MERCHANT, 'amount': int(order.total_price) * 10, 'authority': authority}, timeout=12)
+        response.raise_for_status()
+        result = response.json()
+    except (requests.RequestException, ValueError):
+        return redirect(failed_url)
+    result_data = result.get('data') or {}
+    ref_id = result_data.get('ref_id')
+    if result_data.get('code') not in (100, 101) or not ref_id:
+        return redirect(failed_url)
+    payment['ref_id'] = str(ref_id)
+    order.items['payment'] = payment
+    order.status = 'paid'
+    order.save(update_fields=['items', 'status'])
+    return redirect(FRONTEND_URL + '/thankyou?status=success&ref_id=' + str(ref_id) + '&order_id=' + str(order.id))
