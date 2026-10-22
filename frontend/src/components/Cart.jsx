@@ -1,6 +1,6 @@
 import { useCart } from '../CartContext';
 import { Link } from 'react-router-dom';
-
+import API_URL from '../api';
 
 export default function Cart() {
   const { cartItems, addToCart, removeFromCart, clearCart } = useCart();
@@ -29,7 +29,7 @@ export default function Cart() {
             <h4 className="fw-bold mb-4">سبد خرید شما</h4>
             {cartItems.map(item => (
               <div key={item.id} className="d-flex align-items-center border-bottom py-3">
-                <img src={item.image} alt={item.name} className="rounded-3" style={{ width: '80px', height: '80px', objectFit: 'cover' }} />
+                <img src={item.image && item.image.startsWith('http') ? item.image : item.image ? API_URL + item.image : '/images/products/green-hoodie.png'} alt={item.name} className="rounded-3" style={{ width: '80px', height: '80px', objectFit: 'contain', background: '#fbf7ef' }} onError={event => { event.currentTarget.src = '/images/products/green-hoodie.png'; }} />
                 <div className="ms-3 flex-grow-1">
                   <h6 className="fw-bold mb-1">{item.name}</h6>
                   <p className="text-primary mb-0">{formatPrice(item.price)} تومان</p>
