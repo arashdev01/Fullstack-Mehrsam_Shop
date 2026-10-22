@@ -7,7 +7,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.shortcuts import redirect
-import secrets
+import re, secrets
 from .models import Product, Category, Order, Comment, Blog, ContactMessage, Newsletter
 from .serializers import ProductSerializer, CategorySerializer, CommentSerializer, BlogSerializer, ContactMessageSerializer
 class ProductViewSet(viewsets.ModelViewSet):
@@ -67,7 +67,7 @@ def login_user(request):
 @api_view(['POST'])
 def subscribe_newsletter(request):
     email = str(request.data.get('email', '')).strip().lower()
-    if len(email) > 254 or email.count('@') != 1: return Response({'error': 'ایمیل معتبر وارد کنید.'}, status=400)
+    if len(email) > 254 or not re.fullmatch(r'[^@\s]+@[^@\s]+\.[^@\s]+', email): return Response({'error': 'ایمیل معتبر وارد کنید.'}, status=400)
     _, created = Newsletter.objects.get_or_create(email=email)
     return Response({'message': 'عضویت انجام شد.'}, status=201 if created else 200)
 @api_view(['GET'])
