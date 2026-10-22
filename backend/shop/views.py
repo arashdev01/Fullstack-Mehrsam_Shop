@@ -1,19 +1,15 @@
 import os
-from decimal import Decimal
 import requests
 from rest_framework import viewsets, filters, status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.shortcuts import redirect
 import secrets
 from .models import Product, Category, Order, Comment, Blog, ContactMessage
-from .serializers import (
-    ProductSerializer, CategorySerializer, CommentSerializer,
-    BlogSerializer, ContactMessageSerializer
-)
+from .serializers import ProductSerializer, CategorySerializer, CommentSerializer, BlogSerializer, ContactMessageSerializer
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -38,7 +34,6 @@ class ContactMessageViewSet(viewsets.ModelViewSet):
     serializer_class = ContactMessageSerializer
     http_method_names = ['post', 'head', 'options']
 KAVENEGAR_API_KEY = os.getenv('KAVENEGAR_API_KEY', '')
-SENDER_NUMBER = os.getenv('KAVENEGAR_SENDER_NUMBER', '2000660110')
 def send_sms(receptor, message):
     url = f'https://api.kavenegar.com/v1/{KAVENEGAR_API_KEY}/sms/send.json'
     try:
@@ -46,7 +41,7 @@ def send_sms(receptor, message):
             return None
         response = requests.post(url, data={
             'receptor': receptor,
-            'sender': SENDER_NUMBER,
+            'sender': os.getenv('KAVENEGAR_SENDER_NUMBER', '2000660110'),
             'message': message,
         }, timeout=10)
         response.raise_for_status()
@@ -61,9 +56,9 @@ def register_user(request):
     phone    = request.data.get('phone', '').strip()
     if not username or not password:
         return Response({'error': 'نام کاربری و رمز عبور الزامی است'}, status=400)
-    if User.objects.filter(username=username).exists():
+    if get_user_model().objects.filter(username=username).exists():
         return Response({'error': 'این نام کاربری قبلاً ثبت شده است'}, status=400)
-    User.objects.create_user(username=username, password=password)
+    get_user_model().objects.create_user(username=username, password=password)
     if phone:
         send_sms(phone, f'سلام {username} عزیز!\nثبت‌نام شما در مهرسام جینز با موفقیت انجام شد. خوش آمدید!')
     return Response({'message': 'ثبت‌نام موفق!'}, status=201)
@@ -77,8 +72,13 @@ def login_user(request):
         return Response({'message': 'ورود موفق', 'username': user.username, 'user_id': user.id})
     return Response({'error': 'نام کاربری یا رمز عبور اشتباه است'}, status=401)
 # Order creation and gateway callbacks
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
+@authentication_classes([JWTAuthentication])
 def create_order(request):
+    if request.method == 'GET':
+        if not request.user.is_authenticated: return Response({'error': 'برای مشاهده سفارش‌ها وارد حساب کاربری شوید.'}, status=status.HTTP_401_UNAUTHORIZED)
+        orders = Order.objects.filter(items__user_id=request.user.id).order_by('-created_at')
+        return Response([{'id': order.id, 'created_at': order.created_at.isoformat(), 'status': order.status, 'total_price': str(order.total_price), 'items': order.items.get('products', []) if isinstance(order.items, dict) else order.items} for order in orders])
     data = request.data
     phone = str(data.get('phone', '')).strip()
     address = str(data.get('address', '')).strip()
@@ -101,7 +101,7 @@ def create_order(request):
     if len(products) != len(quantities):
         return Response({'error': 'یکی از محصولات دیگر در دسترس نیست.'}, status=status.HTTP_400_BAD_REQUEST)
     normalized_items = []
-    total_price = Decimal('0')
+    total_price = 0
     for product_id, quantity in quantities.items():
         product = products[product_id]
         if quantity > product.stock:
@@ -109,7 +109,7 @@ def create_order(request):
         normalized_items.append({'product': product.id, 'name': product.name, 'quantity': quantity, 'price': str(product.price), 'image': product.image.url if product.image else ''})
         total_price += product.price * quantity
     order_token = secrets.token_urlsafe(32)
-    order = Order.objects.create(phone=phone, address=address, total_price=total_price, items={'products': normalized_items, 'payment': {'authority': '', 'ref_id': '', 'order_token': order_token}})
+    order = Order.objects.create(phone=phone, address=address, total_price=total_price, items={'products': normalized_items, 'delivery_date': data.get('delivery_date', ''), 'user_id': request.user.id if request.user.is_authenticated else None, 'payment': {'authority': '', 'ref_id': '', 'order_token': order_token}})
     send_sms(phone, 'سفارش شماره {} در مهرسام جینز ثبت شد و در انتظار پرداخت است.'.format(order.id))
     return Response({'message': 'سفارش ثبت شد.', 'order_id': order.id, 'order_token': order_token, 'total_price': str(total_price), 'status': order.status}, status=status.HTTP_201_CREATED)
 ZARINPAL_MERCHANT = os.getenv('ZARINPAL_MERCHANT_ID', '')
