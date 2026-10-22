@@ -21,10 +21,10 @@ urlpatterns = [
     path('token/', TokenObtainPairView.as_view()),
     path('token/refresh/', TokenRefreshView.as_view()),
 
+    path('site-settings/', views.site_settings),
     path('newsletter/', views.subscribe_newsletter),
     # سفارش
     path('orders/', views.create_order),
-
     # درگاه پرداخت
     path('payment/request/', views.payment_request),
     path('payment/verify/', views.payment_verify),
