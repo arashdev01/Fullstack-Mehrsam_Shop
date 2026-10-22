@@ -39,7 +39,7 @@ export default function FeaturedProducts() {
           <div key={product.id} className="col-6 col-md-4 col-lg-3">
             <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
               <img
-                src={product.image && product.image.startsWith('http') ? product.image : API_URL + (product.image || '/images/products/green-hoodie.png')}
+                src={product.image ? (product.image.startsWith('http') ? product.image : API_URL + product.image) : '/images/products/green-hoodie.png'}
                 alt={product.name}
                 className="card-img-top"
                 style={{ height: '220px', objectFit: 'contain' }}
