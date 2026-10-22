@@ -62,7 +62,7 @@ export default function ProductList() {
     if (
       selectedCategories.length > 0 &&
       !selectedCategories.some(
-        categoryId => Number(categoryId) === Number(product.category?.id)
+        categoryId => Number(categoryId) === Number(product.category?.id) || String(categoryId) === String(product.category?.slug)
       )
     ) {
       return false;
