@@ -49,7 +49,7 @@ export default function BestSellers() {
 
   return (
     <section id="best-sellers" className="pt-3 pt-md-4" dir="rtl">
-      <style>{\`
+      <style>{`
         #best-sellers .seller-tabs { display:flex; gap:8px; overflow-x:auto; padding:4px 2px 10px; scrollbar-width:thin; }
         #best-sellers .seller-tab { flex:0 0 auto; border:1px solid #e8deed; border-radius:999px; padding:7px 14px; background:#fff; color:#51465d; font-size:13px; }
         #best-sellers .seller-tab.active { background:#6b459b; border-color:#6b459b; color:#fff; }
@@ -69,11 +69,10 @@ export default function BestSellers() {
         #best-sellers .seller-stock::before { content:''; display:inline-block; width:6px; height:6px; border-radius:50%; background:#a5bd9c; margin-inline-end:5px; }
         #best-sellers .seller-tabs::-webkit-scrollbar { height:4px; }
         #best-sellers .seller-tabs::-webkit-scrollbar-thumb { background:#d6c7e2; border-radius:99px; }
-        #best-sellers .seller-price, #best-sellers .seller-stock { white-space:nowrap; }
-        #best-sellers .seller-media img { object-position:center; }
+        #best-sellers .seller-price, #best-sellers .seller-stock { white-space:nowrap; } #best-sellers .seller-media img { object-position:center; }
         @media(max-width:575px) { #best-sellers .seller-media { height:148px; padding:8px; } #best-sellers .seller-body { padding:9px; gap:6px; } #best-sellers .seller-name { font-size:12px; min-height:40px; } #best-sellers .seller-price { font-size:12px; } }
         @media(prefers-reduced-motion:reduce) { #best-sellers .seller-card { transition:none; } }
-      \`}</style>
+      `}</style>
       <div className="container">
         <div className="d-flex align-items-end justify-content-between gap-2 mb-3">
           <div>
