@@ -1,38 +1,38 @@
 import { useSearchParams, Link } from 'react-router-dom';
-
+import { useEffect } from 'react';
+import { useCart } from '../CartContext';
 export default function ThankYou() {
   const [params] = useSearchParams();
   const status = params.get('status');
   const refId  = params.get('ref_id');
-
-  const isSuccess = status === 'success' || status === 'card';
-  const isFailed  = status === 'failed';
-
+  const { clearCart } = useCart();
+  const isSuccess = status === 'success';
+  const isPending = status === 'pending';
+  useEffect(() => { if (isSuccess) clearCart(); }, [isSuccess, clearCart]);
   // اطلاعات نمایشی (در پروژه واقعی از API بگیر)
   const order = {
-    trackingCode: refId || '1234564',
+    trackingCode: refId || '—',
     date: new Date().toLocaleDateString('fa-IR'),
-    total: '300,000,000',
-    discount: '100,000',
-    shipping: '30,000',
-    paymentMethod: status === 'card' ? 'کارت به کارت' : 'پرداخت اینترنتی توسط درگاه ملت',
-    address: 'تهران، خیابان انقلاب، خیابان 12 فروردین، کوچه 1، پلاک 1',
-    receiver: 'مصطفی کیانی',
-    phone: '09121234567',
-    postal: '1234567890',
-    status: isSuccess ? 'در حال انجام' : 'ناموفق',
+    total: 'طبق سفارش ثبت‌شده',
+    discount: '—',
+    shipping: 'طبق سفارش',
+    paymentMethod: 'پرداخت اینترنتی زرین‌پال',
+    address: 'اطلاعات نشانی در جزئیات سفارش قابل مشاهده است.',
+    receiver: '—',
+    phone: '—',
+    postal: '—',
+    status: isSuccess ? 'پرداخت شده' : isPending ? 'در انتظار پرداخت' : 'ناموفق',
   };
-
   return (
     <section className="inner-page" id="contact-page">
       <div className="container-fluid" id="page-hero">
         <div className="container py-3">
-          <h1>{isSuccess ? 'پرداخت موفق' : 'پرداخت ناموفق'}</h1>
-          <p>{isSuccess ? 'پرداخت شما با موفقیت انجام شد.' : 'متأسفانه پرداخت شما ناموفق بود.'}</p>
+          <h1>{isSuccess ? 'پرداخت موفق' : isPending ? 'سفارش ثبت شد' : 'پرداخت ناموفق'}</h1>
+          <p>{isSuccess ? 'پرداخت شما با موفقیت انجام شد.' : isPending ? 'سفارش ثبت شده است، اما پرداخت هنوز تأیید نشده است.' : 'متأسفانه پرداخت شما ناموفق بود.'}</p>
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb">
               <li className="breadcrumb-item"><Link to="/">صفحه نخست</Link></li>
-              <li className="breadcrumb-item active">{isSuccess ? 'پرداخت موفق' : 'پرداخت ناموفق'}</li>
+              <li className="breadcrumb-item active">{isSuccess ? 'پرداخت موفق' : isPending ? 'در انتظار پرداخت' : 'پرداخت ناموفق'}</li>
             </ol>
           </nav>
         </div>
@@ -49,10 +49,10 @@ export default function ThankYou() {
                 <p className="mb-0">سفارش شما در حال انجام می باشد. تغییر وضعیت سفارش از طریق پیامک خدمت شما اطلاع داده خواهد شد.</p>
               </div>
             ) : (
-              <div className="alert alert-danger rounded-4 p-4 mb-4 text-end">
-                <h4 className="fw-bold text-danger">❌ پرداخت ناموفق بود.</h4>
-                <p className="mb-0">مبلغی از حساب شما کسر نشده است. لطفاً دوباره تلاش کنید.</p>
-                <Link to="/checkout" className="btn btn-danger rounded-pill mt-2 px-4">بازگشت به پرداخت</Link>
+              <div className={`alert ${isPending ? 'alert-warning' : 'alert-danger'} rounded-4 p-4 mb-4 text-end`}>
+                <h4 className={`fw-bold ${isPending ? 'text-dark' : 'text-danger'}`}>{isPending ? 'سفارش دریافت شد؛ پرداخت تأیید نشده است.' : '❌ پرداخت ناموفق بود.'}</h4>
+                <p className="mb-0">{isPending ? 'درگاه پرداخت آنلاین هنوز به‌طور کامل پیکربندی نشده است؛ این سفارش پرداخت‌شده تلقی نمی‌شود.' : 'مبلغی از حساب شما کسر نشده است. لطفاً دوباره تلاش کنید.'}</p>
+                <Link to={isPending ? '/' : '/checkout'} className="btn btn-primary rounded-pill mt-2 px-4">{isPending ? 'بازگشت به فروشگاه' : 'بازگشت به پرداخت'}</Link>
               </div>
             )}
 

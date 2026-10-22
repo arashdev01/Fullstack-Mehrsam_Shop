@@ -206,7 +206,7 @@ export function Orders() {
                     </div>
                     <div className="col-12 col-sm-6 text-sm-start">
                       <span className="text-muted">{order.created_at}</span> -
-                      <span className="badge bg-success me-1">پرداخت شده</span>
+                      <span className={'badge me-1 ' + (order.status === 'paid' ? 'bg-success' : 'bg-warning text-dark')}>{order.status === 'paid' ? 'پرداخت شده' : 'در انتظار پرداخت'}</span>
                     </div>
                   </div>
                   <hr />
@@ -219,9 +219,9 @@ export function Orders() {
                         <div key={i} className="col-6 col-sm-4 col-lg-3 px-1 mb-2">
                           <Link to={`/product/${item.product}`} target="_blank">
                             <div className="border rounded-3 overflow-hidden text-center p-2">
-                              <img src={item.image} alt={item.name}
+                              <img src={item.image ? (item.image.startsWith('http') ? item.image : API_URL + item.image) : '/images/products/green-hoodie.png'} alt={item.name}
                                 style={{ width: '100%', height: '80px', objectFit: 'cover' }}
-                                onError={e => e.target.src='https://via.placeholder.com/100?text=no+img'} />
+                                onError={e => e.target.src='/images/products/green-hoodie.png'} />
                               <div className="small fw-bold mt-1 text-truncate">{item.name}</div>
                               <div className="small text-muted">تعداد: {item.quantity}</div>
                             </div>

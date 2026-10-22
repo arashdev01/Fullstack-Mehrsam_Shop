@@ -2,18 +2,18 @@ export default function OfferBanners() {
   const banners = [
     {
       img: '/images/slider/baner1.webp',
-      badge: 'تخفیف ۲۰٪   ',
-      title: '  فروش ویژه عید نوروز',
-      subtitle: 'انواع پوشاک مـردانه  ',
-      bg: '#044cc8',
+      badge: 'کالکشن جدید',
+      title: 'استایل جین روزمره',
+      subtitle: 'پوشاک منتخب مهرسام',
+      bg: '#6b459b',
       link: '/products',
     },
     {
       img: '/images/slider/baner2.webp',
-      badge: 'تخفیف ویژه برای  ',
-      title: ' بانـوان',
-      subtitle: ' انواع پوشاک زنـانه',
-      bg: '#e7240efd',
+      badge: 'انتخاب فصل',
+      title: 'استایل زنانه و مردانه',
+      subtitle: 'جزئیاتی برای استایل شما',
+      bg: '#dca18b',
       link: '/products',
     },
   ];
@@ -27,7 +27,7 @@ export default function OfferBanners() {
               <div style={{
                 backgroundColor: b.bg,
                 borderRadius: '14px',
-                height: '79px',
+                height: '96px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
@@ -39,9 +39,9 @@ export default function OfferBanners() {
                   src={b.img}
                   alt={b.title}
                   style={{
-                    height: '80px',
-                    width: '180px',
-                    objectFit: 'cover',
+                    height: '96px',
+                    width: '35%',
+                    objectFit: 'contain',
                     flexShrink: 0,
                   }}
                   onError={e => { e.target.style.display = 'none'; }}
