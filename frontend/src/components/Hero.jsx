@@ -138,7 +138,7 @@ export default function HeroSlider() {
           <h5 className="hero-title">کالکشن <span>اختصاصی</span></h5>
           <p style={{ color: 'white', marginBottom: '25px' }}>محصولات را ورق بزنید...</p>
           <Link to="/products" style={{
-            background: 'linear-gradient(90deg, #038817d6, #038d0a)',
+            background: 'linear-gradient(90deg, #6b459b, #8b66b3)',
             color: 'white', padding: '12px 65px', borderRadius: '9px', textDecoration: 'none', fontWeight: 'bold'
           }}>خرید سریع</Link>
         </div>
@@ -153,7 +153,7 @@ export default function HeroSlider() {
                     <img src={p.img} alt={p.title} />
                   </div>
                   <div style={{ color: 'white', marginTop: '10px', fontSize: '13px' }}>{p.title}</div>
-                  <div style={{ color: '#106e07', fontWeight: 'bold', fontSize: '14px' }}>{p.price}</div>
+                  <div style={{ color: '#f2b79f', fontWeight: 'bold', fontSize: '14px' }}>{p.price}</div>
                 </Link>
               ))}
             </div>
