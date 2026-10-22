@@ -32,7 +32,7 @@ export default function ProductList() {
     axios.get(url, { params })
       .then(response => {
         const data = response.data.results || response.data;
-        console.log('PRODUCT API:', response.data);
+        // Keep raw API payloads out of the customer browser console.
         setProducts(Array.isArray(data) ? data : []);
         setLoading(false);
       })
