@@ -70,7 +70,7 @@ body {
   font-weight: bold;
   font-size: 20px !important;
   margin-bottom: 12px;
-  border-bottom: 2px solid #fcb941;
+  border-bottom: 2px solid #6b459b;
   padding-bottom: 6px;
   display: inline-block;
 }
@@ -94,7 +94,7 @@ body {
 }
 
 .custom-footer ul li a:hover {
-  color: #fcb941 !important;
+  color: #6b459b !important;
 }
 
 /* ─── متن‌های ساده ─── */
