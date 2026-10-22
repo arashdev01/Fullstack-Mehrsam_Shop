@@ -37,7 +37,7 @@ export default function ProductSidebar({ onFilterChange }) {
   };
 
   // پلیس‌هولدر محلی — بدون نیاز به اینترنت
-  const NO_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Crect width='60' height='60' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='55%25' font-size='10' text-anchor='middle' fill='%23aaa'%3Eبدون%20تصویر%3C/text%3E%3C/svg%3E";
+  const NO_IMAGE = '/images/products/green-hoodie.png';
 
   return (
     <div className="w-100">
@@ -53,11 +53,11 @@ export default function ProductSidebar({ onFilterChange }) {
           <div id="sb-cats" className="accordion-collapse collapse show">
             <div className="accordion-body">
               {(categories.length > 0 ? categories : [
-                { id: 'g1', name: 'گوشی موبایل' },
-                { id: 'g2', name: 'جانبی موبایل' },
-                { id: 'g3', name: 'دوربین دیجیتال' },
-                { id: 'g4', name: 'ساعت هوشمند' },
-                { id: 'g5', name: 'لپ تاپ' },
+                { id: 'hoodie', name: 'هودی' },
+                { id: 'pants', name: 'شلوار جین' },
+                { id: 'tshirt', name: 'تی‌شرت و پیراهن' },
+                { id: 'handbag', name: 'کیف و اکسسوری' },
+                { id: 'women-shoes', name: 'کفش' },
               ]).map(cat => (
                 <div key={cat.id} className="form-check mb-1">
                   <input className="form-check-input" type="checkbox" id={`cat-${cat.id}`}
@@ -145,7 +145,7 @@ export default function ProductSidebar({ onFilterChange }) {
                     <div className="side-product mb-2 p-2"
                       style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
                       <img
-                        src={product.image || NO_IMAGE}
+                        src={product.image ? (product.image.startsWith('http') ? product.image : API_URL + product.image) : NO_IMAGE}
                         onError={e => e.target.src = NO_IMAGE}
                         alt={product.name}
                         style={{ width: '50px', height: '50px', objectFit: 'cover',
@@ -158,7 +158,7 @@ export default function ProductSidebar({ onFilterChange }) {
                         }}>
                           {product.name}
                         </div>
-                        <div style={{ fontSize: '11px', color: '#fcb941' }}>
+                        <div style={{ fontSize: '11px', color: '#6b459b' }}>
                           {Number(product.price).toLocaleString('fa-IR')} تومان
                         </div>
                       </div>
