@@ -40,7 +40,7 @@ export default function ResetPassword() {
 
                                     {sent ? (
                                         <div className="alert alert-success rounded-3">
-                                            لینک بازیابی رمز عبور به ایمیل شما ارسال شد!
+                                            ارسال خودکار لینک بازیابی در حال حاضر فعال نیست. لطفاً با پشتیبانی مهرسام تماس بگیرید.
                                         </div>
                                     ) : (
                                         <form onSubmit={handleSubmit}>
