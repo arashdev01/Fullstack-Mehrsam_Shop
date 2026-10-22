@@ -21,7 +21,7 @@ export default function ThankYou() {
     receiver: '—',
     phone: '—',
     postal: '—',
-    status: isSuccess ? 'در حال انجام' : 'ناموفق',
+    status: isSuccess ? 'پرداخت شده' : isPending ? 'در انتظار پرداخت' : 'ناموفق',
   };
   return (
     <section className="inner-page" id="contact-page">
@@ -32,7 +32,7 @@ export default function ThankYou() {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb">
               <li className="breadcrumb-item"><Link to="/">صفحه نخست</Link></li>
-              <li className="breadcrumb-item active">{isSuccess ? 'پرداخت موفق' : 'پرداخت ناموفق'}</li>
+              <li className="breadcrumb-item active">{isSuccess ? 'پرداخت موفق' : isPending ? 'در انتظار پرداخت' : 'پرداخت ناموفق'}</li>
             </ol>
           </nav>
         </div>
