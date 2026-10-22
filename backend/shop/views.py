@@ -40,7 +40,7 @@ def send_sms(receptor, message):
         response = requests.post(f'https://api.kavenegar.com/v1/{KAVENEGAR_API_KEY}/sms/send.json', data={'receptor': receptor, 'sender': os.getenv('KAVENEGAR_SENDER_NUMBER', '2000660110'), 'message': message}, timeout=10)
         response.raise_for_status()
         return response.json()
-    except requests.RequestException as error:
+    except (requests.RequestException, ValueError) as error:
         print(f'خطا در ارسال پیامک: {error}'); return None
 @api_view(['POST'])
 def register_user(request):
@@ -83,7 +83,7 @@ def create_order(request):
     phone = str(data.get('phone', '')).strip()
     address = str(data.get('address', '')).strip()
     submitted_items = data.get('items')
-    if not phone or len(phone) > 15 or not address:
+    if len(phone) != 11 or not phone.startswith('09') or not phone.isdigit() or not address:
         return Response({'error': 'شماره تلفن و نشانی معتبر الزامی است.'}, status=status.HTTP_400_BAD_REQUEST)
     if not isinstance(submitted_items, list) or not submitted_items:
         return Response({'error': 'سبد خرید خالی یا نامعتبر است.'}, status=status.HTTP_400_BAD_REQUEST)
