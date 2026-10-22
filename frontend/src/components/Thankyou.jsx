@@ -1,13 +1,14 @@
 import { useSearchParams, Link } from 'react-router-dom';
-
+import { useEffect } from 'react';
+import { useCart } from '../CartContext';
 export default function ThankYou() {
   const [params] = useSearchParams();
   const status = params.get('status');
   const refId  = params.get('ref_id');
-
+  const { clearCart } = useCart();
   const isSuccess = status === 'success';
   const isPending = status === 'pending';
-
+  useEffect(() => { if (isSuccess) clearCart(); }, [isSuccess, clearCart]);
   // اطلاعات نمایشی (در پروژه واقعی از API بگیر)
   const order = {
     trackingCode: refId || '—',
@@ -22,7 +23,6 @@ export default function ThankYou() {
     postal: '—',
     status: isSuccess ? 'در حال انجام' : 'ناموفق',
   };
-
   return (
     <section className="inner-page" id="contact-page">
       <div className="container-fluid" id="page-hero">
