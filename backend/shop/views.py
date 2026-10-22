@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, get_user_model
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.shortcuts import redirect
 import secrets
-from .models import Product, Category, Order, Comment, Blog, ContactMessage
+from .models import Product, Category, Order, Comment, Blog, ContactMessage, Newsletter
 from .serializers import ProductSerializer, CategorySerializer, CommentSerializer, BlogSerializer, ContactMessageSerializer
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
@@ -35,20 +35,13 @@ class ContactMessageViewSet(viewsets.ModelViewSet):
     http_method_names = ['post', 'head', 'options']
 KAVENEGAR_API_KEY = os.getenv('KAVENEGAR_API_KEY', '')
 def send_sms(receptor, message):
-    url = f'https://api.kavenegar.com/v1/{KAVENEGAR_API_KEY}/sms/send.json'
+    if not KAVENEGAR_API_KEY: return None
     try:
-        if not KAVENEGAR_API_KEY:
-            return None
-        response = requests.post(url, data={
-            'receptor': receptor,
-            'sender': os.getenv('KAVENEGAR_SENDER_NUMBER', '2000660110'),
-            'message': message,
-        }, timeout=10)
+        response = requests.post(f'https://api.kavenegar.com/v1/{KAVENEGAR_API_KEY}/sms/send.json', data={'receptor': receptor, 'sender': os.getenv('KAVENEGAR_SENDER_NUMBER', '2000660110'), 'message': message}, timeout=10)
         response.raise_for_status()
         return response.json()
-    except Exception as e:
-        print(f'خطا در ارسال پیامک: {e}')
-        return None
+    except requests.RequestException as error:
+        print(f'خطا در ارسال پیامک: {error}'); return None
 @api_view(['POST'])
 def register_user(request):
     username = request.data.get('username', '').strip()
@@ -71,7 +64,14 @@ def login_user(request):
     if user:
         return Response({'message': 'ورود موفق', 'username': user.username, 'user_id': user.id})
     return Response({'error': 'نام کاربری یا رمز عبور اشتباه است'}, status=401)
+@api_view(['POST'])
+def subscribe_newsletter(request):
+    email = str(request.data.get('email', '')).strip().lower()
+    if len(email) > 254 or email.count('@') != 1: return Response({'error': 'ایمیل معتبر وارد کنید.'}, status=400)
+    _, created = Newsletter.objects.get_or_create(email=email)
+    return Response({'message': 'عضویت انجام شد.'}, status=201 if created else 200)
 # Order creation and gateway callbacks
+
 @api_view(['GET', 'POST'])
 @authentication_classes([JWTAuthentication])
 def create_order(request):
