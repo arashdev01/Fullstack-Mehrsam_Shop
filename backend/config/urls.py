@@ -2,12 +2,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.views.static import serve
-
+from .views import sitemap
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('shop.urls')),
-
+    path('sitemap.xml', sitemap, name='sitemap'),
     # سرو کردن فایل‌های Media در محیط محلی
     path(
         'media/<path:path>',
