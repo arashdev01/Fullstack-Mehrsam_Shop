@@ -3,9 +3,9 @@ export default function Slider() {
     <section id="slider" className="mt-3">
       <style>{`
   #carouselExampleCaptions {
-    height: 400px;
+    height: 360px;
     background: #f0f0f0a5;
-    border-radius: 5px;
+    border-radius: 16px;
     overflow: hidden;
   }
   #carouselExampleCaptions .carousel-inner {
@@ -35,10 +35,10 @@ export default function Slider() {
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(135deg, #ddd207, #d4d405);
+    background: linear-gradient(135deg, #6b459b, #8b66b3);
     color: white;
     padding: 12px 28px;
-    border-radius: 10px;
+    border-radius: 999px;
     font-size: 15px;
     font-weight: bold;
     text-decoration: none;
@@ -63,7 +63,7 @@ export default function Slider() {
     transition: opacity 0.3s ease;
     top: auto !important;
     bottom: 15px !important;
-    background: rgba(0, 0, 0, 0.18);
+    background: rgba(52, 44, 61, 0.24);
     border-radius: 7%;
   }
   
@@ -100,7 +100,7 @@ export default function Slider() {
   /*  موبایل - ارتفاع اسلایدر */
   @media (max-width: 767px) {
     #carouselExampleCaptions {
-      height: 250px !important;
+      height: 220px !important;
     }
     
     #carouselExampleCaptions .carousel-item {
@@ -231,14 +231,14 @@ export default function Slider() {
                       position: 'absolute',
                       bottom: '12px',
                       right: '12px',
-                      background: 'linear-gradient(135deg, #fff423, #f5a623)',
+                      background: 'linear-gradient(135deg, #6b459b, #8b66b3)',
                       color: 'white',
                       padding: '7px 18px',
                       borderRadius: '18px',
                       fontSize: '12px',
                       fontWeight: 'bold',
                       textDecoration: 'none',
-                      boxShadow: '0 7px 10px rgba(0, 0, 0, 0.9)',
+                      boxShadow: '0 7px 10px rgba(52, 44, 61, 0.18)',
                     }}
                   >
                     خرید عمده
@@ -256,7 +256,7 @@ export default function Slider() {
                       position: 'absolute',
                       bottom: '12px',
                       right: '12px',
-                      background: 'linear-gradient(135deg, #3498db, #2980b9)',
+                      background: 'linear-gradient(135deg, #f2b79f, #de987d)',
                       color: 'white',
                       padding: '7px 18px',
                       borderRadius: '18px',
