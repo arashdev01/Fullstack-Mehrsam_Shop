@@ -70,8 +70,8 @@ def subscribe_newsletter(request):
     if len(email) > 254 or email.count('@') != 1: return Response({'error': 'ایمیل معتبر وارد کنید.'}, status=400)
     _, created = Newsletter.objects.get_or_create(email=email)
     return Response({'message': 'عضویت انجام شد.'}, status=201 if created else 200)
-# Order creation and gateway callbacks
-
+@api_view(['GET'])
+def site_settings(request): return Response({'site_name': 'مهرسام جینز', 'logo': '/images/logo.png', 'phone': os.getenv('STORE_PHONE', '')})
 @api_view(['GET', 'POST'])
 @authentication_classes([JWTAuthentication])
 def create_order(request):
