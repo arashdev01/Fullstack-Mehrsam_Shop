@@ -44,7 +44,7 @@ export default function CategoryBoxes() {
         <div className="row row-cols-2 row-cols-sm-3 row-cols-md-6 g-3">
           {categories.map(cat => (
             <div key={cat.id} className="col">
-              <Link to={`/products?search=${encodeURIComponent(cat.name)}`} className="cat-item">
+              <Link to={`/category/${cat.slug}`} className="cat-item">
                 <span>{cat.name}</span>
                 <span className="cat-icon">{cat.icon}</span>
               </Link>
