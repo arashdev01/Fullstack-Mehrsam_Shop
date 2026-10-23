@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 export default function HeroSlider() {
   const products = [
-    { id: 1, title: 'دوربین AX6065', price: '۴,۵۰۰,۰۰۰', img: '/images/products/p403.png' },
-    { id: 2, title: 'لنز دیجیتال Z1', price: '۲,۸۰۰,۰۰۰', img: '/images/products/p400.png' },
-    { id: 3, title: 'پک ویژه لنز', price: '۳,۲۰۰,۰۰۰', img: '/images/products/p403.png' },
-    { id: 4, title: 'دوربین حرفه‌ای', price: '۹,۵۰۰,۰۰۰', img: '/images/products/p400.png' },
+    { id: 1, title: 'شلوار جین کلاسیک', price: 'کالکشن جین', img: '/images/slider/jeans-shop.webp' },
+    { id: 2, title: 'پیراهن روزمره', price: 'تازه‌رسیده‌ها', img: '/images/products/imgi_20_shirt1.webp' },
+    { id: 3, title: 'هودی و سویشرت', price: 'استایل کژوال', img: '/images/products/green-hoodie.png' },
+    { id: 4, title: 'تی‌شرت‌های پایه', price: 'کالکشن روزمره', img: '/images/products/imgi_34_shirt2.webp' },
   ];
 
   const rootRef = useRef(null);
@@ -25,7 +25,7 @@ export default function HeroSlider() {
         .hero-root {
           direction: rtl; 
           padding: 10px; 
-          margin: 20px;
+          margin: 12px auto;
         }
 
         .hero-inner {
@@ -58,7 +58,7 @@ export default function HeroSlider() {
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
 
             /* ✅ رنگ + بافت جین */
-            background-color: #112796;
+            background-color: #193d59;
             background-image: 
               repeating-linear-gradient(
                 45deg,
@@ -86,10 +86,10 @@ export default function HeroSlider() {
 
         /* ✅ باکس چپ - عکس جین‌شاپ */
         .box-slider {
-          align-items: left;
+          align-items: center;
           clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
           background-image: 
-            radial-gradient(circle at top right, rgba(13, 26, 164, 0.23) 0%, rgba(141, 141, 14, 0.26) 60%),
+            radial-gradient(circle at top right, rgba(13, 26, 164, 0.23) 0%, rgba(242, 183, 159, 0.26) 60%),
             url('/images/slider/jeans-shop.webp');
           background-size: cover;
           background-position: center;
@@ -115,8 +115,8 @@ export default function HeroSlider() {
         }
 
         .premium-card {
-          background: rgba(149, 104, 104, 0.07); backdrop-filter: blur(10px);
-          border: 1px solid rgba(164, 63, 63, 0.28); border-radius: 25px;
+          background: rgba(251, 247, 239, 0.93); backdrop-filter: blur(10px);
+          border: 1px solid rgba(107, 69, 155, 0.2); border-radius: 18px;
           padding: 15px; min-width: 180px; text-align: center; text-decoration: none;
         }
 
@@ -138,7 +138,7 @@ export default function HeroSlider() {
           <h5 className="hero-title">کالکشن <span>اختصاصی</span></h5>
           <p style={{ color: 'white', marginBottom: '25px' }}>محصولات را ورق بزنید...</p>
           <Link to="/products" style={{
-            background: 'linear-gradient(90deg, #038817d6, #038d0a)',
+            background: 'linear-gradient(90deg, #6b459b, #8d6abd)',
             color: 'white', padding: '12px 65px', borderRadius: '9px', textDecoration: 'none', fontWeight: 'bold'
           }}>خرید سریع</Link>
         </div>
@@ -148,7 +148,7 @@ export default function HeroSlider() {
           <div className="slider-container">
             <div className="slider-track">
               {[...products, ...products].map((p, index) => (
-                <Link key={index} to={`/product/${p.id}`} className="premium-card">
+                <Link key={index} to="/products" className="premium-card">
                   <div className="card-media">
                     <img src={p.img} alt={p.title} />
                   </div>
