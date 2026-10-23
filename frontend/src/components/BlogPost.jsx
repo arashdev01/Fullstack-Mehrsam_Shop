@@ -5,8 +5,8 @@ export default function BlogPost() {
     const { id } = useParams();
     const [comment, setComment] = useState({ name: '', text: '' });
     const [comments, setComments] = useState([
-        { id: 1, name: 'مصطفی کلانتری', date: '18 تیر 1400', text: 'مطلب بسیار مفیدی بود. ممنون از تیم روبیک مارکت.' },
-        { id: 2, name: 'امین کیانی', date: '18 تیر 1400', text: 'خیلی جامع و کامل بود. لطفا بیشتر بنویسید.' },
+        // نظر نمونه حذف شد؛ فقط بازخورد واقعی باید نمایش داده شود.
+        // از نمایش نظر ساختگی خودداری می‌شود.
     ]);
 
     const handleSubmit = e => {
@@ -19,13 +19,13 @@ export default function BlogPost() {
         <section className="inner-page blog-inner-page" id="blog-page">
             <div className="container-fluid" id="page-hero">
                 <div className="container py-3">
-                    <h1>آموزش نصب قالب وردپرسی روبیک مارکت</h1>
-                    <p>در این آموزش یاد میگیرید که چگونه قالب وردپرسی روبیک مارکت را نصب کنید.</p>
+                    <h1>راهنمای انتخاب و نگهداری لباس جین</h1>
+                    <p>در این مطلب با نکته‌های کاربردی انتخاب، شست‌وشو و نگهداری لباس‌های جین آشنا می‌شوید.</p>
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item"><Link to="/">صفحه نخست</Link></li>
                             <li className="breadcrumb-item"><Link to="/blog">بلاگ آموزشی</Link></li>
-                            <li className="breadcrumb-item active" aria-current="page">آموزش وردپرس</li>
+                            <li className="breadcrumb-item active" aria-current="page">راهنمای پوشاک جین</li>
                         </ol>
                     </nav>
                 </div>
@@ -42,10 +42,10 @@ export default function BlogPost() {
                                         {/* عنوان و تاریخ */}
                                         <div className="row pt-2 px-3" id="post-title">
                                             <div className="col-12 col-md-8">
-                                                <h1>آموزش نصب قالب وردپرسی روبیک مارکت</h1>
+                                                <h1>راهنمای انتخاب و نگهداری لباس جین</h1>
                                             </div>
                                             <div className="col-12 col-md-4 text-md-end">
-                                                <span className="date">ارسال شده در 22 تیر 1400</span>
+                                                <span className="date">راهنمای خرید مهرسام جینز</span>
                                             </div>
                                         </div>
                                         <hr />
@@ -53,7 +53,7 @@ export default function BlogPost() {
                                         {/* جزئیات */}
                                         <div className="row py-0 px-3" id="post-details">
                                             <div className="col-8">
-                                                <span>دسته بندی: <Link to="/blog">آموزش وردپرس</Link></span>
+                                                <span>دسته بندی: <Link to="/blog">راهنمای پوشاک جین</Link></span>
                                             </div>
                                             <div className="col-4 text-end"><span>244 بازدید | {comments.length} نظر</span></div>
                                         </div>
@@ -65,9 +65,9 @@ export default function BlogPost() {
                                                     <img src="/images/blog/post100.jpg" alt="پست بلاگ" className="img-fluid rounded-3"
                                                         onError={e => e.target.src = 'https://via.placeholder.com/800x400?text=Blog+Post'} />
                                                 </div>
-                                                <p>این یک متن آزمایشی است. محتوای این پست به زودی توسط تیم روبیک مارکت تکمیل خواهد شد.</p>
-                                                <p>صفحات و محتوای آزمایشی همیشه بخشی از محتوای پیش‌نمایش هستند. شما می‌توانید به سادگی محتوا را ویرایش کنید.</p>
-                                                <p>بنابراین نگران ویرایش و بروزرسانی محتوای این نوع صفحات نباشید.</p>
+                                                <p>برای کمک به ماندگاری رنگ جین، برچسب شست‌وشو را رعایت کنید و تا حد امکان از شست‌وشوی غیرضروری پرهیز کنید.</p>
+                                                <p>برای خشک‌کردن، از روش توصیه‌شده روی برچسب محصول پیروی کنید و لباس را دور از گرمای شدید نگه دارید.</p>
+                                                <p>برای انتخاب فیت مناسب، راهنمای سایز و اندازه‌های بدن را با هم مقایسه کنید.</p>
                                             </div>
 
                                             {/* برچسب‌ها */}
@@ -75,7 +75,7 @@ export default function BlogPost() {
                                                 <hr />
                                                 <div id="keywords">
                                                     <span>برچسب ها: </span>
-                                                    {['وردپرس', 'طراحی سایت', 'قالب فروشگاهی', 'روبیک مارکت'].map(tag => (
+                                                    {['انتخاب سایز', 'مراقبت از جین', 'استایل روزمره', 'مهرسام جینز'].map(tag => (
                                                         <a key={tag} href="#"><span className="keyword">{tag}</span></a>
                                                     ))}
                                                 </div>
