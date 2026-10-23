@@ -62,8 +62,8 @@ export default function BlogPost() {
                                         <div className="row">
                                             <div className="col-12 pt-2 text-justify" id="post-html">
                                                 <div className="text-center pt-2 pb-3">
-                                                    <img src="/images/blog/post100.jpg" alt="پست بلاگ" className="img-fluid rounded-3"
-                                                        onError={e => e.target.src = 'https://via.placeholder.com/800x400?text=Blog+Post'} />
+                                                    <img src="/images/slider/jeans-shop.webp" alt="پست بلاگ" className="img-fluid rounded-3"
+                                                        onError={e => e.target.src = '/images/products/green-hoodie.png'} />
                                                 </div>
                                                 <p>برای کمک به ماندگاری رنگ جین، برچسب شست‌وشو را رعایت کنید و تا حد امکان از شست‌وشوی غیرضروری پرهیز کنید.</p>
                                                 <p>برای خشک‌کردن، از روش توصیه‌شده روی برچسب محصول پیروی کنید و لباس را دور از گرمای شدید نگه دارید.</p>
