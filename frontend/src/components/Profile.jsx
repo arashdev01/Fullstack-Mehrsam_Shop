@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import API_URL from '../api';
 
 // ─── ساید بار مشترک ───────────────────────────────────────
 function ProfileSidebar({ active }) {
@@ -9,7 +7,9 @@ function ProfileSidebar({ active }) {
   const username = localStorage.getItem('username');
 
   const handleLogout = () => {
-    localStorage.clear();
+    localStorage.removeItem('username');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     navigate('/');
     window.location.reload();
   };
@@ -131,8 +131,8 @@ export function PersonalInfo() {
 
 // ─── صفحه سفارشات ─────────────────────────────────────────
 export function Orders() {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [orders] = useState([]);
+  const [loading] = useState(false);
   const [activeFilter, setActiveFilter] = useState('all');
 
   const filters = [
@@ -143,7 +143,6 @@ export function Orders() {
     { key: 'cancelled', label: 'لغو شده' },
   ];
 
-  useEffect(() => { setLoading(false); }, []);
 
   return (
     <div className="container mt-4 text-end">
