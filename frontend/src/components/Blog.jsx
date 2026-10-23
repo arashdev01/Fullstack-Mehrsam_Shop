@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 
 const posts = [
-    { id: 1, title: 'بررسی آیفون 12 پرو مکس اپل', date: '30 خرداد 1400', img: '/images/blog/post100.jpg', excerpt: 'آیفون ۱۲ پرو مکس با ابعاد غول‌پیکر، دوربین توانمندتر و باتری حجمیش، تمام‌عیارترین پرچم‌دار کنونی اپل به‌حساب می‌آید.' },
-    { id: 2, title: 'سامسونگ گلکسی S21 اولترا 5G', date: '30 خرداد 1400', img: '/images/blog/post101.jpg', excerpt: 'سامسونگ برای گوشی پرچم‌دارش، یعنی گلکسی S21 اولترا 5G، علاوه‌بر رنگ‌های قبلی، رنگ جدید سرمه‌ای را معرفی کرد.' },
-    { id: 3, title: 'دریافت گواهی بلوتوث گلکسی A03s سامسونگ', date: '30 خرداد 1400', img: '/images/blog/post102.jpg', excerpt: 'ماه گذشته، برای اولین‌بار اطلاعاتی از گلکسی A03s فاش شد و اکنون با دریافت گواهی بلوتوث، به زمان رونمایی این گوشی نزدیک شده‌ایم.' },
-    { id: 4, title: 'خرابی بی‌دلیل نمایشگرهای سری گلکسی S20', date: '30 خرداد 1400', img: '/images/blog/post103.jpg', excerpt: 'کاربران سری گلکسی S20 از خرابی ناگهانی نمایشگر گوشی‌های خود گزارش دادند. سامسونگ در حال بررسی این مشکل است.' },
+    { id: 1, title: 'راهنمای انتخاب شلوار جین متناسب با فرم بدن', date: 'راهنمای خرید', img: '/images/slider/jeans-shop.webp', excerpt: 'برای انتخاب فیت مناسب، به راحتی کمر، آزادی حرکت و اندازهٔ قد شلوار توجه کنید.' },
+    { id: 2, title: 'چطور لباس جین را درست بشوییم و نگهداری کنیم؟', date: 'راهنمای خرید', img: '/images/products/green-hoodie.png', excerpt: 'شست‌وشوی کمتر، آب خنک و رعایت برچسب مراقبت می‌تواند به حفظ رنگ و فرم جین کمک کند.' },
+    { id: 3, title: 'ترکیب کت جین با لباس‌های روزمره', date: 'راهنمای خرید', img: '/images/products/imgi_20_shirt1.webp', excerpt: 'کت جین را با تی‌شرت ساده و کفش روزمره ترکیب کنید تا استایلی متعادل و کاربردی داشته باشید.' },
+    { id: 4, title: 'راهنمای انتخاب سایز و فیت لباس جین', date: 'راهنمای خرید', img: '/images/products/imgi_19_cap5.webp', excerpt: 'جدول سایز را با اندازه‌های بدن مقایسه کنید و برای انتخاب دقیق‌تر، به فیت محصول و مدل پوشیده‌شده در عکس توجه کنید.' },
 ];
 
 export default function Blog() {
@@ -13,7 +13,7 @@ export default function Blog() {
             <div className="container-fluid" id="page-hero">
                 <div className="container py-3">
                     <h1>بلاگ</h1>
-                    <p>بلاگ آموزشی روبیک مارکت</p>
+                    <p>بلاگ مهرسام جینز</p>
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item"><Link to="/">صفحه نخست</Link></li>
@@ -31,7 +31,7 @@ export default function Blog() {
                                 <div className="col-12 col-lg-9">
                                     <div className="blog-container">
                                         <div className="row py-2 px-3">
-                                            <div className="col"><h1 className="title">مرکز آموزش روبیک مارکت</h1></div>
+                                            <div className="col"><h1 className="title">راهنمای استایل و نگهداری پوشاک جین</h1></div>
                                         </div>
                                         <div className="container px-2 pb-3">
                                             <div className="row row-cols-1 row-cols-md-2">
@@ -42,7 +42,7 @@ export default function Blog() {
                                                                 <div className="post-image" style={{ backgroundImage: `url('${post.img}')` }}></div>
                                                             </Link>
                                                             <div className="details py-3 px-4">
-                                                                <div className="post-date">ارسال شده در {post.date}</div>
+                                                                <div className="post-date">موضوع: {post.date}</div>
                                                                 <Link to={`/blog/${post.id}`}>
                                                                     <h2 className="post-title">{post.title}</h2>
                                                                 </Link>
