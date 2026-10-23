@@ -1,112 +1,112 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-
-const data = {
-  mobile: [
-    { id: 10, name: 'گوشی سامسونگ Galaxy A51', price: '6.000.000', img: '/images/products/p100.png', cat: 'گوشی موبایل' },
-    { id: 11, name: 'گوشی شیائومی POCO M3',    price: '5.000.000', img: '/images/products/p101.png', cat: 'گوشی موبایل' },
-    { id: 12, name: 'گوشی سامسونگ Galaxy A12', price: '4.000.000', img: '/images/products/p102.png', cat: 'گوشی موبایل' },
-    { id: 13, name: 'گوشی شیائومی POCO X3',    price: '3.000.000', img: '/images/products/p103.png', cat: 'گوشی موبایل' },
-  ],
-  laptop: [
-    { id: 20, name: 'لپ‌تاپ ایسوس VivoBook X543', price: '16.000.000', img: '/images/products/p200.png', cat: 'لپ تاپ' },
-    { id: 21, name: 'لپ‌تاپ لنوو IdeaPad 3',      price: '18.000.000', img: '/images/products/p201.png', cat: 'لپ تاپ' },
-    { id: 22, name: 'لپ‌تاپ اچ‌پی Pavilion',      price: '22.000.000', img: '/images/products/p202.png', cat: 'لپ تاپ' },
-    { id: 23, name: 'لپ‌تاپ دل Inspiron 15',      price: '20.000.000', img: '/images/products/p203.png', cat: 'لپ تاپ' },
-  ],
-  computer: [
-    { id: 30, name: 'مودم روتر دی-لینک',    price: '4.800.000', img: '/images/products/p303.png', cat: 'تجهیزات' },
-    { id: 31, name: 'هارد اکسترنال سیگیت',  price: '2.500.000', img: '/images/products/p304.png', cat: 'تجهیزات' },
-    { id: 32, name: 'رم کامپیوتر کینگستون', price: '1.200.000', img: '/images/products/p305.png', cat: 'تجهیزات' },
-    { id: 33, name: 'کارت گرافیک گیگابایت', price: '8.000.000', img: '/images/products/p306.png', cat: 'تجهیزات' },
-  ],
-  camera: [
-    { id: 40, name: 'دوربین کانن EOS 2000D', price: '12.000.000', img: '/images/products/p400.png', cat: 'دوربین' },
-    { id: 41, name: 'دوربین سونی Alpha A6000', price: '18.000.000', img: '/images/products/p401.png', cat: 'دوربین' },
-    { id: 42, name: 'دوربین نیکون D3500',    price: '14.000.000', img: '/images/products/p402.png', cat: 'دوربین' },
-    { id: 43, name: 'دوربین دیجیتال AX6065', price: '9.000.000',  img: '/images/products/p403.png', cat: 'دوربین' },
-  ],
-};
+import axios from 'axios';
+import API_URL from '../api';
 
 const tabs = [
-  { key: 'mobile',   label: 'گوشی موبایل' },
-  { key: 'laptop',   label: 'لپ تاپ' },
-  { key: 'computer', label: 'تجهیزات کامپیوتر' },
-  { key: 'camera',   label: 'دوربین' },
+  { key: 'all', label: 'همه پوشاک' },
+  { key: 'denim', label: 'جین و شلوار' },
+  { key: 'tops', label: 'پیراهن و تیشرت' },
+  { key: 'outerwear', label: 'هودی و کت' },
 ];
 
-const NO_IMG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect width='200' height='200' fill='%23f5f5f5'/%3E%3C/svg%3E";
+const getCategoryText = (product) => {
+  const category = product.category;
+  return typeof category === 'object'
+    ? `${category?.name || ''} ${category?.slug || ''}`
+    : String(category || '');
+};
+
+const matchesTab = (product, key) => {
+  if (key === 'all') return true;
+  const text = `${product.name || ''} ${product.slug || ''} ${getCategoryText(product)}`.toLowerCase();
+  if (key === 'denim') return /جین|شلوار|jean|denim/.test(text);
+  if (key === 'tops') return /تیشرت|تی‌شرت|پیراهن|shirt|tee/.test(text);
+  return /هودی|سویشرت|کت|کاپشن|hoodie|jacket/.test(text);
+};
+
+const formatPrice = (price) => new Intl.NumberFormat('fa-IR').format(Number(price) || 0);
 
 export default function BestSellers() {
-  const [active, setActive] = useState('mobile');
-
+  const [products, setProducts] = useState([]);
+  const [active, setActive] = useState('all');
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    let mounted = true;
+    axios.get(`${API_URL}/api/products/`)
+      .then(({ data }) => {
+        const items = Array.isArray(data) ? data : data?.results || [];
+        if (mounted) setProducts(items);
+      })
+      .catch((error) => {
+        console.error('خطا در دریافت محصولات پرفروش:', error);
+        if (mounted) setProducts([]);
+      })
+      .finally(() => {
+        if (mounted) setLoading(false);
+      });
+    return () => { mounted = false; };
+  }, []);
+  const visibleProducts = useMemo(
+    () => products.filter((product) => matchesTab(product, active)).slice(0, 8),
+    [products, active],
+  );
+  if (loading) return null;
   return (
-    <section id="best-sellers" className="pt-4">
-      <h1 className="section-title">پرفروش‌ترین محصولات</h1>
-      <div className="container pt-4">
-
-        {/* تب‌ها */}
-        <div className="row pb-2 pb-sm-4">
-          <div className="col-12 text-center">
-            <div style={{display:'flex', flexWrap:'nowrap', overflowX:'auto', gap:'8px', paddingBottom:'4px', boxShadow:'10px'}}>
-
-
-              {tabs.map(tab => (
-               <button
-                    key={tab.key}
-                    type="button"
-                    className={`btn most-sales-categories ${active === tab.key ? 'active' : ''}`}
-                    onClick={() => setActive(tab.key)}
-                    style={{
-                      border: '1.5px solid #e0e0e0',
-                      borderRadius: '20px',
-                      padding: '6px 16px',
-                      margin: '4px',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.10)',
-                      background: active === tab.key ? '#fcb941' : '#fff',
-                      color: active === tab.key ? '#fff' : '#333',
-                      fontWeight: active === tab.key ? 'bold' : 'normal',
-                      transition: 'all 0.2s',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+    <section id="best-sellers" className="ms-best-sellers py-4 py-md-5">
+      <div className="container">
+        <div className="d-flex align-items-end justify-content-between gap-3 flex-wrap mb-3">
+          <div>
+            <span className="ms-eyebrow">MEHRSAM JEANS</span>
+            <h2 className="section-title text-end mb-1">پیشنهادهای مهرسام</h2>
+            <p className="text-muted mb-0">انتخاب‌هایی برای استایل روزمره و جین</p>
           </div>
+          <Link to="/products" className="ms-view-all">مشاهده همه محصولات ←</Link>
         </div>
-
-        {/* محصولات */}
-        <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-md-4">
-          {data[active].map(product => (
-            <div key={product.id} className="col">
-              <div className="encode4326654321vfb">
-                <Link to={`/product/${product.id}`}>
-                  <div className="image"
-                    style={{ backgroundImage: `url('${product.img}')` }}>
-                  </div>
-                </Link>
-                <div className="details p-3">
-                  <div className="category">
-                    <Link to="/products">{product.cat}</Link>
-                  </div>
-                  <Link to={`/product/${product.id}`}><h2>{product.name}</h2></Link>
-                  <div className="encode4365gbf265g43d">{product.price} تومان</div>
-                  <div className="rate">
-                    <i className="fa fa-star"></i>
-                    <i className="fa fa-star"></i>
-                    <i className="fa fa-star"></i>
-                    <i className="fa fa-star"></i>
-                    <i className="fa fa-star-half-alt"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div className="ms-product-tabs d-flex gap-2 overflow-auto pb-2 mb-3" role="group" aria-label="فیلتر پوشاک">
+          {tabs.map((tab) => (
+            <button
+              key={tab.key}
+              type="button"
+              className={`ms-product-tab ${active === tab.key ? 'active' : ''}`}
+              aria-pressed={active === tab.key}
+              onClick={() => setActive(tab.key)}
+            >
+              {tab.label}
+            </button>
           ))}
         </div>
-
+        {visibleProducts.length === 0 ? (
+          <div className="ms-empty-products text-center py-4">
+            <p className="mb-2">{products.length ? 'در این گروه محصولی پیدا نشد.' : 'فعلاً محصولی برای نمایش در دسترس نیست.'}</p>
+            <Link to="/products">رفتن به فروشگاه</Link>
+          </div>
+        ) : (
+          <div className="row row-cols-2 row-cols-md-3 row-cols-xl-4 g-2 g-md-3">
+            {visibleProducts.map((product) => (
+              <div className="col" key={product.id}>
+                <article className="ms-product-card h-100">
+                  <Link to={`/product/${product.id}`} className="ms-product-image">
+                    <img
+                      src={product.image || '/images/user-no-image.jpg'}
+                      alt={product.name}
+                      loading="lazy"
+                      onError={(event) => { event.currentTarget.src = '/images/user-no-image.jpg'; }}
+                    />
+                  </Link>
+                  <div className="ms-product-info">
+                    <span className="ms-product-category">{getCategoryText(product).trim() || 'پوشاک'}</span>
+                    <Link to={`/product/${product.id}`} className="ms-product-name">{product.name}</Link>
+                    <div className="ms-product-price">{formatPrice(product.price)} <small>تومان</small></div>
+                    <span className={`ms-stock ${product.stock > 0 ? 'in-stock' : 'out-stock'}`}>
+                      {product.stock > 0 ? 'موجود در انبار' : 'ناموجود'}
+                    </span>
+                  </div>
+                </article>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
