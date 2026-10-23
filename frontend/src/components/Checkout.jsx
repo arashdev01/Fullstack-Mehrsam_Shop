@@ -3,15 +3,13 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useCart } from '../CartContext';
+import API_URL from '../api';
 
-const deliveryDates = [
-  { id: 'date1', day: 'دوشنبه', date: '20 تیر 1400' },
-  { id: 'date2', day: 'سه شنبه', date: '21 تیر 1400' },
-  { id: 'date3', day: 'چهارشنبه', date: '22 تیر 1400' },
-  { id: 'date4', day: 'پنج شنبه', date: '23 تیر 1400' },
-  { id: 'date5', day: 'جمعه', date: '24 تیر 1400' },
-  { id: 'date6', day: 'شنبه', date: '25 تیر 1400' },
-];
+const deliveryDates = Array.from({ length: 6 }, (_, index) => {
+  const date = new Date();
+  date.setDate(date.getDate() + index + 2);
+  return { id: `date${index + 1}`, day: date.toLocaleDateString('fa-IR', { weekday: 'long' }), date: date.toLocaleDateString('fa-IR', { day: 'numeric', month: 'long' }) };
+});
 
 export default function Checkout() {
   const { cartItems: cart, clearCart } = useCart();
@@ -22,14 +20,14 @@ export default function Checkout() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const address = {
-    province: 'فارس',
-    city: 'شیراز',
-    address: 'بلوار آزادگان، کارخانه نوآوری شیراز',
-    postal: '1234567890',
-    receiver: 'مصطفی',
-    phone: '09351234567',
-  };
+  const [address, setAddress] = useState({
+    province: '', city: '', address: '',
+    postal: '', receiver: '', phone: ''
+  });
+  const updateAddress = (event) => setAddress((prev) => ({ ...prev, [event.target.name]: event.target.value }));
+  const addressFields = [['province', 'استان'], ['city', 'شهر'], ['address', 'نشانی کامل'],
+    ['postal', 'کدپستی'], ['receiver', 'نام تحویل‌گیرنده'], ['phone', 'شماره موبایل']];
+
 
   const totalPrice = cart.reduce(function (sum, item) {
     return sum + Number(item.price) * item.quantity;
@@ -46,6 +44,10 @@ export default function Checkout() {
 
     if (cart.length === 0) {
       setError('سبد خرید شما خالی است');
+      return;
+    }
+    if (!address.province.trim() || !address.city.trim() || !address.address.trim() || !address.receiver.trim() || !/^09\d{9}$/.test(address.phone.trim())) {
+      setError('استان، شهر، نشانی، نام تحویل‌گیرنده و شماره موبایل معتبر را وارد کنید.');
       return;
     }
 
@@ -77,7 +79,7 @@ export default function Checkout() {
         }),
       };
 
-      const response = await axios.post('/api/orders/', orderData);
+      const response = await axios.post(`${API_URL}/api/orders/`, orderData);
 
       console.log('Order created:', response.data);
       console.log('Selected delivery date:', selectedDate);
@@ -86,7 +88,7 @@ export default function Checkout() {
 
       const orderId = response.data.order_id || '';
 
-      navigate('/thankyou?status=card&order_id=' + orderId);
+      navigate('/thankyou?status=pending&order_id=' + orderId);
     } catch (err) {
       console.error('Order creation error:', err);
 
@@ -152,22 +154,13 @@ export default function Checkout() {
                             >
                               <div className="p-3 ml-3 mb-2 mb-md-0 address-to-send">
 
-                                <div className="address-title">
-                                  {address.province}، {address.city}،{' '}
-                                  {address.address}
-                                </div>
-
-                                <div className="row mt-2">
-
-                                  <div className="col-12 col-md-4">
-                                    کدپستی: {address.postal}
-                                  </div>
-
-                                  <div className="col-12 col-md-8">
-                                    تحویل گیرنده: {address.receiver} |{' '}
-                                    {address.phone}
-                                  </div>
-
+                                <div className="address-title mb-2">اطلاعات تحویل سفارش را وارد کنید</div>
+                                <div className="row g-2">
+                                  {addressFields.map(([name, label]) => (
+                                    <div key={name} className={name === 'address' ? 'col-12' : 'col-6 col-md-4'}>
+                                      <input className="form-control" name={name} placeholder={label} aria-label={label} value={address[name]} onChange={updateAddress} required={name !== 'postal'} type={name === 'phone' ? 'tel' : 'text'} />
+                                    </div>
+                                  ))}
                                 </div>
                               </div>
                             </div>
