@@ -13,17 +13,17 @@ router.register(r'contact', views.ContactMessageViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-
     # کاربران
     path('register/', views.register_user),
     path('login/', views.login_user),
-
     # JWT توکن
     path('token/', TokenObtainPairView.as_view()),
     path('token/refresh/', TokenRefreshView.as_view()),
 
     # سفارش
     path('orders/', views.create_order),
+    path('site-settings/', views.site_settings),
+    path('newsletter/', views.newsletter_subscribe),
 
     # درگاه پرداخت
     path('payment/request/', views.payment_request),
