@@ -19,7 +19,7 @@ body {
   padding: 0;
   /* یک رنگ پس‌زمینه کلی تیره برای کل سایت */
   background-color: #FDFBF7; 
-  /* اگر بخواهید رنگ روشن باشد: background-color: #f8f9fa; */
+  /* اگر بخواهید رنگ روشن باشد: background-color: #FDFBF7; */
   font-family: 'IRANSans', 'Vazirmatn', Tahoma, sans-serif; /* فونت پیش‌فرض کل سایت */
   font-size: 16px;
 }
