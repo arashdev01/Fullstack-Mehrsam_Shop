@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import API_URL from '../api';
 
 export default function Contact() {
     const [form, setForm] = useState({ name: '', tel: '', email: '', subject: '', message: '' });
@@ -7,11 +9,14 @@ export default function Contact() {
 
     const handleChange = e => setForm({ ...form, [e.target.id]: e.target.value });
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault();
-        setSent(true);
-        setTimeout(() => setSent(false), 4000);
-        setForm({ name: '', tel: '', email: '', subject: '', message: '' });
+        if (!form.tel.trim() && !form.email.trim()) { window.alert('شماره تماس یا ایمیل را وارد کنید.'); return; }
+        try {
+            const payload = { name: form.name, email_or_phone: form.tel.trim() || form.email.trim(), subject: form.subject, message: form.message };
+            await axios.post(API_URL + '/api/contact/', payload);
+            setSent(true); setTimeout(() => setSent(false), 4000); setForm({ name: '', tel: '', email: '', subject: '', message: '' });
+        } catch { window.alert('ارسال پیام انجام نشد؛ لطفاً دوباره تلاش کنید.'); }
     };
 
     return (
@@ -45,23 +50,20 @@ export default function Contact() {
                                     <div className="info">
                                         <i className="fa fa-phone"></i>
                                         <div className="title">تلفن تماس:</div>
-                                        <div>02112345678</div>
+                                        <div>—</div>
                                         <div>09351234567</div>
                                     </div>
                                     <div className="info">
                                         <i className="fa fa-envelope"></i>
-                                        <div className="title">پست الکترونیک:</div>
-                                        <div>info@rubik.com</div>
+                                        <div className="title">ارتباط با ما:</div>
+                                        <div>برای ارتباط، فرم ارسال پیام را تکمیل کنید.</div>
                                     </div>
                                 </div>
-
                                 {/* فرم ارسال پیام */}
                                 <div className="col-12 col-lg-7 p-4">
                                     <div className="title">ارسال پیام</div>
                                     <p>نظرات، پیشنهادات و انتقادات سازنده خود را از طریق فرم زیر با ما در میان بگذارید.</p>
-
                                     {sent && <div className="alert alert-success">پیام شما با موفقیت ارسال شد!</div>}
-
                                     <form onSubmit={handleSubmit}>
                                         <div className="form-group mb-2">
                                             <label htmlFor="name">نام شما :</label>
@@ -73,7 +75,7 @@ export default function Contact() {
                                         </div>
                                         <div className="form-group mb-2">
                                             <label htmlFor="email">پست الکترونیک :</label>
-                                            <input type="text" className="form-control" id="email" value={form.email} onChange={handleChange} />
+                                            <input type="email" className="form-control" id="email" value={form.email} onChange={handleChange} />
                                         </div>
                                         <div className="form-group mb-2">
                                             <label htmlFor="subject">موضوع پیام :</label>
@@ -88,7 +90,6 @@ export default function Contact() {
                                         </div>
                                     </form>
                                 </div>
-
                                 {/* نقشه */}
                                 <div className="col-12 mt-4 px-0">
                                     <iframe
@@ -102,7 +103,6 @@ export default function Contact() {
                                         title="نقشه"
                                     ></iframe>
                                 </div>
-
                             </div>
                         </div>
                     </div>
