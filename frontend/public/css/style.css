@@ -2004,64 +2004,64 @@ img {
   color: #4270b6;
 }
 
-/* Mobile Menu - Slide-in مثل دموی اصلی */
-.mobile-menu-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 1050;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.4s ease;
-}
+/* API-backed product cards */
 
-.mobile-menu-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
 
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 280px;
-  height: 100%;
-  background: white;
-  box-shadow: -10px 0 30px rgba(0,0,0,0.2);
-  transition: right 0.4s cubic-bezier(0.32, 0.72, 0, 1);
-  z-index: 1060;
-  padding: 20px;
-}
 
-.mobile-menu.active {
-  right: 0;
-}
 
-.mobile-menu-header {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 30px;
-}
 
-.mobile-menu-list {
-  list-style: none;
-  padding: 0;
-}
 
-.mobile-menu-list li {
-  padding: 14px 0;
-  border-bottom: 1px solid #f0f0f0;
-}
 
-.mobile-menu-list a {
-  font-size: 1.05rem;
-  color: #222;
-  text-decoration: none;
-}
 
+
+
+
+
+
+
+
+
+
+
+
+.ms-eyebrow { color: #6b459b; font-size: .72rem; font-weight: 800; letter-spacing: .12em; }
+.ms-view-all { color: #6b459b; font-size: .9rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
+.ms-view-all:hover { color: #275778; }
+.ms-product-tabs { scrollbar-width: none; }
+.ms-product-tabs::-webkit-scrollbar { display: none; }
+.ms-product-tab { border: 1px solid #e5dbea; border-radius: 999px; background: #fff; color: #342c3d; padding: 8px 15px; white-space: nowrap; font-size: .85rem; }
+.ms-product-tab.active { border-color: #6b459b; background: #6b459b; color: #fff; }
+.ms-product-card { display: flex; flex-direction: column; overflow: hidden; height: 100%; border: 1px solid #eee6f2; border-radius: 16px; background: #fff; transition: transform .2s ease, box-shadow .2s ease; }
+.ms-product-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(52, 44, 61, .1); }
+.ms-product-image { display: flex; align-items: center; justify-content: center; aspect-ratio: 4 / 5; overflow: hidden; background: #fbf7ef; }
+.ms-product-image img { width: 100%; height: 100%; padding: 10px; object-fit: contain; transition: transform .25s ease; }
+.ms-product-card:hover .ms-product-image img { transform: scale(1.035); }
+.ms-product-info { display: flex; flex: 1; flex-direction: column; align-items: flex-start; gap: 7px; padding: 14px; }
+.ms-product-category { color: #786e82; font-size: .76rem; }
+.ms-product-name { display: -webkit-box; min-height: 2.8em; overflow: hidden; color: #342c3d; font-size: .94rem; font-weight: 750; line-height: 1.45; text-decoration: none; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.ms-product-name:hover { color: #6b459b; }
+.ms-product-price { color: #6b459b; font-size: 1rem; font-weight: 800; margin-top: auto; }
+.ms-product-price small { color: #786e82; font-size: .72rem; font-weight: 500; }
+.ms-stock { border-radius: 999px; font-size: .72rem; padding: 3px 9px; }
+.ms-stock.in-stock { background: #e8f5ed; color: #20633c; }
+.ms-stock.out-stock { background: #fcebea; color: #9b3530; }
+.ms-empty-products { border: 1px dashed #d8c8e6; border-radius: 16px; background: #fff; color: #786e82; }
+.ms-empty-products a { color: #6b459b; font-weight: 700; }
+.ms-best-sellers { overflow: hidden; }
+@media (max-width: 575px) {
+  .ms-product-image { aspect-ratio: 1 / 1; }
+  .ms-product-info { gap: 5px; padding: 10px; }
+  .ms-product-name { min-height: 2.8em; font-size: .8rem; }
+  .ms-product-price { font-size: .87rem; }
+  .ms-product-tabs { margin-inline: -4px; padding-inline: 4px; }
+  .ms-product-tab { padding: 7px 12px; font-size: .78rem; }
+  .ms-stock { font-size: .67rem; }
+  .ms-view-all { font-size: .78rem; }
+  .ms-best-sellers { padding-block: 12px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ms-product-card, .ms-product-image img { transition: none; }
+}
 /* --- فقط بخش مدیا کوئری را جایگزین کن --- */
 @media (max-width: 768px) {
 
