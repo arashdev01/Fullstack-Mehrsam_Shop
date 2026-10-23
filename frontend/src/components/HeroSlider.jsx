@@ -38,10 +38,10 @@ export default function HeroSlider() {
       <style>{`
         #hero-slider .slide-wrap {
           position: relative;
-          height: 400px;
+          height: clamp(250px, 34vw, 400px);
           border-radius: 12px;
           overflow: hidden;
-          background: #f5f5f5;
+          background: #fbf7ef;
         }
         #hero-slider .slide-img {
           position: absolute;
@@ -53,7 +53,7 @@ export default function HeroSlider() {
         }
         #hero-slider .slide-content {
           position: absolute;
-          right: 60px;
+          right: clamp(16px, 5vw, 60px);
           top: 50%;
           transform: translateY(-50%);
           text-align: right;
@@ -65,7 +65,7 @@ export default function HeroSlider() {
           margin-bottom: 8px;
         }
         #hero-slider .slide-title {
-          font-size: 42px;
+          font-size: clamp(25px, 3.2vw, 42px);
           font-weight: 900;
           color: #1a1a2e;
           line-height: 1.2;
@@ -73,12 +73,12 @@ export default function HeroSlider() {
         }
         #hero-slider .slide-sub {
           font-size: 16px;
-          color: #f5a623;
+          color: #6b459b;
           margin-bottom: 20px;
           font-weight: 600;
         }
         #hero-slider .slide-btn {
-          background: #f5a623;
+          background: #6b459b;
           color: #fff;
           border: none;
           padding: 10px 28px;
@@ -88,7 +88,7 @@ export default function HeroSlider() {
           text-decoration: none;
           display: inline-block;
         }
-        #hero-slider .slide-btn:hover { background: #e09500; color: #fff; }
+        #hero-slider .slide-btn:hover { background: #523477; color: #fff; }
         #hero-slider .nav-btn {
           position: absolute;
           top: 50%;
@@ -126,7 +126,7 @@ export default function HeroSlider() {
           cursor: pointer;
           transition: background 0.3s;
         }
-        #hero-slider .dot.active { background: #f5a623; border-color: #f5a623; }
+        #hero-slider .dot.active { background: #6b459b; border-color: #6b459b; }
       `}</style>
 
       <div className="container-fluid px-3 px-lg-4">
