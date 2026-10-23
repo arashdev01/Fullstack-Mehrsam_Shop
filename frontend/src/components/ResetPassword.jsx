@@ -36,11 +36,11 @@ export default function ResetPassword() {
                                 </div>
                                 <div className="col-12 col-lg-7 pt-5 pt-md-0 align-self-center">
                                     <div className="title">بازیابی رمز</div>
-                                    <p>برای بازیابی رمز عبور، پست الکترونیک خود را وارد کنید.</p>
+                                    <p>فرم بازیابی رمز عبور تا زمان اتصال سرویس سرور غیرفعال است.</p>
 
                                     {sent ? (
                                         <div className="alert alert-success rounded-3">
-                                            لینک بازیابی رمز عبور به ایمیل شما ارسال شد!
+                                            سرویس بازیابی رمز هنوز به سرور متصل نشده است؛ لطفاً با پشتیبانی تماس بگیرید.
                                         </div>
                                     ) : (
                                         <form onSubmit={handleSubmit}>
