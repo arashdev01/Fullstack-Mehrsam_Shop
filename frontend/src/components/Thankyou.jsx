@@ -6,18 +6,18 @@ export default function ThankYou() {
   const status = params.get('status');
   const refId  = params.get('ref_id');
   const { clearCart } = useCart();
-  const isSuccess = status === 'success';
+  const isSuccess = status === 'success' && Boolean(refId) && Boolean(params.get('order_id'));
   const isPending = status === 'pending';
   useEffect(() => { if (isSuccess) clearCart(); }, [isSuccess, clearCart]);
   // اطلاعات نمایشی (در پروژه واقعی از API بگیر)
   const order = {
     trackingCode: refId || '—',
-    date: new Date().toLocaleDateString('fa-IR'),
-    total: 'طبق سفارش ثبت‌شده',
+    date: '—',
+    total: 'اطلاعات مبلغ در این صفحه دریافت نشده است',
     discount: '—',
-    shipping: 'طبق سفارش',
+    shipping: '—',
     paymentMethod: 'پرداخت اینترنتی زرین‌پال',
-    address: 'اطلاعات نشانی در جزئیات سفارش قابل مشاهده است.',
+    address: 'جزئیات نشانی از API دریافت نشده و در این صفحه نمایش داده نمی‌شود.',
     receiver: '—',
     phone: '—',
     postal: '—',
@@ -51,7 +51,7 @@ export default function ThankYou() {
             ) : (
               <div className={`alert ${isPending ? 'alert-warning' : 'alert-danger'} rounded-4 p-4 mb-4 text-end`}>
                 <h4 className={`fw-bold ${isPending ? 'text-dark' : 'text-danger'}`}>{isPending ? 'سفارش دریافت شد؛ پرداخت تأیید نشده است.' : '❌ پرداخت ناموفق بود.'}</h4>
-                <p className="mb-0">{isPending ? 'درگاه پرداخت آنلاین هنوز به‌طور کامل پیکربندی نشده است؛ این سفارش پرداخت‌شده تلقی نمی‌شود.' : 'مبلغی از حساب شما کسر نشده است. لطفاً دوباره تلاش کنید.'}</p>
+                <p className="mb-0">{isPending ? 'نتیجهٔ پرداخت هنوز از درگاه تأیید نشده است؛ تا تأیید نهایی، این سفارش را پرداخت‌شده در نظر نگیرید.' : 'مبلغی از حساب شما کسر نشده است. لطفاً دوباره تلاش کنید.'}</p>
                 <Link to={isPending ? '/' : '/checkout'} className="btn btn-primary rounded-pill mt-2 px-4">{isPending ? 'بازگشت به فروشگاه' : 'بازگشت به پرداخت'}</Link>
               </div>
             )}
@@ -77,8 +77,8 @@ export default function ThankYou() {
 
                 <div className="row py-2 border-bottom">
                   <div className="col-12 col-md-4 fw-bold">مبلغ پرداختی:</div>
-                  <div className="col-12 col-md-4">{order.total} تومان</div>
-                  <div className="col-12 col-md-4 text-success">جمع تخفیف: {order.discount} تومان</div>
+                  <div className="col-12 col-md-4">{order.total}</div>
+                  <div className="col-12 col-md-4 text-success">جمع تخفیف: {order.discount}</div>
                 </div>
 
                 <div className="row py-2 border-bottom">
@@ -88,7 +88,7 @@ export default function ThankYou() {
 
                 <div className="row py-2 border-bottom">
                   <div className="col-12 col-md-4 fw-bold">هزینه ارسال:</div>
-                  <div className="col-12 col-md-8">{order.shipping} تومان</div>
+                  <div className="col-12 col-md-8">{order.shipping}</div>
                 </div>
 
                 <div className="row py-3">
