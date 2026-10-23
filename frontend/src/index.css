@@ -5,7 +5,7 @@
 
 body {
   font-family: 'Tahoma', 'Segoe UI', sans-serif;
-  background-color: #f8f9fa;
+  background-color: #FDFBF7;
   margin: 0;
 }
 
@@ -18,8 +18,8 @@ body {
   margin: 0;
   padding: 0;
   /* یک رنگ پس‌زمینه کلی تیره برای کل سایت */
-  background-color: #5697f8f0; 
+  background-color: #FDFBF7; 
   /* اگر بخواهید رنگ روشن باشد: background-color: #f8f9fa; */
-  font-family: vazir, sans-serif; /* فونت پیش‌فرض کل سایت */
+  font-family: 'IRANSans', 'Vazirmatn', Tahoma, sans-serif; /* فونت پیش‌فرض کل سایت */
   font-size: 16px;
 }
