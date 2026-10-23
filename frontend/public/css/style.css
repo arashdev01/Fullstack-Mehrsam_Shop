@@ -142,7 +142,7 @@ section#header #encode43254bvfb #btn-login-register a:hover {
 }
 section#header #encode43254bvfb .btn-warning {
   color: white;
-  background-color: #fcb941;
+  background-color: var(--ms-purple);
   opacity: 1;
   transition: 0.3s;
 }
@@ -259,7 +259,7 @@ section#encode4365gbf2vfc65g43d .on-sale-encode4326654321vfb .time-counter .coun
   font-size: 22px;
   font-weight: 100;
   color: white;
-  background-color: #fcb941;
+  background-color: var(--ms-purple);
   border-radius: 3px;
   margin-bottom: 5px;
 }
@@ -415,12 +415,12 @@ section.inner-page#products-page #order-filters .products-view-type {
   transition: 0.2s;
 }
 section.inner-page#products-page #order-filters .products-view-type:hover {
-  color: #fcb941;
+  color: var(--ms-purple);
   transition: 0.2s;
 }
 section.inner-page#products-page #order-filters .products-view-type.active {
-  color: #fcb941;
-  border: 1px solid #fcb941;
+  color: var(--ms-purple);
+  border: 1px solid var(--ms-purple);
 }
 section.inner-page#products-page #order-filters .order-filter {
   font-size: 12px;
@@ -433,13 +433,13 @@ section.inner-page#products-page #order-filters .order-filter {
 }
 section.inner-page#products-page #order-filters .order-filter:hover {
   color: white;
-  background-color: #fcb941;
+  background-color: var(--ms-purple);
   opacity: 0.8;
   transition: 0.2s;
 }
 section.inner-page#products-page #order-filters .order-filter.active {
   color: white;
-  background-color: #fcb941;
+  background-color: var(--ms-purple);
 }
 section.inner-page#products-page .filters-container input[type=checkbox], section.inner-page#products-page .filters-container input[type=radio] {
   width: 22px;
@@ -472,7 +472,7 @@ section.inner-page#products-page .filters-container .encode4365gbf265g43d-range 
 section.inner-page#products-page .filters-container .btn-warning {
   font-family: "vazir-light-fd";
   font-size: 15px;
-  background-color: #fcb941;
+  background-color: var(--ms-purple);
   border: 1px solid #282828;
   border-radius: 10px;
   transition: 0.3s;
@@ -492,7 +492,7 @@ section.inner-page#products-page .side-product h2 {
   transition: 0.1s;
 }
 section.inner-page#products-page .side-product h2:hover {
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 section.inner-page#products-page .side-product .image {
   min-height: 65px;
@@ -505,7 +505,7 @@ section.inner-page#products-page .side-product .image {
 section.inner-page#products-page .side-product .encode4365gbf265g43d {
   font-family: "vazir-fd";
   font-size: 12px;
-  color: #fcb941;
+  color: var(--ms-purple);
   line-height: 19px;
 }
 section.inner-page#products-page .side-product .views {
@@ -556,7 +556,7 @@ section.inner-page#products-page #pagination-bg .pagination #next-page {
   left: 10px;
 }
 section.inner-page#products-page #pagination-bg .page-item.active .page-link {
-  background-color: #fcb941 !important;
+  background-color: var(--ms-purple) !important;
   color: #fff !important;
 }
 section.inner-page#product-page .image {
@@ -667,7 +667,7 @@ section.inner-page#product-page #product-intro hr {
   border: 0.5px solid lightgray;
 }
 section.inner-page#product-page #product-intro .stars-container svg {
-  color: #fcb941;
+  color: var(--ms-purple);
   font-size: 14px;
   margin-left: -2px;
 }
@@ -683,7 +683,7 @@ section.inner-page#product-page #product-intro .encode4365gbf265g43d-container .
 section.inner-page#product-page #product-intro .encode4365gbf265g43d-container .encode4365gbf265g43d {
   font-family: "vazir-bold-fd";
   font-size: 27px;
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 section.inner-page#product-page #product-intro .encode4365gbf265g43d-container .encode4365gbf265g43d span {
   font-family: "vazir-fd";
@@ -745,7 +745,7 @@ section.inner-page#product-page #product-intro .cta-container .btn-outline-secon
   border-color: gray;
 }
 section.inner-page#product-page #product-intro .cta-container .btn-outline-secondary:hover {
-  background-color: #fcb941;
+  background-color: var(--ms-purple);
   border-color: dimgray;
 }
 section.inner-page#product-page #product-intro .cta-container .btn-outline-secondary.encode43243d {
@@ -779,7 +779,7 @@ section.inner-page#product-page #product-intro #share-links .share-link {
   }
 }
 section.inner-page#product-page #product-intro #share-links .share-link:hover {
-  color: #fcb941;
+  color: var(--ms-purple);
   transition: 0.2s;
 }
 section.inner-page#product-page #product-nav-tabs {
@@ -803,7 +803,7 @@ section.inner-page#product-page #product-nav-tabs #tabs-panel .tab-item {
 }
 section.inner-page#product-page #product-nav-tabs #tabs-panel .tab-item.selected {
   font-family: "vazir-bold-fd";
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 section.inner-page#product-page #product-nav-tabs #tabs-panel .tab-item:focus {
   outline: none;
@@ -815,7 +815,7 @@ section.inner-page#product-page #product-nav-tabs .tabs-container#details-tab .d
   font-size: 16px;
 }
 section.inner-page#product-page #product-nav-tabs .tabs-container#details-tab .detail-title svg {
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 section.inner-page#product-page #product-nav-tabs #html-tab h1, section.inner-page#product-page #product-nav-tabs #html-tab h3, section.inner-page#product-page #product-nav-tabs #html-tab h3, section.inner-page#product-page #product-nav-tabs #html-tab h4, section.inner-page#product-page #product-nav-tabs #html-tab h5, section.inner-page#product-page #product-nav-tabs #html-tab h6 {
   font-family: inherit !important;
@@ -824,13 +824,13 @@ section.inner-page#product-page #product-nav-tabs #html-tab img {
   max-width: 100%;
 }
 section.inner-page#product-page #product-nav-tabs #html-tab a {
-  color: #fcb941 !important;
+  color: var(--ms-purple) !important;
   text-decoration: revert;
 }
 section.inner-page #comments h1, section.inner-page #comments h2 {
   font-family: "vazir-bold-fd";
   font-size: 19px;
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 section.inner-page #comments .comment {
   background-color: white;
@@ -943,7 +943,7 @@ section.inner-page#checkout-page .btn, section.inner-page#checkout-page .form-co
 section.inner-page#checkout-page .title {
   font-family: "vazir-bold-fd";
   font-size: 18px;
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 section.inner-page#checkout-page section#choose-address {
   border: 1px solid lightgray;
@@ -996,9 +996,9 @@ section.inner-page#checkout-page section#select-receive-date .form-check {
   padding-right: 0;
 }
 section.inner-page#checkout-page section#select-receive-date .form-check.selected .send-date {
-  color: #fcb941;
+  color: var(--ms-purple);
   background-color: rgba(0, 181, 244, 0.2);
-  border: 1px solid #fcb941;
+  border: 1px solid var(--ms-purple);
 }
 section.inner-page#checkout-page section#select-receive-date .receive-date {
   font-size: 14px;
@@ -1084,7 +1084,7 @@ section.inner-page#blog-page .blog-side-panel .side-blog-product .image {
 section.inner-page#blog-page .blog-side-panel .side-blog-product .encode4365gbf265g43d {
   font-family: "vazir-bold-fd";
   font-size: 12px;
-  color: #fcb941;
+  color: var(--ms-purple);
   line-height: 19px;
 }
 section.inner-page#blog-page .blog-side-panel .side-blog-product .views {
@@ -1212,7 +1212,7 @@ section.inner-page .team-person .profile-image {
   z-index: 1;
   position: relative;
   padding: 10px;
-  border: 2px solid #fcb941;
+  border: 2px solid var(--ms-purple);
 }
 section.inner-page .team-person .profile-image img {
   max-width: 100%;
@@ -1254,7 +1254,7 @@ section.inner-page .team-person svg {
   display: inline-block;
   font-size: 18px;
   font-weight: normal;
-  color: #fcb941;
+  color: var(--ms-purple);
   opacity: 0.75;
 }
 section.inner-page .team-person i:hover {
@@ -1279,7 +1279,7 @@ section.inner-page#contact-page #contact-page-info .info .title {
   font-size: 20px;
 }
 section.inner-page#contact-page #contact-page-info .info div[class=title] {
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 section.inner-page#contact-page .form-group {
   padding: 10px 0;
@@ -1291,7 +1291,7 @@ section.inner-page#profile-page a {
   color: #282828;
 }
 section.inner-page#profile-page a:hover {
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 section.inner-page#profile-page .modal {
   display: block;
@@ -1332,7 +1332,7 @@ section.inner-page#profile-page .modal .btn-toggle-pass:focus {
   outline: none;
 }
 section.inner-page#profile-page .modal .btn-toggle-pass.active svg {
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 section.inner-page#profile-page #side-panel #full-name {
   font-family: "vazir-bold-fd";
@@ -1351,7 +1351,7 @@ section.inner-page#profile-page #side-panel ul li {
   padding: 8px 0;
 }
 section.inner-page#profile-page #side-panel ul li a.active {
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 section.inner-page#profile-page #side-panel ul li a.active .icon {
   opacity: 1;
@@ -1361,7 +1361,7 @@ section.inner-page#profile-page #side-panel ul li a .icon {
   opacity: 0.7;
 }
 section.inner-page#profile-page #side-panel ul li a:hover {
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 section.inner-page#profile-page #side-panel ul li a:hover .icon {
   opacity: 1;
@@ -1412,7 +1412,7 @@ section.inner-page#profile-page #side-panel .menu-container .custom-switch .cust
 }
 section.inner-page#profile-page #side-panel .menu-container #steps-slider.noUi-horizontal {
   height: 4px;
-  background-color: #fcb941;
+  background-color: var(--ms-purple);
 }
 section.inner-page#profile-page #side-panel .menu-container #steps-slider .noUi-handle {
   width: 28px;
@@ -1445,7 +1445,7 @@ section.inner-page#profile-page #side-panel .menu-container .encode4365gbf265g43
 section.inner-page#profile-page #side-panel .menu-container .btn-info {
   font-family: "vazir-light-fd";
   font-size: 15px;
-  background-color: #fcb941;
+  background-color: var(--ms-purple);
   border-radius: 10px;
 }
 section.inner-page#profile-page #profile-fields .profile-field a svg {
@@ -1489,7 +1489,7 @@ section.inner-page#profile-page #addresses .address {
 }
 section.inner-page#profile-page #addresses .address a svg {
   font-size: 24px;
-  color: #fcb941;
+  color: var(--ms-purple);
   padding-top: 5px;
   transition: 0.2s;
 }
@@ -1518,18 +1518,18 @@ section.inner-page#profile-page #orders-status ul li a {
   font-size: 14px;
 }
 section.inner-page#profile-page #orders-status ul li a.active {
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 section.inner-page#profile-page #orders-status ul li a.active .badge {
-  background-color: #fcb941;
+  background-color: var(--ms-purple);
 }
 section.inner-page#profile-page #orders-status ul li a:hover {
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 section.inner-page#profile-page #orders-status ul li .badge {
   font-size: 12px;
   font-weight: normal;
-  background-color: #fcb941;
+  background-color: var(--ms-purple);
   padding: 5px 7px;
 }
 section.inner-page#profile-page #orders-status .nowrap > .row {
@@ -1582,7 +1582,7 @@ section.inner-page#profile-page .order .footer span {
 section.inner-page section#mobile-forbidden {
   font-size: 35px;
   line-height: 50px;
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 section.inner-page div#compare-table #products-compared img {
   width: 80%;
@@ -1601,7 +1601,7 @@ section.inner-page div#compare-table #products-compared.nav-fixed .cta-container
   display: none;
 }
 section.inner-page div#compare-table #products-compared .products-compare-item {
-  border-bottom: 2px solid #fcb941;
+  border-bottom: 2px solid var(--ms-purple);
 }
 section.inner-page div#compare-table #products-compared .products-compare-item:after {
   width: 0;
@@ -1645,7 +1645,7 @@ section.inner-page div#compare-table .detail-title {
   font-size: 16px;
 }
 section.inner-page div#compare-table .detail-title i {
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 section.inner-page div#compare-table .sub-detail-title {
   background-color: #eaeaea;
@@ -1678,7 +1678,7 @@ body {
 
 a {
   text-decoration: none;
-  color: #fcb941;
+  color: var(--ms-purple);
   transition: 0.3s;
 }
 a:hover {
@@ -1771,7 +1771,7 @@ img {
   transition: 0.3s;
 }
 .encode4326654321vfb .icons .btn:hover {
-  background-color: #fcb941;
+  background-color: var(--ms-purple);
   color: #ffffff;
   cursor: pointer;
   transition: 0.3s;
@@ -1818,14 +1818,14 @@ img {
 }
 .encode4326654321vfb .encode4365gbf265g43d {
   font-family: "vazir-bold-fd";
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 .encode4326654321vfb .rate {
   padding-top: 5px;
 }
 .encode4326654321vfb .rate svg {
   font-size: 13px;
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 .encode4326654321vfb .rate .encode43bf265g43d {
   font-family: "vazir-light-fd";
@@ -1897,14 +1897,14 @@ img {
 }
 .encode4326654321vfb-row .encode4365gbf265g43d {
   font-family: "vazir-bold-fd";
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 .encode4326654321vfb-row .rate {
   padding-bottom: 5px;
 }
 .encode4326654321vfb-row .rate svg {
   font-size: 13px;
-  color: #fcb941;
+  color: var(--ms-purple);
 }
 .encode4326654321vfb-row .rate .encode43bf265g43d {
   font-family: "vazir-light-fd";
@@ -1949,7 +1949,7 @@ img {
   line-height: 20px;
 }
 .encode43bdsf23da .read-more {
-  color: #fcb941;
+  color: var(--ms-purple);
   font-size: 14px;
   text-align: center;
   padding: 7px 0;
@@ -2099,7 +2099,7 @@ img {
 
   #search-bar {
     height: 38px !important;
-    background: rgb(189, 188, 188) !important;
+    background: var(--ms-lilac) !important;
     border-radius: 8px !important;
   }
 }
