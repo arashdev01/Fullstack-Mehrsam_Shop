@@ -1,175 +1,175 @@
-# ─── shop/views.py — نسخه نهایی و تمیز ───────────────────
+# Shop API views. Payment is intentionally gated until the database and merchant setup are ready.
+
+
+
+
+import os
+from decimal import Decimal
 
 import requests
-from rest_framework import viewsets, filters, status
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from django.shortcuts import redirect
+from rest_framework import filters, status, viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
-from django.shortcuts import redirect
-from django.http import JsonResponse
 
-from .models import Product, Category, Order, Comment, Blog, ContactMessage
-from .serializers import (
-    ProductSerializer, CategorySerializer, CommentSerializer,
-    BlogSerializer, ContactMessageSerializer
-)
 
-# ─────────────────────────────────────────────────────────
-# ۱. محصولات و دسته‌بندی
-# ─────────────────────────────────────────────────────────
+from .models import Blog, Category, Comment, ContactMessage, Newsletter, Order, Product
+
+from .serializers import BlogSerializer, CategorySerializer, CommentSerializer, ContactMessageSerializer, ProductSerializer
+
+
+# Public catalog endpoints are read-only; writes belong in Django admin.
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    filterset_fields = ['category', 'stock']
+    filterset_fields = ['category', 'category__slug', 'stock']
+
     search_fields = ['name', 'description']
+    http_method_names = ['get', 'head', 'options']
+
+
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
-# ─────────────────────────────────────────────────────────
-# ۲. نظرات
-# ─────────────────────────────────────────────────────────
+    http_method_names = ['get', 'head', 'options']
+
 class CommentViewSet(viewsets.ModelViewSet):
+
+
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    http_method_names = ['get', 'post', 'head', 'options']
 
-# ─────────────────────────────────────────────────────────
-# ۳. بلاگ
-# ─────────────────────────────────────────────────────────
+
 class BlogViewSet(viewsets.ModelViewSet):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer
 
-# ─────────────────────────────────────────────────────────
-# ۴. تماس با ما
-# ─────────────────────────────────────────────────────────
-class ContactMessageViewSet(viewsets.ModelViewSet):
-    queryset = ContactMessage.objects.all()
-    serializer_class = ContactMessageSerializer
+    http_method_names = ['get', 'head', 'options']
 
-# ─────────────────────────────────────────────────────────
-# ۵. پیامک (کاوه‌نگار)
-# ─────────────────────────────────────────────────────────
-KAVENEGAR_API_KEY = '676A586A6A456A4C4F4333355876434A6C622F2B4263636D55422B7739552B697A7276616D4A71582B64303D'
-SENDER_NUMBER = '2000660110'
+class ContactMessageViewSet(viewsets.ModelViewSet):
+    queryset = ContactMessage.objects.none()
+    serializer_class = ContactMessageSerializer
+    http_method_names = ['post', 'options']
+
+
+# SMS credentials must be provided through the deployment environment.
+KAVENEGAR_API_KEY = os.environ.get('KAVENEGAR_API_KEY', '')
+SENDER_NUMBER = os.environ.get('KAVENEGAR_SENDER_NUMBER', '2000660110')
+
 
 def send_sms(receptor, message):
+    if not KAVENEGAR_API_KEY or not receptor:
+        return None
     url = f'https://api.kavenegar.com/v1/{KAVENEGAR_API_KEY}/sms/send.json'
     try:
-        response = requests.post(url, data={
-            'receptor': receptor,
-            'sender': SENDER_NUMBER,
-            'message': message,
-        })
+
+        response = requests.post(url, data={'receptor': receptor, 'sender': SENDER_NUMBER, 'message': message}, timeout=8)
+        response.raise_for_status()
         return response.json()
-    except Exception as e:
-        print(f'خطا در ارسال پیامک: {e}')
+    except (requests.RequestException, ValueError) as error:
+        print(f'خطا در ارسال پیامک: {error}')
         return None
 
-# ─────────────────────────────────────────────────────────
-# ۶. ثبت‌نام با پیامک
-# ─────────────────────────────────────────────────────────
+
+@api_view(['GET'])
+def site_settings(request):
+    return Response({'site_name': 'مهرسام جینز', 'logo': '/images/logo.png', 'phone': os.environ.get('PUBLIC_CONTACT_PHONE', '')})
+
+
+@api_view(['POST'])
+def newsletter_subscribe(request):
+    email = str(request.data.get('email', '')).strip().lower()
+    try:
+        validate_email(email)
+    except ValidationError:
+
+        return Response({'error': 'ایمیل معتبر وارد کنید.'}, status=status.HTTP_400_BAD_REQUEST)
+    _, created = Newsletter.objects.get_or_create(email=email)
+    message = 'عضویت در خبرنامه با موفقیت ثبت شد.' if created else 'این ایمیل قبلاً عضو خبرنامه شده است.'
+
+    return Response({'message': message}, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
+
+# Registration
 @api_view(['POST'])
 def register_user(request):
-    username = request.data.get('username', '').strip()
-    password = request.data.get('password', '').strip()
-    phone    = request.data.get('phone', '').strip()
+    username = str(request.data.get('username', '')).strip()
+    password = str(request.data.get('password', ''))
+    phone = str(request.data.get('phone', '')).strip()
 
     if not username or not password:
-        return Response({'error': 'نام کاربری و رمز عبور الزامی است'}, status=400)
-
+        return Response({'error': 'نام کاربری و رمز عبور الزامی است'}, status=status.HTTP_400_BAD_REQUEST)
     if User.objects.filter(username=username).exists():
-        return Response({'error': 'این نام کاربری قبلاً ثبت شده است'}, status=400)
+        return Response({'error': 'این نام کاربری قبلاً ثبت شده است'}, status=status.HTTP_400_BAD_REQUEST)
 
     User.objects.create_user(username=username, password=password)
-
     if phone:
-        send_sms(phone, f'سلام {username} عزیز!\nثبت‌نام شما در روبیک مارکت با موفقیت انجام شد. خوش آمدید!')
+        send_sms(phone, f'سلام {username} عزیز!\nثبت‌نام شما در مهرسام جینز ثبت شد.')
+    return Response({'message': 'ثبت‌نام موفق!'}, status=status.HTTP_201_CREATED)
 
-    return Response({'message': 'ثبت‌نام موفق!'}, status=201)
-
-# ─────────────────────────────────────────────────────────
-# ۷. ورود
-# ─────────────────────────────────────────────────────────
+# Login
 @api_view(['POST'])
 def login_user(request):
-    user = authenticate(
-        username=request.data.get('username'),
-        password=request.data.get('password')
-    )
+    user = authenticate(username=request.data.get('username'), password=request.data.get('password'))
+
     if user:
         return Response({'message': 'ورود موفق', 'username': user.username, 'user_id': user.id})
-    return Response({'error': 'نام کاربری یا رمز عبور اشتباه است'}, status=401)
+    return Response({'error': 'نام کاربری یا رمز عبور اشتباه است'}, status=status.HTTP_401_UNAUTHORIZED)
 
-# ─────────────────────────────────────────────────────────
-# ۸. سفارش
-# ─────────────────────────────────────────────────────────
+
+# Orders: all prices are recalculated from trusted database products, never from browser prices.
 @api_view(['POST'])
 def create_order(request):
-    data = request.data
-    order = Order.objects.create(
-        phone=data['phone'],
-        address=data['address'],
-        total_price=data['total_price'],
-        items=data['items']
-    )
-    send_sms(data['phone'], f'سفارش #{order.id} با موفقیت ثبت شد. روبیک مارکت')
-    return Response({'message': 'موفق', 'order_id': order.id})
+    phone = str(request.data.get('phone', '')).strip()
+    address = str(request.data.get('address', '')).strip()
+    items = request.data.get('items')
+    if not phone or len(phone) > 15 or not address or not isinstance(items, list) or not items:
+        return Response({'error': 'اطلاعات تماس، نشانی و اقلام سفارش الزامی است.'}, status=status.HTTP_400_BAD_REQUEST)
+    quantities = {}
+    for item in items:
 
-# ─────────────────────────────────────────────────────────
-# ۹. درگاه پرداخت زرین‌پال
-# ─────────────────────────────────────────────────────────
-ZARINPAL_MERCHANT = 'YOUR-MERCHANT-ID'  # ← بعداً از پنل زرین‌پال جایگزین کن
-ZARINPAL_REQUEST  = 'https://api.zarinpal.com/pg/v4/payment/request.json'
-ZARINPAL_VERIFY   = 'https://api.zarinpal.com/pg/v4/payment/verify.json'
-ZARINPAL_STARTPAY = 'https://www.zarinpal.com/pg/StartPay/{}'
-CALLBACK_URL      = 'http://127.0.0.1:8000/api/payment/verify/'
+        if not isinstance(item, dict):
+            return Response({'error': 'ساختار اقلام سفارش معتبر نیست.'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            product_id, quantity = int(item.get('product')), int(item.get('quantity'))
+        except (TypeError, ValueError):
+            return Response({'error': 'شناسه محصول یا تعداد معتبر نیست.'}, status=status.HTTP_400_BAD_REQUEST)
+        if product_id < 1 or quantity < 1:
 
+            return Response({'error': 'شناسه محصول و تعداد باید مثبت باشند.'}, status=status.HTTP_400_BAD_REQUEST)
+        quantities[product_id] = quantities.get(product_id, 0) + quantity
+    order_items, total_price = [], Decimal('0')
+    for product_id, quantity in quantities.items():
+        try:
+            product = Product.objects.get(pk=product_id)
+        except Product.DoesNotExist:
+            return Response({'error': 'یکی از محصولات دیگر موجود نیست.'}, status=status.HTTP_400_BAD_REQUEST)
+        if quantity > product.stock:
+            return Response({'error': f'موجودی «{product.name}» برای این تعداد کافی نیست.'}, status=status.HTTP_400_BAD_REQUEST)
+        total_price += product.price * quantity
+
+        order_items.append({'product': product.id, 'name': product.name, 'quantity': quantity, 'price': str(product.price), 'image': product.image.url if product.image else ''})
+    order = Order.objects.create(phone=phone, address=address, total_price=total_price, items=order_items)
+    send_sms(phone, f'سفارش #{order.id} در مهرسام جینز ثبت شد و در انتظار تکمیل است.')
+    return Response({'message': 'سفارش ثبت شد', 'order_id': order.id, 'total_price': str(order.total_price), 'status': order.status}, status=status.HTTP_201_CREATED)
+
+
+# Payment is disabled until a valid merchant ID and persisted authority/ref_id fields are added via a migration.
 @api_view(['POST'])
 def payment_request(request):
-    order_id    = request.data.get('order_id')
-    total_price = request.data.get('total_price')
-
-    response = requests.post(ZARINPAL_REQUEST, json={
-        'merchant_id':  ZARINPAL_MERCHANT,
-        'amount':       int(total_price) * 10,
-        'description':  f'پرداخت سفارش #{order_id}',
-        'callback_url': CALLBACK_URL,
-    })
-    result = response.json()
-
-    if result['data']['code'] == 100:
-        authority = result['data']['authority']
-        Order.objects.filter(id=order_id).update(authority=authority)
-        return JsonResponse({'pay_url': ZARINPAL_STARTPAY.format(authority)})
-    return JsonResponse({'error': 'خطا در اتصال به درگاه'}, status=400)
+    return Response({'error': 'درگاه پرداخت آنلاین هنوز پیکربندی نشده است؛ سفارش را پرداخت‌شده تلقی نکنید.'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
 def payment_verify(request):
-    authority = request.GET.get('Authority')
-    status    = request.GET.get('Status')
 
-    if status != 'OK':
-        return redirect('http://localhost:5173/thankyou?status=failed')
 
-    order = Order.objects.filter(authority=authority).first()
-    if not order:
-        return redirect('http://localhost:5173/thankyou?status=failed')
 
-    response = requests.post(ZARINPAL_VERIFY, json={
-        'merchant_id': ZARINPAL_MERCHANT,
-        'amount':      int(order.total_price) * 10,
-        'authority':   authority,
-    })
-    result = response.json()
-
-    if result['data']['code'] in [100, 101]:
-        ref_id = result['data']['ref_id']
-        order.status = 'paid'
-        order.ref_id = str(ref_id)
-        order.save()
-        return redirect(f'http://localhost:5173/thankyou?status=success&ref_id={ref_id}')
-    return redirect('http://localhost:5173/thankyou?status=failed')
+    return redirect('https://mehrsamjeans.ir/thankyou?status=failed')
