@@ -143,14 +143,7 @@ export function Orders() {
     { key: 'cancelled', label: 'لغو شده' },
   ];
 
-  useEffect(() => {
-    const token = localStorage.getItem('access_token');
-    axios.get(`${API_URL}/api/orders/`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(res => { setOrders(res.data); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, []);
+  useEffect(() => { setLoading(false); }, []);
 
   return (
     <div className="container mt-4 text-end">
@@ -194,7 +187,7 @@ export function Orders() {
             ) : orders.length === 0 ? (
               <div className="custom-container p-5 text-center rounded-3 bg-white shadow-sm">
                 <i className="fa fa-shopping-bag fa-3x text-muted mb-3"></i>
-                <p className="text-muted">هنوز سفارشی ثبت نکرده‌اید</p>
+                <p className="text-muted">تاریخچه سفارش هنوز به حساب کاربری متصل نشده است.</p>
                 <Link to="/" className="btn btn-primary rounded-pill px-4">رفتن به فروشگاه</Link>
               </div>
             ) : (
