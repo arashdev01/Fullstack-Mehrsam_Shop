@@ -26,7 +26,7 @@ export default function ProductList() {
     const search = queryParams.get('search');
     const params = {};
 
-    if (categoryId) params.category = categoryId;
+    if (categoryId) params['category__slug'] = categoryId;
     if (search) params.search = search;
 
     axios.get(url, { params })
