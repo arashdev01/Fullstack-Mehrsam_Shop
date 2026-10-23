@@ -9,7 +9,7 @@ function ProfileSidebar({ active }) {
   const username = localStorage.getItem('username');
 
   const handleLogout = () => {
-    localStorage.clear();
+    localStorage.removeItem('access_token'); localStorage.removeItem('refresh_token'); localStorage.removeItem('username');
     navigate('/');
     window.location.reload();
   };
@@ -86,7 +86,7 @@ export function PersonalInfo() {
       <div className="container-fluid" id="page-hero">
         <div className="container py-3">
           <h1>ناحیه کاربری</h1>
-          <p>به ناحیه کاربری روبیک مارکت خوش آمدید.</p>
+          <p>به ناحیه کاربری مهرسام جینز خوش آمدید.</p>
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb">
               <li className="breadcrumb-item"><Link to="/">صفحه نخست</Link></li>
