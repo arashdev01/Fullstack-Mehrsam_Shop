@@ -79,7 +79,7 @@ export default function Contact() {
                                         </div>
                                         <div className="form-group mb-2">
                                             <label htmlFor="subject">موضوع پیام :</label>
-                                            <input type="text" className="form-control" id="subject" value={form.subject} onChange={handleChange} />
+                                            <input type="text" className="form-control" id="subject" value={form.subject} onChange={handleChange} required />
                                         </div>
                                         <div className="form-group mb-3">
                                             <label htmlFor="message">متن پیام :</label>
