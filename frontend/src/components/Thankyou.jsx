@@ -5,34 +5,35 @@ export default function ThankYou() {
   const status = params.get('status');
   const refId  = params.get('ref_id');
 
-  const isSuccess = status === 'success' || status === 'card';
-  const isFailed  = status === 'failed';
+  const isPending = status === 'pending';
+  const isSuccess = false; // A query-string status is not proof of payment; verification is disabled.
+  const isFailed = !isPending && !isSuccess;
 
   // اطلاعات نمایشی (در پروژه واقعی از API بگیر)
   const order = {
-    trackingCode: refId || '1234564',
+    trackingCode: refId || params.get('order_id') || '—',
     date: new Date().toLocaleDateString('fa-IR'),
-    total: '300,000,000',
-    discount: '100,000',
-    shipping: '30,000',
-    paymentMethod: status === 'card' ? 'کارت به کارت' : 'پرداخت اینترنتی توسط درگاه ملت',
-    address: 'تهران، خیابان انقلاب، خیابان 12 فروردین، کوچه 1، پلاک 1',
-    receiver: 'مصطفی کیانی',
-    phone: '09121234567',
-    postal: '1234567890',
-    status: isSuccess ? 'در حال انجام' : 'ناموفق',
+    total: 'پس از تأیید سفارش اعلام می‌شود',
+    discount: '—',
+    shipping: '—',
+    paymentMethod: 'درگاه پرداخت آنلاین هنوز فعال نیست',
+    address: 'نشانی در جزئیات سفارش ثبت شده است.',
+    receiver: '—',
+    phone: '—',
+    postal: '—',
+    status: isPending ? 'ثبت‌شده، در انتظار پرداخت' : 'نیازمند بررسی',
   };
 
   return (
     <section className="inner-page" id="contact-page">
       <div className="container-fluid" id="page-hero">
         <div className="container py-3">
-          <h1>{isSuccess ? 'پرداخت موفق' : 'پرداخت ناموفق'}</h1>
-          <p>{isSuccess ? 'پرداخت شما با موفقیت انجام شد.' : 'متأسفانه پرداخت شما ناموفق بود.'}</p>
+          <h1>{isPending ? 'سفارش ثبت شد' : isSuccess ? 'پرداخت تأیید شد' : 'وضعیت پرداخت قابل تأیید نیست'}</h1>
+          <p>{isPending ? 'سفارش ثبت شده است، اما پرداخت آنلاین در حال حاضر فعال نیست.' : isSuccess ? 'پرداخت از سمت سرور تأیید شده است.' : 'از روی آدرس صفحه نمی‌توان موفقیت پرداخت را تأیید کرد.'}</p>
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb">
               <li className="breadcrumb-item"><Link to="/">صفحه نخست</Link></li>
-              <li className="breadcrumb-item active">{isSuccess ? 'پرداخت موفق' : 'پرداخت ناموفق'}</li>
+              <li className="breadcrumb-item active">{isPending ? 'در انتظار پرداخت' : isSuccess ? 'پرداخت تأیید شد' : 'وضعیت پرداخت'}</li>
             </ol>
           </nav>
         </div>
@@ -48,11 +49,17 @@ export default function ThankYou() {
                 <h4 className="fw-bold text-success">✅ پرداخت شما با موفقیت انجام شد.</h4>
                 <p className="mb-0">سفارش شما در حال انجام می باشد. تغییر وضعیت سفارش از طریق پیامک خدمت شما اطلاع داده خواهد شد.</p>
               </div>
+            ) : isPending ? (
+              <div className="alert alert-warning rounded-4 p-4 mb-4 text-end">
+                <h4 className="fw-bold">سفارش ثبت شد؛ پرداخت هنوز انجام نشده است.</h4>
+                <p className="mb-0">درگاه آنلاین هنوز پیکربندی نشده؛ این صفحه رسید پرداخت محسوب نمی‌شود.</p>
+                <Link to="/" className="btn btn-primary rounded-pill mt-2 px-4">بازگشت به فروشگاه</Link>
+              </div>
             ) : (
               <div className="alert alert-danger rounded-4 p-4 mb-4 text-end">
-                <h4 className="fw-bold text-danger">❌ پرداخت ناموفق بود.</h4>
-                <p className="mb-0">مبلغی از حساب شما کسر نشده است. لطفاً دوباره تلاش کنید.</p>
-                <Link to="/checkout" className="btn btn-danger rounded-pill mt-2 px-4">بازگشت به پرداخت</Link>
+                <h4 className="fw-bold text-danger">وضعیت پرداخت قابل تأیید نیست.</h4>
+                <p className="mb-0">تا زمانی که سرور پرداخت را تأیید نکرده، این صفحه موفقیت پرداخت را نشان نمی‌دهد.</p>
+                <Link to="/checkout" className="btn btn-danger rounded-pill mt-2 px-4">بازگشت به سفارش</Link>
               </div>
             )}
 
