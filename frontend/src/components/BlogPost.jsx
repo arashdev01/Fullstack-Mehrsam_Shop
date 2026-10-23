@@ -16,7 +16,7 @@ export default function BlogPost() {
     };
 
     return (
-        <section className="inner-page blog-inner-page" id="blog-page">
+        <section className="inner-page blog-inner-page" id="blog-page" data-post-id={id}>
             <div className="container-fluid" id="page-hero">
                 <div className="container py-3">
                     <h1>راهنمای انتخاب و نگهداری لباس جین</h1>
