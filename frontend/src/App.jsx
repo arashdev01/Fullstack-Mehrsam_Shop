@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 // کامپوننت‌های ثابت
 import Header from './components/Header';
@@ -20,7 +20,7 @@ import Newsletter from './components/Newsletter';
 import PopupDiscount from './components/PopupDiscount';
 
 // صفحات فروشگاه
-import ShopPage from './pages/ShopPage';
+// Keep the legacy /shop path, but route shoppers to the live API-backed listing.
 import ProductList from './components/ProductList';
 import ProductDetail from './components/ProductDetail';
 import Cart from './components/Cart';
@@ -74,7 +74,7 @@ function App() {
         />
 
         {/* صفحه فروشگاه قدیمی */}
-        <Route path="/shop" element={<ShopPage />} />
+        <Route path="/shop" element={<Navigate to="/products" replace />} />
 
         {/* لیست تمام محصولات */}
         <Route path="/products" element={<ProductList />} />
