@@ -66,7 +66,7 @@ export default function Header() {
                   display: 'inline-flex',
                   height: '32px',
                   alignItems: 'center',
-                  background: '#28c22d',
+                  background: '#9B7EBD',
                   color: '#000',
                   padding: '2px 15px',
                   borderRadius: '6px',
@@ -78,7 +78,7 @@ export default function Header() {
                 }}>
                   <i className="fa fa-phone" style={{ fontSize: '14px' }}></i>
                   <span style={{ letterSpacing: '1px' }}>{config.phone}</span>
-                  <span style={{ background: '#19aa11e6', height: '32px', color: '#073403', padding: '1px 10px', borderRadius: '5px', fontSize: '11px' }}>تماس</span>
+                  <span style={{ background: '#8B6BAE', height: '32px', color: '#FFFFFF', padding: '1px 10px', borderRadius: '5px', fontSize: '11px' }}>تماس</span>
                 </a>
               </div>
             </div>
@@ -101,26 +101,26 @@ export default function Header() {
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', flexWrap: 'nowrap' }}>
                   {username ? (
                     <div style={{ position: 'relative' }} className="account-dropdown">
-                      <button style={{ background: 'linear-gradient(135deg,#fcb941,#f5a623)', border: 'none', borderRadius: '8px', padding: '7px 16px', color: 'white', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap', fontFamily: 'inherit' }}>
+                      <button style={{ background: 'linear-gradient(135deg,#9B7EBD,#8B6BAE)', border: 'none', borderRadius: '8px', padding: '7px 16px', color: 'white', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap', fontFamily: 'inherit' }}>
                         <i className="fa fa-user-circle"></i>{username}<i className="fa fa-chevron-down" style={{ fontSize: '10px' }}></i>
                       </button>
                       <div className="acc-menu">
                         <Link to="/profile"><i className="fa fa-user"></i> پروفایل</Link>
                         <Link to="/profile/orders"><i className="fa fa-box"></i> سفارشات</Link>
                         <hr style={{ margin: '4px 0' }} />
-                        <a href="/" onClick={(e) => { e.preventDefault(); localStorage.clear(); window.location.reload() }} style={{ color: '#e74c3c' }}><i className="fa fa-sign-out-alt"></i> خروج</a>
+                        <a href="/" onClick={(e) => { e.preventDefault(); localStorage.clear(); window.location.reload() }} style={{ color: '#B85C7A' }}><i className="fa fa-sign-out-alt"></i> خروج</a>
                       </div>
                     </div>
                   ) : (
                     <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                      <Link to="/login" style={{ padding: '6px 14px', borderRadius: '20px', border: '1px solid #fcb941', color: '#fcb941', fontSize: '13px', fontWeight: 'bold', textDecoration: 'none' }}>ورود</Link>
-                      <Link to="/register" style={{ padding: '6px 14px', borderRadius: '20px', background: 'linear-gradient(135deg,#fcb941,#f5a623)', color: 'white', fontSize: '13px', fontWeight: 'bold', textDecoration: 'none' }}>عضویت</Link>
+                      <Link to="/login" style={{ padding: '6px 14px', borderRadius: '20px', border: '1px solid #9B7EBD', color: '#9B7EBD', fontSize: '13px', fontWeight: 'bold', textDecoration: 'none' }}>ورود</Link>
+                      <Link to="/register" style={{ padding: '6px 14px', borderRadius: '20px', background: 'linear-gradient(135deg,#9B7EBD,#8B6BAE)', color: 'white', fontSize: '13px', fontWeight: 'bold', textDecoration: 'none' }}>عضویت</Link>
                     </div>
                   )}
-                  <Link to="/cart" style={{ background: '#fcb941', color: 'white', borderRadius: '8px', padding: '7px 14px', display: 'flex', alignItems: 'center', gap: '6px', textDecoration: 'none', fontSize: '13px', fontWeight: 'bold' }}>
+                  <Link to="/cart" style={{ background: '#9B7EBD', color: 'white', borderRadius: '8px', padding: '7px 14px', display: 'flex', alignItems: 'center', gap: '6px', textDecoration: 'none', fontSize: '13px', fontWeight: 'bold' }}>
                     <i className="fa fa-shopping-cart"></i>
                     <span className="d-none d-lg-inline">سبد خرید</span>
-                    <span style={{ background: '#e74c3c', color: 'white', borderRadius: '50%', width: '18px', height: '18px', fontSize: '11px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>۲</span>
+                    <span style={{ background: '#B85C7A', color: 'white', borderRadius: '50%', width: '18px', height: '18px', fontSize: '11px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>۲</span>
                   </Link>
                 </div>
               </div>
@@ -138,16 +138,16 @@ export default function Header() {
 
             {/* دکمه‌های موبایل */}
             <div className="d-flex d-lg-none ms-auto align-items-center" style={{ gap: '6px' }}>
-              <Link to="/cart" className="mob-btn-cart" style={{ background: '#fcb941', color: 'white', borderRadius: '8px', height: '30px', padding: '0 10px', display: 'flex', alignItems: 'center', gap: '5px', textDecoration: 'none', fontSize: '11px', fontWeight: 'bold' }}>
+              <Link to="/cart" className="mob-btn-cart" style={{ background: '#9B7EBD', color: 'white', borderRadius: '8px', height: '30px', padding: '0 10px', display: 'flex', alignItems: 'center', gap: '5px', textDecoration: 'none', fontSize: '11px', fontWeight: 'bold' }}>
                 <i className="fa fa-shopping-cart"></i>
-                <span style={{ background: '#e74c3c', color: 'white', borderRadius: '50%', width: '15px', height: '15px', fontSize: '9px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>۲</span>
+                <span style={{ background: '#B85C7A', color: 'white', borderRadius: '50%', width: '15px', height: '15px', fontSize: '9px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>۲</span>
               </Link>
               {username ? (
-                <Link to="/profile" className="mob-btn-user" style={{ background: 'linear-gradient(135deg,#fcb941,#f5a623)', color: 'white', borderRadius: '8px', height: '30px', padding: '0 10px', display: 'flex', alignItems: 'center', gap: '4px', textDecoration: 'none', fontSize: '11px', fontWeight: 'bold' }}>
+                <Link to="/profile" className="mob-btn-user" style={{ background: 'linear-gradient(135deg,#9B7EBD,#8B6BAE)', color: 'white', borderRadius: '8px', height: '30px', padding: '0 10px', display: 'flex', alignItems: 'center', gap: '4px', textDecoration: 'none', fontSize: '11px', fontWeight: 'bold' }}>
                   <i className="fa fa-user-circle"></i> {username}
                 </Link>
               ) : (
-                <Link to="/login" className="mob-btn-user" style={{ background: 'linear-gradient(135deg,#fcb941,#f5a623)', color: 'white', borderRadius: '8px', height: '30px', padding: '0 10px', display: 'flex', alignItems: 'center', textDecoration: 'none', fontSize: '11px', fontWeight: 'bold' }}>ورود</Link>
+                <Link to="/login" className="mob-btn-user" style={{ background: 'linear-gradient(135deg,#9B7EBD,#8B6BAE)', color: 'white', borderRadius: '8px', height: '30px', padding: '0 10px', display: 'flex', alignItems: 'center', textDecoration: 'none', fontSize: '11px', fontWeight: 'bold' }}>ورود</Link>
               )}
             </div>
 
@@ -163,7 +163,7 @@ export default function Header() {
                     <div className="mega-tabs" style={{ width: '180px', display: 'flex', flexDirection: 'column' }}>
                       {Object.entries(megaTabs).map(([key, val]) => (
                         <button key={key} className={`mega-tab-btn ${megaTab === key ? 'active' : ''}`}
-                          style={{ padding: '12px', textAlign: 'right', border: 'none', background: megaTab === key ? '#fcb941' : 'transparent', color: megaTab === key ? '#000' : '#282828', cursor: 'pointer', fontSize: '14px' }}
+                          style={{ padding: '12px', textAlign: 'right', border: 'none', background: megaTab === key ? '#9B7EBD' : 'transparent', color: megaTab === key ? '#000' : '#282828', cursor: 'pointer', fontSize: '14px' }}
                           onMouseEnter={() => setMegaTab(key)} onClick={() => setMegaTab(key)}>{val.label}</button>
                       ))}
                     </div>
