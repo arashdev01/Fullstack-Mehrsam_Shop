@@ -45,7 +45,7 @@ export default function Contact() {
                                     <div className="info">
                                         <i className="fa fa-map-marked"></i>
                                         <div className="title">آدرس فروشگاه:</div>
-                                        <div>ایران، تهران، جردن</div>
+                                        <div>نشانی حضوری در انتظار تأیید است.</div>
                                     </div>
                                     <div className="info">
                                         <i className="fa fa-phone"></i>
@@ -92,16 +92,16 @@ export default function Contact() {
                                 </div>
                                 {/* نقشه */}
                                 <div className="col-12 mt-4 px-0">
-                                    <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13877.455761926274!2d52.5714962!3d29.5931048!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xcc3a67871fb07f53!2z2YjYqCDYsdmI2KjbjNqpIC0gV2ViUnViaWs!5e0!3m2!1sen!2sca!4v1600581121318!5m2!1sen!2sca"
-                                        width="100%"
-                                        height="400"
-                                        className="rounded"
-                                        style={{ border: 0 }}
-                                        allowFullScreen=""
-                                        loading="lazy"
-                                        title="نقشه"
-                                    ></iframe>
+                                    <div className="alert alert-light rounded-3 p-4 text-center" role="note">
+                                        <i className="fa fa-map-marker-alt mb-2" aria-hidden="true"></i>
+                                        <p className="fw-bold mb-2">نشانی حضوری فروشگاه هنوز تأیید نشده است.</p>
+                                        <p className="mb-0">برای هماهنگی، از فرم تماس همین صفحه استفاده کنید.</p>
+                                    </div>
+                                    {/* نقشهٔ قبلی با اطلاعات نشانی ناسازگار بود. */}
+                                    {/* پس از تأیید موقعیت دقیق، نقشه جایگزین شود. */}
+                                    {/* اطلاعات مکانی جدیدی حدس زده نمی‌شود. */}
+                                    {/* نمایش مختصات نامطمئن از رابط حذف شد. */}
+                                    {/* متن تماس از دادهٔ تأییدشده استفاده می‌کند. */}
                                 </div>
                             </div>
                         </div>
