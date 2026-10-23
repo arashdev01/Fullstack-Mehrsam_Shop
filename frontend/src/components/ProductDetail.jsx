@@ -110,7 +110,7 @@ export default function ProductDetail() {
               }}
               onClick={() => setMainImage(product.image)}
               onError={e => {
-                e.currentTarget.src = '/images/images/user-no-image.jpg';
+                e.currentTarget.src = '/images/user-no-image.jpg;
               }}
             />
 
