@@ -108,7 +108,7 @@ export default function Header() {
                         <Link to="/profile"><i className="fa fa-user"></i> پروفایل</Link>
                         <Link to="/profile/orders"><i className="fa fa-box"></i> سفارشات</Link>
                         <hr style={{ margin: '4px 0' }} />
-                        <a href="/" onClick={(e) => { e.preventDefault(); localStorage.clear(); window.location.reload() }} style={{ color: '#e74c3c' }}><i className="fa fa-sign-out-alt"></i> خروج</a>
+                        <a href="/" onClick={(e) => { e.preventDefault(); localStorage.removeItem('access_token'); localStorage.removeItem('refresh_token'); localStorage.removeItem('username'); window.location.assign('/') }} style={{ color: '#e74c3c' }}><i className="fa fa-sign-out-alt"></i> خروج</a>
                       </div>
                     </div>
                   ) : (
@@ -163,7 +163,7 @@ export default function Header() {
                     <div className="mega-tabs" style={{ width: '180px', display: 'flex', flexDirection: 'column' }}>
                       {Object.entries(megaTabs).map(([key, val]) => (
                         <button key={key} className={`mega-tab-btn ${megaTab === key ? 'active' : ''}`}
-                          style={{ padding: '12px', textAlign: 'right', border: 'none', background: megaTab === key ? '#6b459b' : 'transparent', color: megaTab === key ? '#000' : '#282828', cursor: 'pointer', fontSize: '14px' }}
+                          style={{ padding: '12px', textAlign: 'right', border: 'none', background: megaTab === key ? '#6b459b' : 'transparent', color: megaTab === key ? '#fff' : '#282828', cursor: 'pointer', fontSize: '14px' }}
                           onMouseEnter={() => setMegaTab(key)} onClick={() => setMegaTab(key)}>{val.label}</button>
                       ))}
                     </div>
@@ -211,7 +211,7 @@ export default function Header() {
             { label: 'بلاگ', to: '/blog' },
             { label: 'سبد خرید', to: '/cart' },
             ...(username ? [{ label: 'پروفایل', to: '/profile' }] : []),
-            ...(username ? [{ label: 'خروج', to: '/', onClick: () => { localStorage.clear(); window.location.reload(); } }] : []),
+            ...(username ? [{ label: 'خروج', to: '/', onClick: () => { localStorage.removeItem('access_token'); localStorage.removeItem('refresh_token'); localStorage.removeItem('username'); window.location.assign('/'); } }] : []),
           ].map((item, i) => (
             <li key={i}>
               <Link to={item.to} onClick={() => { setMobileOpen(false); if (item.onClick) item.onClick(); }}>{item.label}</Link>
