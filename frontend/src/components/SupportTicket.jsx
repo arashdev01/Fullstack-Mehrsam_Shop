@@ -1,5 +1,5 @@
-import React from 'react';
 import { submitContactMessage } from '../api';
+
 const SupportTicket = () => {
   const handleSubmit = async event => {
     event.preventDefault();
