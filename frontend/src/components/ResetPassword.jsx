@@ -32,7 +32,7 @@ export default function ResetPassword() {
                             <div className="row">
                                 <div className="col-12 col-lg-5 text-center">
                                     <img src="/images/reset-password.png" alt="بازیابی رمز عبور" className="img-fluid"
-                                        onError={e => e.target.src = 'https://via.placeholder.com/400x300?text=Reset+Password'} />
+                                        onError={e => e.target.src = '/images/user-no-image.jpg'} />
                                 </div>
                                 <div className="col-12 col-lg-7 pt-5 pt-md-0 align-self-center">
                                     <div className="title">بازیابی رمز</div>
