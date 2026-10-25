@@ -2,9 +2,15 @@ import { useState, useEffect, useRef } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
 import useSiteSettings from '../useSiteSettings';
+import { useCart } from '../CartContext';
 
 export default function Header() {
-  const config = useSiteSettings();
+    const config = useSiteSettings();
+    const { cartItems } = useCart();
+    const cartCount = cartItems.reduce(
+      (total, item) => total + (Number(item.quantity) || 0),
+      0
+    );
   const username = localStorage.getItem('username');
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
@@ -120,7 +126,7 @@ export default function Header() {
                   <Link to="/cart" style={{ background: '#fcb941', color: 'white', borderRadius: '8px', padding: '7px 14px', display: 'flex', alignItems: 'center', gap: '6px', textDecoration: 'none', fontSize: '13px', fontWeight: 'bold' }}>
                     <i className="fa fa-shopping-cart"></i>
                     <span className="d-none d-lg-inline">سبد خرید</span>
-                    <span style={{ background: '#e74c3c', color: 'white', borderRadius: '50%', width: '18px', height: '18px', fontSize: '11px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>۲</span>
+                    <span style={{ background: '#e74c3c', color: 'white', borderRadius: '50%', width: '18px', height: '18px', fontSize: '11px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{cartCount}</span>
                   </Link>
                 </div>
               </div>
@@ -140,7 +146,7 @@ export default function Header() {
             <div className="d-flex d-lg-none ms-auto align-items-center" style={{ gap: '6px' }}>
               <Link to="/cart" className="mob-btn-cart" style={{ background: '#fcb941', color: 'white', borderRadius: '8px', height: '30px', padding: '0 10px', display: 'flex', alignItems: 'center', gap: '5px', textDecoration: 'none', fontSize: '11px', fontWeight: 'bold' }}>
                 <i className="fa fa-shopping-cart"></i>
-                <span style={{ background: '#e74c3c', color: 'white', borderRadius: '50%', width: '15px', height: '15px', fontSize: '9px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>۲</span>
+                <span style={{ background: '#e74c3c', color: 'white', borderRadius: '50%', width: '15px', height: '15px', fontSize: '9px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{cartCount}</span>
               </Link>
               {username ? (
                 <Link to="/profile" className="mob-btn-user" style={{ background: 'linear-gradient(135deg,#fcb941,#f5a623)', color: 'white', borderRadius: '8px', height: '30px', padding: '0 10px', display: 'flex', alignItems: 'center', gap: '4px', textDecoration: 'none', fontSize: '11px', fontWeight: 'bold' }}>
