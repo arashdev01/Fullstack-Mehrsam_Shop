@@ -6,7 +6,7 @@ export default function useSiteContent() {
   const [content, setContent] = useState({});
 
   useEffect(() => {
-    const base = String(API_URL || '').replace(/\\/+$/, '');
+    const base = String(API_URL || '').replace(/\/+$/, '');
     if (!base) return;
     const controller = new AbortController();
 
