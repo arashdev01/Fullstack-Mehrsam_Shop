@@ -1,10 +1,13 @@
+import useSiteContent from '../useSiteContent';
+
 export default function VendorCarousel() {
+  const content = useSiteContent();
   const vendors = [
-    { id: 1, name: 'برند ۱', image: '/images/team/adidas.png' },
-    { id: 2, name: 'برند ۲', image: '/images/team/puma.png' },
-    { id: 3, name: 'برند ۳', image: '/images/team/nike.png' },
-    { id: 4, name: 'برند ۴', image: '/images/team/reebok.png' },
-    { id: 5, name: 'برند ۵', image: '/images/team/lv.png' },
+    { id: 1, name: content.vendor1_name || 'برند ۱', image: content.vendor1_image || '/images/team/adidas.png' },
+    { id: 2, name: content.vendor2_name || 'برند ۲', image: content.vendor2_image || '/images/team/puma.png' },
+    { id: 3, name: content.vendor3_name || 'برند ۳', image: content.vendor3_image || '/images/team/nike.png' },
+    { id: 4, name: content.vendor4_name || 'برند ۴', image: content.vendor4_image || '/images/team/reebok.png' },
+    { id: 5, name: content.vendor5_name || 'برند ۵', image: content.vendor5_image || '/images/team/lv.png' },
   ];
 
   return (
@@ -76,7 +79,7 @@ export default function VendorCarousel() {
       `}</style>
 
       <div className="vendor-section">
-        <h5 className="fw-bold text-end mb-4 border-bottom pb-2 ">برندهای موجود</h5>
+        <h5 className="fw-bold text-end mb-4 border-bottom pb-2 ">{content.vendor_title || 'برندهای موجود'}</h5>
 
         <div className="vendor-track-wrapper">
           <div className="vendor-track">
