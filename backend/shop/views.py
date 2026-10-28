@@ -2,7 +2,7 @@
 
 import requests
 from rest_framework import viewsets, filters, status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from django.contrib.auth.models import User
@@ -173,3 +173,18 @@ def payment_verify(request):
         order.save()
         return redirect(f'http://localhost:5173/thankyou?status=success&ref_id={ref_id}')
     return redirect('http://localhost:5173/thankyou?status=failed')
+
+# Public read-only endpoint for the fixed site-content slots.
+from rest_framework.permissions import AllowAny
+from .models import SiteContent
+from .serializers import SiteContentSerializer
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def site_content(request):
+    content = SiteContent.objects.filter(pk=1).first()
+    if content is None:
+        return Response({'detail': 'محتوای سایت هنوز مقداردهی نشده است.'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+    serializer = SiteContentSerializer(content, context={'request': request})
+    return Response(serializer.data)
