@@ -12,6 +12,7 @@ router.register(r'blogs', views.BlogViewSet)
 router.register(r'contact', views.ContactMessageViewSet)
 
 urlpatterns = [
+    path('site-content/', views.site_content),
     path('', include(router.urls)),
 
     # کاربران
