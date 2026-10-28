@@ -1,18 +1,21 @@
+import useSiteContent from '../useSiteContent';
+
 export default function OfferBanners() {
+  const content = useSiteContent();
   const banners = [
     {
-      img: '/images/slider/baner1.webp',
-      badge: 'تخفیف ۲۰٪   ',
-      title: '  فروش ویژه عید نوروز',
-      subtitle: 'انواع پوشاک مـردانه  ',
+      img: content.offer1_image || '/images/slider/baner1.webp',
+      badge: content.offer1_badge || 'تخفیف ۲۰٪   ', 
+      title: content.offer1_title || '  فروش ویژه عید نوروز',
+      subtitle: content.offer1_subtitle || 'انواع پوشاک مـردانه  ', 
       bg: '#044cc8',
       link: '/products',
     },
     {
-      img: '/images/slider/baner2.webp',
-      badge: 'تخفیف ویژه برای  ',
-      title: ' بانـوان',
-      subtitle: ' انواع پوشاک زنـانه',
+      img: content.offer2_image || '/images/slider/baner2.webp',
+      badge: content.offer2_badge || 'تخفیف ویژه برای  ', 
+      title: content.offer2_title || ' بانـوان',
+      subtitle: content.offer2_subtitle || ' انواع پوشاک زنـانه',
       bg: '#e7240efd',
       link: '/products',
     },
