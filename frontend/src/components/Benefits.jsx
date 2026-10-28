@@ -1,9 +1,12 @@
+import useSiteContent from '../useSiteContent';
+
 export default function Benefits() {
+  const content = useSiteContent();
   const items = [
-    { img: '/images/benefits/benefit1.png', label: 'پشتیبانی کامل' },
-    { img: '/images/benefits/benefit2.png', label: 'اصالت کالا' },
-    { img: '/images/benefits/benefit3.png', label: 'بازگشت وجه' },
-    { img: '/images/benefits/benefit4.png', label: 'ارسال رایگان' },
+    { img: content.benefit1_image || '/images/benefits/benefit1.png', label: content.benefit1_label || 'پشتیبانی کامل' },
+    { img: content.benefit2_image || '/images/benefits/benefit2.png', label: content.benefit2_label || 'اصالت کالا' },
+    { img: content.benefit3_image || '/images/benefits/benefit3.png', label: content.benefit3_label || 'بازگشت وجه' },
+    { img: content.benefit4_image || '/images/benefits/benefit4.png', label: content.benefit4_label || 'ارسال رایگان' },
   ];
 
   return (
