@@ -86,7 +86,7 @@ export default function Contact() {
                                             <textarea className="form-control" id="message" rows="3" value={form.message} onChange={handleChange} required></textarea>
                                         </div>
                                         <div className="form-group">
-                                            <button type="submit" className="btn btn-success rounded-pill px-4">ارسال پیام</button>
+                                            <button type="submit" className="btn btn-success rounded-pill px-4">{content.contact_form_button || 'ارسال پیام'}</button>
                                         </div>
                                     </form>
                                 </div>
