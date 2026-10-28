@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useSiteContent from '../useSiteContent';
 
 export default function Contact() {
+    const content = useSiteContent();
     const [form, setForm] = useState({ name: '', tel: '', email: '', subject: '', message: '' });
     const [sent, setSent] = useState(false);
 
@@ -18,8 +20,8 @@ export default function Contact() {
         <section className="inner-page" id="contact-page">
             <div className="container-fluid" id="page-hero">
                 <div className="container py-3">
-                    <h1>تماس با ما</h1>
-                    <p>با ما در ارتباط باشید.</p>
+                    <h1>{content.contact_page_title || 'تماس با ما'}</h1>
+                    <p>{content.contact_page_subtitle || 'با ما در ارتباط باشید.'}</p>
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item"><Link to="/">صفحه نخست</Link></li>
@@ -39,26 +41,26 @@ export default function Contact() {
                                 <div className="col-12 col-lg-5 text-center" id="contact-page-info">
                                     <div className="info">
                                         <i className="fa fa-map-marked"></i>
-                                        <div className="title">آدرس فروشگاه:</div>
-                                        <div>ایران، تهران، جردن</div>
+                                        <div className="title">{content.contact_address_label || 'آدرس فروشگاه:'}</div>
+                                        <div>{content.contact_address || 'ایران، تهران، جردن'}</div>
                                     </div>
                                     <div className="info">
                                         <i className="fa fa-phone"></i>
-                                        <div className="title">تلفن تماس:</div>
-                                        <div>02112345678</div>
-                                        <div>09351234567</div>
+                                        <div className="title">{content.contact_phone_label || 'تلفن تماس:'}</div>
+                                        <div>{content.contact_phone1 || '02112345678'}</div>
+                                        <div>{content.contact_phone2 || '09351234567'}</div>
                                     </div>
                                     <div className="info">
                                         <i className="fa fa-envelope"></i>
-                                        <div className="title">پست الکترونیک:</div>
-                                        <div>info@rubik.com</div>
+                                        <div className="title">{content.contact_email_label || 'پست الکترونیک:'}</div>
+                                        <div>{content.contact_email || 'info@rubik.com'}</div>
                                     </div>
                                 </div>
 
                                 {/* فرم ارسال پیام */}
                                 <div className="col-12 col-lg-7 p-4">
-                                    <div className="title">ارسال پیام</div>
-                                    <p>نظرات، پیشنهادات و انتقادات سازنده خود را از طریق فرم زیر با ما در میان بگذارید.</p>
+                                    <div className="title">{content.contact_form_title || 'ارسال پیام'}</div>
+                                    <p>{content.contact_form_intro || 'نظرات، پیشنهادات و انتقادات سازنده خود را از طریق فرم زیر با ما در میان بگذارید.'}</p>
 
                                     {sent && <div className="alert alert-success">پیام شما با موفقیت ارسال شد!</div>}
 
@@ -92,7 +94,7 @@ export default function Contact() {
                                 {/* نقشه */}
                                 <div className="col-12 mt-4 px-0">
                                     <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13877.455761926274!2d52.5714962!3d29.5931048!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xcc3a67871fb07f53!2z2YjYqCDYsdmI2KjbjNqpIC0gV2ViUnViaWs!5e0!3m2!1sen!2sca!4v1600581121318!5m2!1sen!2sca"
+                                        src={content.contact_map_url || 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13877.455761926274!2d52.5714962!3d29.5931048!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xcc3a67871fb07f53!2z2YjYqCDYsdmI2KjbjNqpIC0gV2ViUnViaWs!5e0!3m2!1sen!2sca!4v1600581121318!5m2!1sen!2sca'}
                                         width="100%"
                                         height="400"
                                         className="rounded"
