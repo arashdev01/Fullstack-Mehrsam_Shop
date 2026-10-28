@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import useSiteContent from '../useSiteContent';
 
 const posts = [
   { id: 1, title: 'بررسی آیفون 12 پرو مکس اپل', date: '30 خرداد 1400', img: '/images/blog/post100.jpg', excerpt: 'آیفون ۱۲ پرو مکس با ابعاد غول‌پیکر، دوربین توانمندتر و باتری حجمیش، تمام‌عیارترین پرچم‌دار کنونی اپل به‌حساب می‌آید.' },
@@ -7,6 +8,7 @@ const posts = [
 ];
 
 export default function LatestPosts() {
+  const content = useSiteContent();
   return (
     <>
       <style>{`
@@ -43,7 +45,7 @@ export default function LatestPosts() {
 `}</style>
 
       <section id="blog" className="pt-5">
-        <h5 className="section-title">جدیدترین مقالات آموزشی</h5>
+        <h5 className="section-title">{content.latest_posts_title || 'جدیدترین مقالات آموزشی'}</h5>
         <div className="container pt-4">
           <div className="row row-cols-1 row-cols-md-3">
             {posts.map(post => (
