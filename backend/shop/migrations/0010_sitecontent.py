@@ -106,7 +106,7 @@ class Migration(migrations.Migration):
                 ('offer2_badge', models.CharField(max_length=255, blank=True, default="تخفیف ویژه برای")),
                 ('offer2_title', models.CharField(max_length=255, blank=True, default="بانـوان")),
                 ('offer2_subtitle', models.CharField(max_length=255, blank=True, default="انواع پوشاک زنـانه")),
-                ('offer2_image', models.ImageField(blank=True, upload_to='site-content/')),
+                ('offer2_image', models.ImageField(blank=True, upload_to='site-content/', help_text='در صورت خالی بودن، تصویر پیش‌فرض فعلی سایت نمایش داده می‌شود.')),
                 ('benefit1_label', models.CharField(max_length=255, blank=True, default="پشتیبانی کامل")),
                 ('benefit1_image', models.ImageField(blank=True, upload_to='site-content/', help_text='در صورت خالی بودن، تصویر پیش‌فرض فعلی سایت نمایش داده می‌شود.')),
                 ('benefit2_label', models.CharField(max_length=255, blank=True, default="اصالت کالا")),
