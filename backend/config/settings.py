@@ -130,7 +130,8 @@ JAZMIN_SETTINGS = {
     "site_header": "مهرسام",
     "welcome_sign": "به پنل مدیریت خوش آمدید",
     "search_model": "shop.Product",
-    "show_ui_builder": True, # این رو True بذاری، یک آیکون سمت راست میاد که میتونی رنگ‌ها رو آنلاین عوض کنی!
+    "show_ui_builder": True, 
+    "changeform_format": "horizontal_tabs",
 }
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
