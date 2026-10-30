@@ -1,7 +1,9 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import useSiteContent from '../useSiteContent';
 
 export default function HeroSlider() {
+  const content = useSiteContent();
   const products = [
     { id: 1, title: 'دوربین AX6065', price: '۴,۵۰۰,۰۰۰', img: '/images/products/p403.png' },
     { id: 2, title: 'لنز دیجیتال Z1', price: '۲,۸۰۰,۰۰۰', img: '/images/products/p400.png' },
@@ -90,7 +92,7 @@ export default function HeroSlider() {
           clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
           background-image: 
             radial-gradient(circle at top right, rgba(13, 26, 164, 0.23) 0%, rgba(141, 141, 14, 0.26) 60%),
-            url('/images/slider/jeans-shop.webp');
+            url('${content.hero_background_image || '/images/slider/jeans-shop.webp'}');
           background-size: cover;
           background-position: center;
           background-repeat: no-repeat;
@@ -135,12 +137,12 @@ export default function HeroSlider() {
 
         {/* جعبه اول: متن و دکمه */}
         <div className="hero-box box-text">
-          <h5 className="hero-title">کالکشن <span>اختصاصی</span></h5>
-          <p style={{ color: 'white', marginBottom: '25px' }}>محصولات را ورق بزنید...</p>
+          <h5 className="hero-title">{content.hero_title || 'کالکشن'} <span>{content.hero_title_highlight || 'اختصاصی'}</span></h5>
+          <p style={{ color: 'white', marginBottom: '25px' }}>{content.hero_description || 'محصولات را ورق بزنید...'}</p>
           <Link to="/products" style={{
             background: 'linear-gradient(90deg, #038817d6, #038d0a)',
             color: 'white', padding: '12px 65px', borderRadius: '9px', textDecoration: 'none', fontWeight: 'bold'
-          }}>خرید سریع</Link>
+          }}>{content.hero_button || 'خرید سریع'}</Link>
         </div>
 
         {/* جعبه دوم: اسلایدر محصولات */}

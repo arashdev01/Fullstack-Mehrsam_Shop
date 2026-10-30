@@ -1,4 +1,7 @@
+import useSiteContent from '../useSiteContent';
+
 export default function Slider() {
+  const content = useSiteContent();
   return (
     <section id="slider" className="mt-3">
       <style>{`
@@ -188,17 +191,17 @@ export default function Slider() {
               <div className="carousel-inner">
                 {/* اسلاید اول */}
                 <div className="carousel-item active">
-                  <img src="/images/slider/slide (2).webp" className="d-block w-100" alt="اسلاید ۱" />
+                  <img src={content.slider_slide1_image || '/images/slider/slide (2).webp'} className="d-block w-100" alt="اسلاید ۱" />
                   <a href="/products" className="slider-cta-btn">
-                    ورود به فروشگاه
+                    {content.slider_slide1_button || 'ورود به فروشگاه'}
                   </a>
                 </div>
 
                 {/* اسلاید دوم */}
                 <div className="carousel-item">
-                  <img src="/images/slider/slide (1).webp" className="d-block w-100" alt="اسلاید ۲" />
+                  <img src={content.slider_slide2_image || '/images/slider/slide (1).webp'} className="d-block w-100" alt="اسلاید ۲" />
                   <a href="/products" className="slider-cta-btn">
-                    دیدن محصولات
+                    {content.slider_slide2_button || 'دیدن محصولات'}
                   </a>
                 </div>
               </div>
@@ -224,7 +227,7 @@ export default function Slider() {
               {/* بنر اول - خرید عمده */}
               <div className="col">
                 <div style={{ position: 'relative' }}>
-                  <img src="/images/slider/slide (3).webp" alt="بنر ۱" width="100%" />
+                  <img src={content.slider_side1_image || '/images/slider/slide (3).webp'} alt="بنر ۱" width="100%" />
                   <a
                     href="/products"
                     style={{
@@ -241,7 +244,7 @@ export default function Slider() {
                       boxShadow: '0 7px 10px rgba(0, 0, 0, 0.9)',
                     }}
                   >
-                    خرید عمده
+                    {content.slider_side1_button || 'خرید عمده'}
                   </a>
                 </div>
               </div>
@@ -249,7 +252,7 @@ export default function Slider() {
               {/* بنر دوم - خرید تکی */}
               <div className="col">
                 <div style={{ position: 'relative' }}>
-                  <img src="/images/slider/slide (4).webp" alt="بنر ۲" width="100%" />
+                  <img src={content.slider_side2_image || '/images/slider/slide (4).webp'} alt="بنر ۲" width="100%" />
                   <a
                     href="/products"
                     style={{
@@ -266,7 +269,7 @@ export default function Slider() {
                       boxShadow: '0 3px 10px rgba(0,0,0,0.25)',
                     }}
                   >
-                    خرید تکی
+                    {content.slider_side2_button || 'خرید تکی'}
                   </a>
                 </div>
               </div>
